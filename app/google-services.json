@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "531513348170",
+    "firebase_url": "https://profitness-e6c41.firebaseio.com",
+    "project_id": "profitness-e6c41",
+    "storage_bucket": "profitness-e6c41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531513348170:android:6d72abf2eec9d08b4b56b3",
+        "android_client_info": {
+          "package_name": "com.example.profitness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "531513348170-mhi0790f36nvncg03dvu49hcp8ce4vri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu3S2mFx-2K2ipPMdROBT89OlXSoWA_9c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "531513348170-mhi0790f36nvncg03dvu49hcp8ce4vri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

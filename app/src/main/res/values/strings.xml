@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Profitness</string>
+    <string name="profitness">ProFitness</string>
+    <string name="sign_in">sign in</string>
+    <string name="sign_up">sign up</string>
+    <string name="email">Email</string>
+    <string name="password">password</string>
+    <string name="login">login</string>
+    <string name="new_here_create_account">new here?  CREATE ACCOUNT</string>
+</resources>
