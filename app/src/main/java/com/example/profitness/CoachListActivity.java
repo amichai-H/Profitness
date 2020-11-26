@@ -44,26 +44,25 @@ public class CoachListActivity extends AppCompatActivity {
     }
 
     private void createViewOnScreen() {
-        for(QueryDocumentSnapshot s : myTrainers)
-        {
-            TextView newTextView = new TextView(this);
-            newTextView.setText((String) s.getData().get("first"));
-            newTextView.setTextColor(Color.BLACK);
-            newTextView.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    System.out.println(s);
-                    //Intent intent=new Intent(this,SecondActivity.class);
-                    //intent.putExtra("Uid", s.getId());
-                    //startActivity(intent);
+       // for (int i = 0;i<20;i++) {
+            for (QueryDocumentSnapshot s : myTrainers) {
+                TextView newTextView = new TextView(this);
+                newTextView.setText((String) s.getData().get("first"));
+                newTextView.setTextColor(Color.BLACK);
+                newTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println(s);
+                        //Intent intent=new Intent(this,SecondActivity.class);
+                        //intent.putExtra("Uid", s.getId());
+                        //startActivity(intent);
 
-                }
-            });
+                    }
+                });
 
-            layout.addView(newTextView);
-        }
+                layout.addView(newTextView);
+            }
+        //}
     }
 
     void preferList(){

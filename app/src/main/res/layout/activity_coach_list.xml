@@ -5,20 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CoachListActivity">
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/listLayout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:fillViewport="true">
 
-        <!-- Include other widget or layout tags here. These are considered
-                "child views" or "children" of the linear layout -->
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/listLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <!-- Include other widget or layout tags here. These are considered
+                    "child views" or "children" of the linear layout -->
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
