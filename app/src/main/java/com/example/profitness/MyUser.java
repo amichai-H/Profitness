@@ -2,8 +2,8 @@ package com.example.profitness;
 
 public class MyUser {
     private String firstName, lastName, email, password,phone,birthDAy;
-    private int gsex ;
-    public MyUser(String fn, String ln, String email, String pass, String phone, String birthDAy, int sg){
+    private int gsex, training;
+    public MyUser(String fn, String ln, String email, String pass, String phone, String birthDAy, int sg,int isTraining){
         this.birthDAy =birthDAy;
         this.email = email;
         this.firstName = fn;
@@ -11,6 +11,7 @@ public class MyUser {
         this.password = pass;
         this.phone = phone;
         this.gsex= sg; // m = 0 f =1
+        this.training = isTraining;
     }
 
     public String getFirstName() {
@@ -38,5 +39,9 @@ public class MyUser {
     }
     public int getGsex(){
         return gsex;
+    }
+
+    public int getTraining() {
+        return training;
     }
 }

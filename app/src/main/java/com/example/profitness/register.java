@@ -36,6 +36,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
 
     EditText mLastName,mFirstNAme ,mEmail, mPassword,mPhone,mDayOfBirth;
     RadioGroup mSex;
+    RadioGroup mtrain;
     Button mRegisterBtn;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
@@ -51,6 +52,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         mPhone = findViewById(R.id.phoneNumber);
         mDayOfBirth = findViewById(R.id.dayofbirth);
         mSex = findViewById(R.id.sexgender);
+        mtrain = findViewById(R.id.trainRadio);
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         mRegisterBtn = findViewById(R.id.btn_register);
@@ -98,9 +100,21 @@ public class register extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void CreateUser() {
+        RadioButton radioSexButton = (RadioButton) findViewById(mSex.getCheckedRadioButtonId());
+        RadioButton radioTrainButton = (RadioButton) findViewById(mtrain.getCheckedRadioButtonId());
+        int sex = 2;
+        if (radioSexButton.getTag().toString().equals("0"))
+            sex = 0;
+        else
+            sex = 1;
+        int train = 2;
+        if (radioTrainButton.getTag().toString().equals("0"))
+            train = 0;
+        else
+            train = 1;
         myUser = new MyUser(mFirstNAme.getText().toString()
                 ,mLastName.getText().toString(),mEmail.getText().toString()
-                ,mPassword.getText().toString(),mPhone.getText().toString(),mDayOfBirth.getText().toString(),mSex.getCheckedRadioButtonId());
+                ,mPassword.getText().toString(),mPhone.getText().toString(),mDayOfBirth.getText().toString(),sex,train);
     }
 
     private boolean chackData() {
@@ -135,6 +149,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         userDB.put("last", myUser.getLastName());
         userDB.put("born", myUser.getBirthDAy());
         userDB.put("sex", myUser.getGsex());
+        userDB.put("trainer", myUser.getTraining());
         userDB.put("phone", myUser.getPhone());
 
 // Add a new document with a generated ID
@@ -145,6 +160,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("add new user to db", "DocumentSnapshot successfully written!");
+                                finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

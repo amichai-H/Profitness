@@ -17,4 +17,6 @@
     <string name="male">Male</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
+    <string name="trainer">trainer</string>
+    <string name="coach">coach</string>
 </resources>
