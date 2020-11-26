@@ -3,6 +3,7 @@ package com.example.profitness;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mCreateBtn = (TextView)findViewById(R.id.createText);
         progressBar = (ProgressBar)findViewById(R.id.progressBar2);
         mLoginBtn.setOnClickListener(this);
+        mCreateBtn.setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -61,6 +63,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             // ...
                         }
                     });
+        }
+        else if(v == mCreateBtn){
+
+            Intent intent=new Intent(this,register.class);
+            startActivity(intent);
         }
 
     }
