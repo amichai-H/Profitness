@@ -44,11 +44,14 @@ public class CoachListActivity extends AppCompatActivity {
     }
 
     private void createViewOnScreen() {
-       // for (int i = 0;i<20;i++) {
+//        for (int i = 0;i<20;i++) {
             for (QueryDocumentSnapshot s : myTrainers) {
                 TextView newTextView = new TextView(this);
                 newTextView.setText((String) s.getData().get("first"));
                 newTextView.setTextColor(Color.BLACK);
+                newTextView.setTextSize(25);
+                newTextView.setBackgroundColor(Color.CYAN);
+                newTextView.setPadding(12,12,12,12);
                 newTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -62,7 +65,7 @@ public class CoachListActivity extends AppCompatActivity {
 
                 layout.addView(newTextView);
             }
-        //}
+//        }
     }
 
     void preferList(){
