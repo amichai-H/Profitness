@@ -19,4 +19,8 @@
     <string name="last_name">Last Name</string>
     <string name="trainer">trainer</string>
     <string name="coach">coach</string>
+    <string name="schedule_a_new_workout">Schedule a new workout</string>
+    <string name="performance">Performance</string>
+    <string name="menu">Menu</string>
+    <string name="hello">Hello</string>
 </resources>
