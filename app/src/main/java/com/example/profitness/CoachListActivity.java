@@ -49,7 +49,7 @@ public class CoachListActivity extends AppCompatActivity {
                 TextView newTextView = new TextView(this);
                 newTextView.setText((String) s.getData().get("first"));
                 newTextView.setTextColor(Color.BLACK);
-                newTextView.setTextSize(25);
+                newTextView.setTextSize(24);
                 newTextView.setBackgroundColor(Color.CYAN);
                 newTextView.setPadding(12,12,12,12);
                 newTextView.setOnClickListener(new View.OnClickListener() {
