@@ -23,4 +23,7 @@
     <string name="performance">Performance</string>
     <string name="menu">Menu</string>
     <string name="hello">Hello</string>
+    <string name="pick_date_time"><![CDATA[pick date & time]]></string>
+    <string name="schedule_training">Schedule training</string>
+    <string name="done">Done</string>
 </resources>

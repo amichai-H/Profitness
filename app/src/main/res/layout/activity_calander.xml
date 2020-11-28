@@ -7,16 +7,61 @@
     android:background="@drawable/background"
     tools:context=".Calander">
 
-    <CalendarView
-        android:id="@+id/calendarView"
+    <Button
+        android:id="@+id/pick_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#66FFFFFF"
+        android:fontFamily="@font/allerta_stencil"
+        android:text="@string/pick_date_time"
+        app:backgroundTint="#777575"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.211" />
+        app:layout_constraintVertical_bias="0.117" />
 
+    <Button
+        android:id="@+id/sched_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/allerta_stencil"
+        android:text="@string/schedule_training"
+        app:backgroundTint="#777575"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/emptyTV"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/emptyTV"
+        app:layout_constraintTop_toBottomOf="@+id/emptyTV"
+        app:layout_constraintVertical_bias="0.17" />
+
+    <TextView
+        android:id="@+id/emptyTV"
+        android:layout_width="183dp"
+        android:layout_height="104dp"
+        android:fontFamily="@font/allerta_stencil"
+        android:gravity="center"
+        android:textColor="#BA353742"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/pick_btn"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@+id/pick_btn"
+        app:layout_constraintTop_toBottomOf="@+id/pick_btn"
+        app:layout_constraintVertical_bias="0.039" />
+
+    <TextView
+        android:id="@+id/done_tv"
+        android:layout_width="154dp"
+        android:layout_height="54dp"
+        android:fontFamily="@font/allerta_stencil"
+        android:gravity="center"
+        android:text="@string/done"
+        android:textColor="#BA353742"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/sched_btn"
+        app:layout_constraintHorizontal_bias="0.439"
+        app:layout_constraintStart_toStartOf="@+id/sched_btn"
+        app:layout_constraintTop_toBottomOf="@+id/sched_btn"
+        app:layout_constraintVertical_bias="0.621" />
 </androidx.constraintlayout.widget.ConstraintLayout>
