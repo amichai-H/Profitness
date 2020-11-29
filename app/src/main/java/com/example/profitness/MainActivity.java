@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void openCoach() {
-        Intent intent=new Intent(this,CoachListActivity.class);
+        Intent intent=new Intent(this,SelfCoachScreen.class);
         startActivity(intent);
     }
 

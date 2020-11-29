@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".SchedAvailability">
+
+    <Button
+        android:id="@+id/choosDateForCoach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.187" />
+
+    <TextView
+        android:id="@+id/showMycDate"
+        android:layout_width="165dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="180dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/choosDateForCoach"
+        app:layout_constraintHorizontal_bias="0.222"
+        app:layout_constraintStart_toStartOf="@+id/choosDateForCoach"
+        app:layout_constraintTop_toBottomOf="@+id/choosDateForCoach"
+        app:layout_constraintVertical_bias="0.064" />
+
+    <Button
+        android:id="@+id/strHB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/coose_start_hour"
+        app:layout_constraintEnd_toStartOf="@+id/showMycDate"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showMycDate" />
+
+    <Button
+        android:id="@+id/endHB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/choose_end_hour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/showMycDate"
+        app:layout_constraintTop_toBottomOf="@+id/showMycDate" />
+
+    <TextView
+        android:id="@+id/strTime"
+        android:layout_width="175dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/teal_700"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/strHB"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/strHB"
+        app:layout_constraintTop_toBottomOf="@+id/strHB"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <TextView
+        android:id="@+id/endTime"
+        android:layout_width="172dp"
+        android:layout_height="36dp"
+        android:background="@color/design_default_color_secondary_variant"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/endHB"
+        app:layout_constraintTop_toBottomOf="@+id/endHB"
+        app:layout_constraintVertical_bias="0.069" />
+
+    <TextView
+        android:id="@+id/helloCoach"
+        android:layout_width="411dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="28dp"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/choosDateForCoach"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/sendBT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showMycDate" />
+</androidx.constraintlayout.widget.ConstraintLayout>

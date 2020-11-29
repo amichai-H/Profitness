@@ -32,4 +32,9 @@
     <string name="practice_time">Practice Time</string>
     <string name="edit_performance">Edit Performance</string>
     <string name="edit_menu">Edit Menu</string>
+    <string name="day_of_birth">Day Of Birth</string>
+    <string name="coose_start_hour">coose start hour</string>
+    <string name="choose_end_hour">choose end hour</string>
+    <string name="time_for_training">Time for training</string>
+    <string name="list_of_trainees">List of trainees</string>
 </resources>
