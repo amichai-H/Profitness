@@ -48,7 +48,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
         /* spinner init */
         spinner = findViewById(R.id.spinner);
-        String[] avaiableDates = {"a", "b", "c", "d"};// need to take available dates from DB
+        String[] avaiableDates = {"Choose date:", "b", "c", "d"};// need to take available dates from DB
         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, avaiableDates);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(aa);
