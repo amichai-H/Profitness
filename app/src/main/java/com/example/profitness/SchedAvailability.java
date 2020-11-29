@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SchedAvailability extends AppCompatActivity implements View.OnClickListener {
+
     String dateString,timeString;
     Button pick_btn,pickStartH,pickEndH,send;
     TextView showDate,showStartH,showEndH;
