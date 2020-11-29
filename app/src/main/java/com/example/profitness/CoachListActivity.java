@@ -44,28 +44,28 @@ public class CoachListActivity extends AppCompatActivity {
     }
 
     private void createViewOnScreen() {
-//        for (int i = 0;i<20;i++) {
+ //       for (int i = 0;i<20;i++) {
             for (QueryDocumentSnapshot s : myTrainers) {
                 TextView newTextView = new TextView(this);
                 newTextView.setText((String) s.getData().get("first"));
                 newTextView.setTextColor(Color.BLACK);
                 newTextView.setTextSize(24);
-                newTextView.setBackgroundColor(Color.CYAN);
+                //newTextView.setBackgroundColor(Color.GRAY);
                 newTextView.setPadding(12,12,12,12);
                 newTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         System.out.println(s);
-                        //Intent intent=new Intent(this,SecondActivity.class);
-                        //intent.putExtra("Uid", s.getId());
-                        //startActivity(intent);
+                        Intent intent = new Intent(CoachListActivity.this, DetailsTraining.class);
+                        intent.putExtra("Uid", s.getId());
+                        startActivity(intent);
 
                     }
                 });
 
                 layout.addView(newTextView);
             }
-//        }
+ //       }
     }
 
     void preferList(){
