@@ -26,6 +26,8 @@
     <string name="pick_date_time"><![CDATA[pick date & time]]></string>
     <string name="schedule_training">Schedule training</string>
     <string name="done">Done</string>
+    <string name="choose_date">choose date</string>
+    <string name="choose_coach">choose coach</string>
     <string name="practice_time">Practice Time</string>
     <string name="edit_performance">Edit Performance</string>
     <string name="edit_menu">Edit Menu</string>

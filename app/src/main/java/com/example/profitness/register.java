@@ -3,15 +3,21 @@ package com.example.profitness;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 
+import android.app.DatePickerDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,21 +31,29 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class register extends AppCompatActivity implements View.OnClickListener {
     FirebaseFirestore db;
     MyUser myUser;
-
-    EditText mLastName,mFirstNAme ,mEmail, mPassword,mPhone,mDayOfBirth;
+    String dateString;
+    EditText mLastName, mFirstNAme, mEmail, mPassword, mPhone, mDayOfBirth;
     RadioGroup mSex;
     RadioGroup mtrain;
     Button mRegisterBtn;
+    ImageButton pick_btn;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +72,21 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         mRegisterBtn = findViewById(R.id.btn_register);
         mAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar);
+        pick_btn = findViewById(R.id.choosday);
+        pick_btn.setOnClickListener(this);
         mRegisterBtn.setOnClickListener(this);
+        /* spinner*/
     }
+
 
     @Override
     public void onClick(View v) {
-        if(v==mRegisterBtn) {
+        if (v == pick_btn) {
+            handleDateButton();
+
+
+        }
+        if (v == mRegisterBtn) {
             //
             // test5();
             if (chackData()) {
@@ -91,8 +114,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
                             }
                         });
 
-            }
-            else {
+            } else {
                 System.out.println("hello found out no!!!");
             }
         }
@@ -113,23 +135,23 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         else
             train = 1;
         myUser = new MyUser(mFirstNAme.getText().toString()
-                ,mLastName.getText().toString(),mEmail.getText().toString()
-                ,mPassword.getText().toString(),mPhone.getText().toString(),mDayOfBirth.getText().toString(),sex,train);
+                , mLastName.getText().toString(), mEmail.getText().toString()
+                , mPassword.getText().toString(), mPhone.getText().toString(), mDayOfBirth.getText().toString(), sex, train);
     }
 
     private boolean chackData() {
         boolean select = mSex.isSelected();
-        boolean stringNotNullOrBlank = !mLastName.getText().toString().equals("")&&
-                !mFirstNAme.getText().toString().equals("")&&
-                !mEmail.getText().toString().equals("")&&
-                !mPhone.getText().toString().equals("")&&
+        boolean stringNotNullOrBlank = !mLastName.getText().toString().equals("") &&
+                !mFirstNAme.getText().toString().equals("") &&
+                !mEmail.getText().toString().equals("") &&
+                !mPhone.getText().toString().equals("") &&
                 !mPassword.getText().toString().equals("");
         return true;
 
     }
 
 
-    void updateUser(FirebaseUser user){
+    void updateUser(FirebaseUser user) {
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(mLastName.getText().toString())
                 .setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))
@@ -154,20 +176,39 @@ public class register extends AppCompatActivity implements View.OnClickListener 
 
 // Add a new document with a generated ID
 
-                db.collection("users").document(user.getUid())
-                        .set(userDB)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d("add new user to db", "DocumentSnapshot successfully written!");
-                                finish();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("fail add new user to db", "Error writing document", e);
-                            }
-                        });
+        db.collection("users").document(user.getUid())
+                .set(userDB)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("add new user to db", "DocumentSnapshot successfully written!");
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("fail add new user to db", "Error writing document", e);
+                    }
+                });
+    }
+
+    private void handleDateButton() {
+        //Toast.makeText(this, "handleDateButton", Toast.LENGTH_SHORT).show();
+
+        Calendar calendar = Calendar.getInstance();
+        int YEAR = calendar.get(Calendar.YEAR);
+        int MONTH = calendar.get(Calendar.MONTH);
+        int DATE = calendar.get(Calendar.DATE);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int date) {
+                dateString = date + "/" + month + "/" + year;
+                mDayOfBirth.setText(dateString);
+
+            }
+        }, YEAR, MONTH, DATE);
+        datePickerDialog.show();
     }
 }

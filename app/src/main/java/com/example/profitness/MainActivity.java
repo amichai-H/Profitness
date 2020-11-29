@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressBar = (ProgressBar)findViewById(R.id.progressBar2);
         mLoginBtn.setOnClickListener(this);
         mCreateBtn.setOnClickListener(this);
-        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
