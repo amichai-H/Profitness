@@ -6,8 +6,11 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -15,12 +18,14 @@ import java.util.Calendar;
 
 public class Calander extends AppCompatActivity implements View.OnClickListener{
 
-    String dateString;
-    String timeString;
+    private String dateString;
+    private String timeString;
 
-    Button pick_btn, sched_btn;
-    TextView dateTimeTextv, doneTv;
+    private Button pick_btn, sched_btn;
+    private TextView dateTimeTextv, doneTv;
+    private Calendar calendar;
 
+    Spinner spinner;
 
 
     @Override
@@ -41,6 +46,28 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         /* Only Text View */
         dateTimeTextv = findViewById(R.id.emptyTV);
 
+        /* spinner init */
+        spinner = findViewById(R.id.spinner);
+        String[] avaiableDates = {"a", "b", "c", "d"};// need to take available dates from DB
+        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, avaiableDates);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(aa);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                String spinnerChoose = adapterView.getItemAtPosition(position).toString();
+                dateTimeTextv.setText(spinnerChoose);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        /* Other */
+        calendar = Calendar.getInstance();
+
     }
 
     @Override
@@ -49,10 +76,9 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
             handleTimeButton();
             handleDateButton();
 
-
         }
         else if(v == sched_btn){
-            // someting
+            // do someting with FireBase
         }
         else if(v == doneTv){
             finish();
@@ -63,7 +89,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     private void handleDateButton(){
         //Toast.makeText(this, "handleDateButton", Toast.LENGTH_SHORT).show();
 
-        Calendar calendar = Calendar.getInstance();
+
         int YEAR = calendar.get(Calendar.YEAR);
         int MONTH = calendar.get(Calendar.MONTH);
         int DATE = calendar.get(Calendar.DATE);
@@ -81,10 +107,12 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     private void handleTimeButton(){
         //Toast.makeText(this, "handleTimeButton", Toast.LENGTH_SHORT).show();
 
-        Calendar calendar = Calendar.getInstance();
+
         int HOUR = calendar.get(Calendar.HOUR);
         int MINUTE = calendar.get(Calendar.MINUTE);
         int SECOND = calendar.get(Calendar.SECOND);
+
+        boolean is24HourFormat = true;
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
 
@@ -95,7 +123,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 dateTimeTextv.setText(dateAndTime);
 
             }
-        }, HOUR, MINUTE, true);
+        }, HOUR, MINUTE, is24HourFormat);
         timePickerDialog.show();
     }
 }

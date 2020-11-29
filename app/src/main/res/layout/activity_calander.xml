@@ -29,10 +29,10 @@
         app:backgroundTint="#777575"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/emptyTV"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="@+id/emptyTV"
-        app:layout_constraintTop_toBottomOf="@+id/emptyTV"
-        app:layout_constraintVertical_bias="0.17" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        app:layout_constraintVertical_bias="0.174" />
 
     <TextView
         android:id="@+id/emptyTV"
@@ -44,10 +44,9 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/pick_btn"
-        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="@+id/pick_btn"
         app:layout_constraintTop_toBottomOf="@+id/pick_btn"
-        app:layout_constraintVertical_bias="0.039" />
+        app:layout_constraintVertical_bias="0.038" />
 
     <TextView
         android:id="@+id/done_tv"
@@ -63,5 +62,17 @@
         app:layout_constraintHorizontal_bias="0.439"
         app:layout_constraintStart_toStartOf="@+id/sched_btn"
         app:layout_constraintTop_toBottomOf="@+id/sched_btn"
-        app:layout_constraintVertical_bias="0.621" />
+        app:layout_constraintVertical_bias="0.562" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="176dp"
+        android:layout_height="49dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/emptyTV"
+        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintStart_toStartOf="@+id/emptyTV"
+        app:layout_constraintTop_toBottomOf="@+id/emptyTV"
+        app:layout_constraintVertical_bias="0.132" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
