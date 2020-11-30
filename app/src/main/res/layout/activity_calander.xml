@@ -8,19 +8,6 @@
     tools:context=".Calander">
 
     <Button
-        android:id="@+id/pick_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/allerta_stencil"
-        android:text="@string/pick_date_time"
-        app:backgroundTint="#777575"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.117" />
-
-    <Button
         android:id="@+id/sched_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,11 +15,10 @@
         android:text="@string/schedule_training"
         app:backgroundTint="#777575"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/emptyTV"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="@+id/emptyTV"
-        app:layout_constraintTop_toBottomOf="@+id/spinner"
-        app:layout_constraintVertical_bias="0.174" />
+        app:layout_constraintEnd_toEndOf="@+id/hourSpinner"
+        app:layout_constraintStart_toStartOf="@+id/hourSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/hourSpinner"
+        app:layout_constraintVertical_bias="0.147" />
 
     <TextView
         android:id="@+id/emptyTV"
@@ -43,10 +29,10 @@
         android:textColor="#BA353742"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/pick_btn"
-        app:layout_constraintStart_toStartOf="@+id/pick_btn"
-        app:layout_constraintTop_toBottomOf="@+id/pick_btn"
-        app:layout_constraintVertical_bias="0.038" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.059" />
 
     <TextView
         android:id="@+id/done_tv"
@@ -59,20 +45,31 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/sched_btn"
-        app:layout_constraintHorizontal_bias="0.439"
+        app:layout_constraintHorizontal_bias="0.536"
         app:layout_constraintStart_toStartOf="@+id/sched_btn"
         app:layout_constraintTop_toBottomOf="@+id/sched_btn"
-        app:layout_constraintVertical_bias="0.562" />
+        app:layout_constraintVertical_bias="0.687" />
 
     <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="176dp"
-        android:layout_height="49dp"
+        android:id="@+id/dateSpinner"
+        android:layout_width="183dp"
+        android:layout_height="54dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/emptyTV"
-        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/emptyTV"
         app:layout_constraintTop_toBottomOf="@+id/emptyTV"
-        app:layout_constraintVertical_bias="0.132" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Spinner
+        android:id="@+id/hourSpinner"
+        android:layout_width="183dp"
+        android:layout_height="54dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dateSpinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/dateSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/dateSpinner"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

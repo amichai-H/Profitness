@@ -1,20 +1,33 @@
 package com.example.profitness;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Calander extends AppCompatActivity implements View.OnClickListener{
 
@@ -25,7 +38,23 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     private TextView dateTimeTextv, doneTv;
     private Calendar calendar;
 
-    Spinner spinner;
+    private Spinner dateSpinner;
+    private Spinner hourSpinner;
+
+    String date;
+    String time;
+
+    boolean timeSelected, dateSelected; //if user select something in spinner
+
+    FirebaseFirestore db;
+    List<String> availableDatesList;
+    List<String> availableHoursList;
+
+
+    String availableDates;
+    String hours;
+
+
 
 
     @Override
@@ -33,10 +62,9 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calander);
 
-        /* Clickable */
-        pick_btn = findViewById(R.id.pick_btn);
-        pick_btn.setOnClickListener(this);
 
+
+        /* Clickable */
         doneTv = findViewById(R.id.done_tv);
         doneTv.setOnClickListener(this);
 
@@ -46,46 +74,137 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         /* Only Text View */
         dateTimeTextv = findViewById(R.id.emptyTV);
 
-        /* spinner init */
-        spinner = findViewById(R.id.spinner);
-        String[] avaiableDates = {"Choose date:", "b", "c", "d"};// need to take available dates from DB
-        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, avaiableDates);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(aa);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                String spinnerChoose = adapterView.getItemAtPosition(position).toString();
-                dateTimeTextv.setText(spinnerChoose);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
         /* Other */
-        calendar = Calendar.getInstance();
+        //calendar = Calendar.getInstance();
+
+        hourSpinner = findViewById(R.id.hourSpinner);
+        dateSpinner = findViewById(R.id.dateSpinner);
+
+        timeSelected = dateSelected = false;
+
+        availableDates = "availableDates";
+        hours = "hours";
+
+        date = "";
+        time = "";
+
+        availableDatesList = new ArrayList<>();
+        availableHoursList = new ArrayList<>();
+
+        /* db init */
+        db = FirebaseFirestore.getInstance();
+
+
+        /* spinner init */
+        getAvailableDatesFromDB();
 
     }
 
     @Override
     public void onClick(View v) {
-        if(v == pick_btn){
-            handleTimeButton();
-            handleDateButton();
-
-        }
-        else if(v == sched_btn){
-            // do someting with FireBase
+        if(v == sched_btn){
+            if(!dateSelected)
+                Toast.makeText(this, "Select valid date", Toast.LENGTH_SHORT).show();
+            else if(!timeSelected)
+                Toast.makeText(this, "Select valid time", Toast.LENGTH_SHORT).show();
+            else{
+                Toast.makeText(this, "Train is set up!", Toast.LENGTH_SHORT).show();//DB add action
+            }
         }
         else if(v == doneTv){
             finish();
         }
-
     }
 
+    private void dateSpinnerInit(){
+
+        //String[] showList = availableDatesList.toArray(new String[0]);
+        // String[] showList = {"Choose date:", "01/11/2020", "02/11/2020", "03/11/2020", "04/11/2020"};// need to take available dates from DB
+        ArrayAdapter aa = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item,
+                availableDatesList);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dateSpinner.setAdapter(aa);
+        dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                dateSelected = true;
+                date = adapterView.getItemAtPosition(position).toString();
+                dateTimeTextv.setText(date);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                dateSelected = false;
+            }
+        });
+    }
+
+    private void hourSpinnerInit(){
+
+        String[] showList = {"07:00", "08:00", "09:00", "10:00", "11:00"};// need to take available hours from DB
+        ArrayAdapter aa;
+        aa = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item,
+                showList);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        hourSpinner.setAdapter(aa);
+        hourSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                timeSelected = true;
+                time = adapterView.getItemAtPosition(position).toString();
+                dateTimeTextv.setText(time);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                timeSelected = false;
+            }
+        });
+    }
+
+    void getAvailableHoursFromDB(){
+
+        db.collection(availableDates + "/" + date + "/" + hours)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                            for(DocumentSnapshot doc: myListOfDocuments){
+                                availableHoursList.add(doc.getId());
+                            }
+                            hourSpinnerInit();
+                        }
+                    }
+                });
+    }
+
+    void getAvailableDatesFromDB(){
+
+        db.collection(availableDates)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                            for(DocumentSnapshot doc: myListOfDocuments){
+                                availableDatesList.add(doc.getId());
+                            }
+                            dateSpinnerInit();
+                            hourSpinnerInit();
+                            //getAvailableHoursFromDB();
+                        }
+                    }
+                });
+    }
+
+
+
+    /*
     private void handleDateButton(){
         //Toast.makeText(this, "handleDateButton", Toast.LENGTH_SHORT).show();
 
@@ -126,4 +245,6 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         }, HOUR, MINUTE, is24HourFormat);
         timePickerDialog.show();
     }
+
+     */
 }
