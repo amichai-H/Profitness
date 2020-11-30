@@ -127,8 +127,8 @@ public class SchedAvailability extends AppCompatActivity implements View.OnClick
         for (String d:allDates) {
             Map<String, Object> docData = new HashMap<>();
             docData.put("isFree", true);
-            db.collection(dateString).document(d
-            ).set(docData)
+            db.collection("availableDates").document(dateString
+            ).collection("hours").document(d).set(docData)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
