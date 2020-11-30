@@ -124,6 +124,22 @@ public class SchedAvailability extends AppCompatActivity implements View.OnClick
                 }
             }
         }
+        Map<String, Object> docData2 = new HashMap<>();
+        docData2.put("isRelevant", true);
+        db.collection("availableDates").document(dateString
+        ).set(docData2)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("TAG", "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAG", "Error writing document", e);
+                    }
+                });
         for (String d:allDates) {
             Map<String, Object> docData = new HashMap<>();
             docData.put("isFree", true);
@@ -141,7 +157,9 @@ public class SchedAvailability extends AppCompatActivity implements View.OnClick
                             Log.w("TAG", "Error writing document", e);
                         }
                     });
+
         }
+
 
 
     }
