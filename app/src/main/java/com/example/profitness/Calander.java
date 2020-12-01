@@ -108,7 +108,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
             else if(!timeSelected)
                 Toast.makeText(this, "Select valid time", Toast.LENGTH_SHORT).show();
             else{
-                Toast.makeText(this, "Train is set up!", Toast.LENGTH_SHORT).show();//DB add action
+                Toast.makeText(this, "The training was set up!", Toast.LENGTH_SHORT).show();//DB add action
             }
         }
         else if(v == doneTv){
@@ -131,22 +131,23 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 dateSelected = true;
                 date = adapterView.getItemAtPosition(position).toString();
                 dateTimeTextv.setText(date);
+                getAvailableHoursFromDB();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 dateSelected = false;
+
             }
         });
     }
 
     private void hourSpinnerInit(){
 
-        String[] showList = {"07:00", "08:00", "09:00", "10:00", "11:00"};// need to take available hours from DB
+        //String[] showList = {"07:00", "08:00", "09:00", "10:00", "11:00"};// need to take available hours from DB
         ArrayAdapter aa;
         aa = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item,
-                showList);
+                availableHoursList);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hourSpinner.setAdapter(aa);
         hourSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -173,6 +174,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                            availableHoursList.clear();
                             for(DocumentSnapshot doc: myListOfDocuments){
                                 availableHoursList.add(doc.getId());
                             }
@@ -195,7 +197,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                                 availableDatesList.add(doc.getId());
                             }
                             dateSpinnerInit();
-                            hourSpinnerInit();
+                            //hourSpinnerInit();
                             //getAvailableHoursFromDB();
                         }
                     }
