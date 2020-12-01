@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:contentPadding="5dp"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/dayId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/day"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/breakFastId2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/breakfast_recommendation"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editTextBreakFast"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:ems="10"
+                android:hint="@string/menu_breakfast"
+                android:inputType="textMultiLine"
+                android:autofillHints="" />
+
+            <TextView
+                android:id="@+id/lunchId2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lunch_recommendation"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editTextDinner"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/menu_lunch"
+                android:inputType="textMultiLine" />
+
+            <TextView
+                android:id="@+id/dinnerId2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dinner_recommendation"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editTextDinnerId"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:ems="10"
+                android:hint="@string/menu_dinner"
+                android:inputType="textMultiLine"
+                android:autofillHints="" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</androidx.cardview.widget.CardView>

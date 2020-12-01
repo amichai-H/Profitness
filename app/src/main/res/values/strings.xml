@@ -37,4 +37,19 @@
     <string name="choose_end_hour">choose end hour</string>
     <string name="time_for_training">Time for training</string>
     <string name="list_of_trainees">List of trainees</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">Lunch</string>
+    <string name="lunch_menu">Lunch Menu</string>
+    <string name="breakfast_menu">BreakFast Menu</string>
+    <string name="dinner">Dinner</string>
+    <string name="dinner_menu">Dinner Menu</string>
+    <string name="save">Save</string>
+    <string name="show_list">Show List</string>
+    <string name="day">Day</string>
+    <string name="menu_breakfast">Menu BreakFast</string>
+    <string name="lunch_recommendation">Lunch Recommendation</string>
+    <string name="breakfast_recommendation">BreakFast Recommendation</string>
+    <string name="menu_lunch">Menu Lunch</string>
+    <string name="dinner_recommendation">Dinner Recommendation</string>
+    <string name="menu_dinner">Menu Dinner</string>
 </resources>
