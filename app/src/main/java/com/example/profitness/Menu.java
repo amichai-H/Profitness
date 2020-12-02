@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,24 +20,34 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class Menu extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class Menu extends AppCompatActivity implements  View.OnClickListener {
     private Spinner spinner;
     private TextView breakFastMenu, lunchMenu, dinnerMenu;
+
     FirebaseFirestore db;
     ProgressDialog pd;
-
+    modelMenu mm;
     private Button save, showList;
     private FirebaseAuth mAuth;
+
     FirebaseUser user;
     LinearLayout layout;
+    String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,40 +78,25 @@ public class Menu extends AppCompatActivity implements AdapterView.OnItemSelecte
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
 
+        uid = (String) getIntent().getExtras().get("Uid");
     }
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String choice = parent.getItemAtPosition(position).toString();
-        if(position == 0) {
-            Toast.makeText(this,"Sunday",Toast.LENGTH_LONG).show();
-
-
-        }
-
-
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        Toast.makeText(getApplicationContext(),"Please Select Day",Toast.LENGTH_LONG).show();
-    }
 
 
     @Override
     public void onClick(View v) {
-        if(v == save){
-            String one = breakFastMenu.getText().toString().trim();
-            String two = lunchMenu.getText().toString().trim();
-            String tree = dinnerMenu.getText().toString().trim();
-            String day = spinner.getSelectedItem().toString().trim();
-            uploadData(one, two , tree, day);
 
-            Toast.makeText(this,day,Toast.LENGTH_LONG).show();
+        if(v == save) {
+            String bf = breakFastMenu.getText().toString().trim();
+            String l = lunchMenu.getText().toString().trim();
+            String d = dinnerMenu.getText().toString().trim();
+            String day = spinner.getSelectedItem().toString().trim();
+
+            saveNewDayMenu(user.getUid(),bf, l, d, day);
+
+            saveNewDayMenu(uid,bf, l, d, day);
 
         }
 
@@ -110,19 +106,17 @@ public class Menu extends AppCompatActivity implements AdapterView.OnItemSelecte
         }
     }
 
-    private void uploadData(String breakFast, String lunch, String dinner, String day) {
+
+    private void saveNewDayMenu(String trainer ,String breakFast, String lunch, String dinner, String day){
         pd.setTitle("Adding data to FireStore");
         pd.show();
 
         Map<String, Object> doc = new HashMap<>();
-        doc.put("day", day);
         doc.put("breakFast", breakFast);
         doc.put("lunch", lunch);
         doc.put("dinner", dinner);
 
-        System.out.println("id: " + user.getUid());
-
-        db.collection("menu").document(user.getUid()).set(doc)
+        db.collection("menu").document(trainer).collection("Days").document(day).set(doc)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -138,6 +132,4 @@ public class Menu extends AppCompatActivity implements AdapterView.OnItemSelecte
                     }
                 });
     }
-
-
 }

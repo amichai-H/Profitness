@@ -9,6 +9,7 @@ import android.widget.Button;
 
 public class DetailsTraining extends AppCompatActivity implements View.OnClickListener {
     private Button editMenu;
+    String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +17,7 @@ public class DetailsTraining extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_details_training);
 
         editMenu = (Button)findViewById(R.id.menuBtn);
+        uid = (String) getIntent().getExtras().get("Uid");
 
         editMenu.setOnClickListener(this);
     }
@@ -24,6 +26,7 @@ public class DetailsTraining extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         if(v == editMenu){
             Intent intent = new Intent(this, Menu.class);
+            intent.putExtra("Uid", uid);
             startActivity(intent);
         }
     }
