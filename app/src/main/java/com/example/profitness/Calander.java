@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +29,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Calander extends AppCompatActivity implements View.OnClickListener{
 
@@ -53,6 +57,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
     String availableDates;
     String hours;
+    String isRelevantString;
 
 
 
@@ -82,8 +87,10 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
         timeSelected = dateSelected = false;
 
+        /* Strings Init */
         availableDates = "availableDates";
         hours = "hours";
+        isRelevantString = "isRelevant";
 
         date = "";
         time = "";
@@ -108,12 +115,34 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
             else if(!timeSelected)
                 Toast.makeText(this, "Select valid time", Toast.LENGTH_SHORT).show();
             else{
-                Toast.makeText(this, "The training was set up!", Toast.LENGTH_SHORT).show();//DB add action
+                setAsTaken();
+
+                //Toast.makeText(this, "The training was set up!", Toast.LENGTH_SHORT).show();//DB add action
             }
         }
-        else if(v == doneTv){
-            finish();
-        }
+//        else if(v == doneTv){
+//            finish();
+//        }
+    }
+
+    private void setAsTaken() {
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("isFree", false);
+        db.collection(availableDates).document(date)
+                .collection(hours).document(time).set(docData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("set as taken", "DocumentSnapshot successfully written!");
+                        //finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("fail add new user to db", "Error writing document", e);
+                    }
+                });
     }
 
     private void dateSpinnerInit(){
@@ -131,7 +160,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 dateSelected = true;
                 date = adapterView.getItemAtPosition(position).toString();
                 dateTimeTextv.setText(date);
-                getAvailableHoursFromDB();
+                getAvailableHoursFromDB(); //only after clicking on some date we need to update the hourSpinner
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -176,7 +205,9 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                             List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
                             availableHoursList.clear();
                             for(DocumentSnapshot doc: myListOfDocuments){
-                                availableHoursList.add(doc.getId());
+                                if((Boolean)doc.get("isFree"))
+                                    availableHoursList.add(doc.getId());
+
                             }
                             hourSpinnerInit();
                         }
