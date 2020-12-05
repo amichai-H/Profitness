@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -29,7 +30,7 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
     FirebaseFirestore db;
     FirebaseAuth mAuth;
 
-    DocumentSnapshot mUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
         menu_btn = findViewById(R.id.menu_btn);
         userName_tv = findViewById(R.id.userNameTv);
 
+
         sched_btn.setOnClickListener(this);
         perf_btn.setOnClickListener(this);
         menu_btn.setOnClickListener(this);
@@ -50,6 +52,7 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
         user = mAuth.getCurrentUser();
 
         setUserName();
+
 
     }
 
@@ -64,7 +67,10 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
 
         }
         else if (v == menu_btn){
-
+            Intent intent = new Intent(this, ShowMenuListCoach.class);
+            intent.putExtra("Uid", user.getUid());
+            startActivity(intent);
+            finish();
         }
 
     }

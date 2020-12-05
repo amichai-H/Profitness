@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:contentPadding="5dp"
     app:cardCornerRadius="3dp"
     app:cardElevation="3dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    app:contentPadding="5dp">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,10 +37,10 @@
                 android:id="@+id/editTextBreakFast"
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/menu_breakfast"
-                android:inputType="textMultiLine"
-                android:autofillHints="" />
+                android:inputType="textMultiLine" />
 
             <TextView
                 android:id="@+id/lunchId2"
@@ -49,7 +50,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editTextDinner"
+                android:id="@+id/editTextLunch"
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
                 android:autofillHints=""
@@ -68,10 +69,10 @@
                 android:id="@+id/editTextDinnerId"
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/menu_dinner"
-                android:inputType="textMultiLine"
-                android:autofillHints="" />
+                android:inputType="textMultiLine" />
         </LinearLayout>
 
     </ScrollView>

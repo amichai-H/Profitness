@@ -41,13 +41,14 @@ public class Menu extends AppCompatActivity implements  View.OnClickListener {
 
     FirebaseFirestore db;
     ProgressDialog pd;
-    modelMenu mm;
+
     private Button save, showList;
     private FirebaseAuth mAuth;
 
     FirebaseUser user;
     LinearLayout layout;
     String uid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class Menu extends AppCompatActivity implements  View.OnClickListener {
         spinner.setAdapter(adapter);
 
         uid = (String) getIntent().getExtras().get("Uid");
+
     }
 
 
@@ -94,14 +96,16 @@ public class Menu extends AppCompatActivity implements  View.OnClickListener {
             String d = dinnerMenu.getText().toString().trim();
             String day = spinner.getSelectedItem().toString().trim();
 
-            saveNewDayMenu(user.getUid(),bf, l, d, day);
+           // saveNewDayMenu(user.getUid(),bf, l, d, day);
 
             saveNewDayMenu(uid,bf, l, d, day);
 
         }
 
         if(v == showList){
-            startActivity(new Intent(this, ShowMenuListCoach.class));
+            Intent intent = new Intent(this, ShowMenuListCoach.class);
+            intent.putExtra("Uid", uid);
+            startActivity(intent);
             finish();
         }
     }
@@ -112,6 +116,7 @@ public class Menu extends AppCompatActivity implements  View.OnClickListener {
         pd.show();
 
         Map<String, Object> doc = new HashMap<>();
+
         doc.put("breakFast", breakFast);
         doc.put("lunch", lunch);
         doc.put("dinner", dinner);

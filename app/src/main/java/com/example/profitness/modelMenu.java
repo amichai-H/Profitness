@@ -1,5 +1,7 @@
 package com.example.profitness;
 
+import com.google.firebase.firestore.Exclude;
+
 public class modelMenu {
 
     String breakFast, lunch, dinner, day;
@@ -8,11 +10,12 @@ public class modelMenu {
 
     }
 
-    public modelMenu(String breakFast, String lunch, String dinner, String day){
+    public modelMenu(String day, String breakFast, String lunch, String dinner){
+        this.day = day;
         this.breakFast = breakFast;
         this.lunch = lunch;
         this.dinner = dinner;
-        this.day = day;
+
     }
 
     public String getBreakFast(){ return breakFast; }
@@ -25,6 +28,7 @@ public class modelMenu {
         return dinner;
     }
 
+    @Exclude
     public String getDay(){return day;}
 
     public void setBreakFast(String breakFast){

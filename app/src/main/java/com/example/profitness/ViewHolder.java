@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewHolder extends RecyclerView.ViewHolder {
 
-    TextView breakFastTV, lunchTV, dinnerTV;
+    TextView breakFastTV, lunchTV, dinnerTV, day;
     View mView;
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -22,27 +22,18 @@ public class ViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                mClickListener.onLongClickItem(v,getAdapterPosition());
-                return true;
-            }
-        });
-
-        breakFastTV = itemView.findViewById(R.id.breakFastId2);
-        lunchTV = itemView.findViewById(R.id.lunchId2);
-        dinnerTV = itemView.findViewById(R.id.dinnerId2);
+        day = itemView.findViewById(R.id.dayId);
+        breakFastTV = itemView.findViewById(R.id.editTextBreakFast);
+        lunchTV = itemView.findViewById(R.id.editTextLunch);
+        dinnerTV = itemView.findViewById(R.id.editTextDinnerId);
     }
 
     private ViewHolder.ClickListenr mClickListener;
+
+    //interface with click listener
     public interface ClickListenr{
         void onClickItem(View view, int position);
-        void onLongClickItem(View view, int position);
 
     }
 
-    public void setOnClickListener(ViewHolder.ClickListenr clickListener){
-        mClickListener = clickListener;
-    }
 }

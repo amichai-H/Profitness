@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +29,7 @@ public class CoachListActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseUser user;
     LinearLayout layout;
+    MyUser myUser;
 
 
     @Override

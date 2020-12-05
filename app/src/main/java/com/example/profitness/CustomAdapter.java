@@ -15,7 +15,7 @@ public class CustomAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     ShowMenuListCoach showMenuListCoach;
     List<modelMenu> modelMenuList;
-    Context context;
+
 
     public CustomAdapter(ShowMenuListCoach showMenuListCoach, List<modelMenu> modelMenuList){
         this.showMenuListCoach = showMenuListCoach;
@@ -30,25 +30,13 @@ public class CustomAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         ViewHolder viewHolder = new ViewHolder(itemview);
 
-        viewHolder.setOnClickListener(new ViewHolder.ClickListenr() {
-            @Override
-            public void onClickItem(View view, int position) {
-                //this will call went coach select item
-
-            }
-
-            @Override
-            public void onLongClickItem(View view, int position) {
-                //this will call went coach select long item
-            }
-        });
-
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //bind view / set data
+        holder.day.setText(modelMenuList.get(position).getDay());
         holder.breakFastTV.setText(modelMenuList.get(position).getBreakFast());
         holder.lunchTV.setText(modelMenuList.get(position).getLunch());
         holder.dinnerTV.setText(modelMenuList.get(position).getDinner());

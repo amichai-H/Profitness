@@ -11,6 +11,7 @@ public class DetailsTraining extends AppCompatActivity implements View.OnClickLi
     private Button editMenu;
     String uid;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +19,7 @@ public class DetailsTraining extends AppCompatActivity implements View.OnClickLi
 
         editMenu = (Button)findViewById(R.id.menuBtn);
         uid = (String) getIntent().getExtras().get("Uid");
+
 
         editMenu.setOnClickListener(this);
     }
