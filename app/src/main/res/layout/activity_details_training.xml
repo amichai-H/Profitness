@@ -38,7 +38,7 @@
         android:id="@+id/menuBtn"
         android:layout_width="202dp"
         android:layout_height="49dp"
-        android:backgroundTint="#B3777575"
+        android:backgroundTint="#B3777576"
         android:text="@string/edit_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,4 +46,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/performanceTraineeBtn"
         app:layout_constraintVertical_bias="0.244" />
+
+    <TextView
+        android:id="@+id/showTrainneName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#B3777575"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/practiceTimeBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/allerta_stencil"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
