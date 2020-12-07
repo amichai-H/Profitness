@@ -32,28 +32,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.059" />
-
-    <TextView
-        android:id="@+id/done_tv"
-        android:layout_width="154dp"
-        android:layout_height="54dp"
-        android:fontFamily="@font/allerta_stencil"
-        android:gravity="center"
-        android:text="@string/done"
-        android:textColor="#BA353742"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/sched_btn"
-        app:layout_constraintHorizontal_bias="0.536"
-        app:layout_constraintStart_toStartOf="@+id/sched_btn"
-        app:layout_constraintTop_toBottomOf="@+id/sched_btn"
-        app:layout_constraintVertical_bias="0.687" />
+        app:layout_constraintVertical_bias="0.156" />
 
     <Spinner
         android:id="@+id/dateSpinner"
         android:layout_width="183dp"
         android:layout_height="54dp"
+        android:background="#99FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/emptyTV"
         app:layout_constraintHorizontal_bias="0.0"
@@ -65,6 +50,7 @@
         android:id="@+id/hourSpinner"
         android:layout_width="183dp"
         android:layout_height="54dp"
+        android:background="#99FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/dateSpinner"
         app:layout_constraintHorizontal_bias="0.0"

@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class trainee_main_activity extends AppCompatActivity implements View.OnClickListener{
 
     Button sched_btn;
+    Button my_trainings_btn;
     Button perf_btn;
     Button menu_btn;
     TextView userName_tv;
@@ -41,11 +42,13 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
         perf_btn = findViewById(R.id.performance_btn);
         menu_btn = findViewById(R.id.menu_btn);
         userName_tv = findViewById(R.id.userNameTv);
+        my_trainings_btn = findViewById(R.id.my_trainings_btn);
 
 
         sched_btn.setOnClickListener(this);
         perf_btn.setOnClickListener(this);
         menu_btn.setOnClickListener(this);
+        my_trainings_btn.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -61,6 +64,11 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
         if (v == sched_btn){
 
             startActivity(new Intent(getApplicationContext(), Calander.class));
+
+        }
+        else if (v == my_trainings_btn) {
+
+            startActivity(new Intent(getApplicationContext(), TraineeNextTrainingView.class));
 
         }
         else if (v == perf_btn){

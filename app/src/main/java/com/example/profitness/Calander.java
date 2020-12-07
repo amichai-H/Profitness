@@ -39,7 +39,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     private String timeString;
 
     private Button pick_btn, sched_btn;
-    private TextView dateTimeTextv, doneTv;
+    private TextView dateTimeTextv;
     private Calendar calendar;
 
     private Spinner dateSpinner;
@@ -51,6 +51,9 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     boolean timeSelected, dateSelected; //if user select something in spinner
 
     FirebaseFirestore db;
+    FirebaseAuth mAuth;
+    FirebaseUser user;
+
     List<String> availableDatesList;
     List<String> availableHoursList;
 
@@ -70,8 +73,9 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
 
         /* Clickable */
-        doneTv = findViewById(R.id.done_tv);
-        doneTv.setOnClickListener(this);
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
         sched_btn = findViewById(R.id.sched_btn);
         sched_btn.setOnClickListener(this);
@@ -116,13 +120,12 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 Toast.makeText(this, "Select valid time", Toast.LENGTH_SHORT).show();
             else{
                 setAsTaken();
+                Toast.makeText(this, "The training was set up!", Toast.LENGTH_SHORT).show();//DB add action
+                finish();
 
-                //Toast.makeText(this, "The training was set up!", Toast.LENGTH_SHORT).show();//DB add action
+
             }
         }
-//        else if(v == doneTv){
-//            finish();
-//        }
     }
 
     private void setAsTaken() {
@@ -134,7 +137,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d("set as taken", "DocumentSnapshot successfully written!");
-                        //finish();
+                        //addToUserNextTrainings();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -143,6 +146,12 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                         Log.w("fail add new user to db", "Error writing document", e);
                     }
                 });
+    }
+
+    private void addToUserNextTrainings() {//not finished
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("time", hours);
+
     }
 
     private void dateSpinnerInit(){
@@ -234,50 +243,4 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                     }
                 });
     }
-
-
-
-    /*
-    private void handleDateButton(){
-        //Toast.makeText(this, "handleDateButton", Toast.LENGTH_SHORT).show();
-
-
-        int YEAR = calendar.get(Calendar.YEAR);
-        int MONTH = calendar.get(Calendar.MONTH);
-        int DATE = calendar.get(Calendar.DATE);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int date) {
-                dateString = date + "/" + month + "/" + year;
-
-            }
-        }, YEAR, MONTH, DATE);
-        datePickerDialog.show();
-    }
-
-    private void handleTimeButton(){
-        //Toast.makeText(this, "handleTimeButton", Toast.LENGTH_SHORT).show();
-
-
-        int HOUR = calendar.get(Calendar.HOUR);
-        int MINUTE = calendar.get(Calendar.MINUTE);
-        int SECOND = calendar.get(Calendar.SECOND);
-
-        boolean is24HourFormat = true;
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-
-            @Override
-            public void onTimeSet(TimePicker datePicker, int hour, int minute) {
-                timeString = hour + ":" + minute;
-                String dateAndTime = dateString + "\n" + timeString;
-                dateTimeTextv.setText(dateAndTime);
-
-            }
-        }, HOUR, MINUTE, is24HourFormat);
-        timePickerDialog.show();
-    }
-
-     */
 }

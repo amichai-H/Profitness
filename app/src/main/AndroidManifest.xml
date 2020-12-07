@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.profitness">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Profitness">
-        <activity android:name=".ShowMenuListCoach"/>
+        <activity android:name=".TraineeNextTrainingView"></activity>
+        <activity android:name=".ShowMenuListCoach" />
         <activity android:name=".Menu" />
         <activity android:name=".SelfCoachScreen" />
         <activity android:name=".SchedAvailability" />

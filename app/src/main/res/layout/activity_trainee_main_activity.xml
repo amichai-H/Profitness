@@ -22,6 +22,19 @@
         app:layout_constraintVertical_bias="0.127" />
 
     <Button
+        android:id="@+id/my_trainings_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/allerta_stencil"
+        android:text="My Trainings"
+        app:backgroundTint="#B3777575"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/sched_wrk_btn"
+        app:layout_constraintStart_toStartOf="@+id/sched_wrk_btn"
+        app:layout_constraintTop_toBottomOf="@+id/sched_wrk_btn"
+        app:layout_constraintVertical_bias="0.102" />
+
+    <Button
         android:id="@+id/performance_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,10 +42,10 @@
         android:text="@string/performance"
         app:backgroundTint="#B3777575"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/sched_wrk_btn"
+        app:layout_constraintEnd_toEndOf="@+id/my_trainings_btn"
         app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="@+id/sched_wrk_btn"
-        app:layout_constraintTop_toBottomOf="@+id/sched_wrk_btn"
+        app:layout_constraintStart_toStartOf="@+id/my_trainings_btn"
+        app:layout_constraintTop_toBottomOf="@+id/my_trainings_btn"
         app:layout_constraintVertical_bias="0.119" />
 
     <Button
