@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,15 +19,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +36,6 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
     private Button pick_btn, sched_btn;
     private TextView dateTimeTextv;
-    private Calendar calendar;
 
     private Spinner dateSpinner;
     private Spinner hourSpinner;
@@ -57,10 +52,10 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     List<String> availableDatesList;
     List<String> availableHoursList;
 
-
     String availableDates;
-    String hours;
+    String hoursString;
     String isRelevantString;
+    String userName;
 
 
 
@@ -93,11 +88,12 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
         /* Strings Init */
         availableDates = "availableDates";
-        hours = "hours";
+        hoursString = "hours";
         isRelevantString = "isRelevant";
 
         date = "";
         time = "";
+        userName = "";
 
         availableDatesList = new ArrayList<>();
         availableHoursList = new ArrayList<>();
@@ -105,10 +101,8 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         /* db init */
         db = FirebaseFirestore.getInstance();
 
-
         /* spinner init */
         getAvailableDatesFromDB();
-
     }
 
     @Override
@@ -122,42 +116,101 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 setAsTaken();
                 Toast.makeText(this, "The training was set up!", Toast.LENGTH_SHORT).show();//DB add action
                 finish();
-
-
-            }
+                }
         }
     }
 
     private void setAsTaken() {
         Map<String, Object> docData = new HashMap<>();
         docData.put("isFree", false);
+        docData.put("user", user.getUid());
         db.collection(availableDates).document(date)
-                .collection(hours).document(time).set(docData)
+                .collection(hoursString).document(time).set(docData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d("set as taken", "DocumentSnapshot successfully written!");
-                        //addToUserNextTrainings();
+                        addToUserTrainings();
+                        addToAllTrainings(user.getUid());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("fail add new user to db", "Error writing document", e);
+                        Log.w("fail set as taken", "Error writing document", e);
                     }
                 });
     }
 
-    private void addToUserNextTrainings() {//not finished
+
+    private void addToAllTrainings(String uid) {
+
+        DocumentReference docRef = db.collection("users").document(uid);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    String userFirstNameString = (String)document.getData().get("first");
+                    String userLastNameString = (String)document.getData().get("last");
+                    userName = userFirstNameString + " " + userLastNameString;
+
+                    /* put into db */
+                    Map<String, Object> docData = new HashMap<>();
+                    docData.put("trainee", userName);
+
+                    db.collection("allTrainings").document(date).collection("hours").document(time)
+                            .set(docData)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("addToUserTrainings", "DocumentSnapshot successfully written!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("fail addToUserTrainings", "Error writing document", e);
+                                }
+                            });
+
+                    if (document.exists()) {
+
+                        Log.d("readData", "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d("notFound", "No such document");
+                    }
+                } else {
+                    Log.d("NotConnected", "get failed with ", task.getException());
+                }
+            }
+        });
+
+    }
+
+    private void addToUserTrainings() {//not finished
         Map<String, Object> docData = new HashMap<>();
-        docData.put("time", hours);
+        docData.put("isOver", false);
+
+        db.collection("users").document(user.getUid()).collection("trainings").document(date).collection("hours").document(time)
+                .set(docData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("addToUserTrainings", "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("fail addToUserTrainings", "Error writing document", e);
+                    }
+                });
 
     }
 
     private void dateSpinnerInit(){
 
-        //String[] showList = availableDatesList.toArray(new String[0]);
-        // String[] showList = {"Choose date:", "01/11/2020", "02/11/2020", "03/11/2020", "04/11/2020"};// need to take available dates from DB
         ArrayAdapter aa = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item,
                 availableDatesList);
@@ -181,7 +234,6 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
     private void hourSpinnerInit(){
 
-        //String[] showList = {"07:00", "08:00", "09:00", "10:00", "11:00"};// need to take available hours from DB
         ArrayAdapter aa;
         aa = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item,
@@ -205,7 +257,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
     void getAvailableHoursFromDB(){
 
-        db.collection(availableDates + "/" + date + "/" + hours)
+        db.collection(availableDates + "/" + date + "/" + hoursString)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -213,13 +265,46 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                         if (task.isSuccessful()) {
                             List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
                             availableHoursList.clear();
+
+                            boolean isDateAvailable = false;
                             for(DocumentSnapshot doc: myListOfDocuments){
+
+
                                 if((Boolean)doc.get("isFree"))
+                                    isDateAvailable = true;
                                     availableHoursList.add(doc.getId());
+                            }
+                            if(!isDateAvailable){
+                                removeDateFromList(date);
 
                             }
                             hourSpinnerInit();
                         }
+                    }
+                });
+    }
+
+    private void removeDateFromList(String date) {
+        makeDateNotRelevant();
+        dateSpinnerInit();
+    }
+
+    private void makeDateNotRelevant() {
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("isRelevant", false);
+
+        db.collection("availableDates").document(date)
+                .set(docData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("makeDateNotRelevant", "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("fail makeDateNotRelevant", "Error writing document", e);
                     }
                 });
     }
@@ -234,11 +319,11 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                         if (task.isSuccessful()) {
                             List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
                             for(DocumentSnapshot doc: myListOfDocuments){
-                                availableDatesList.add(doc.getId());
+                                if((boolean)doc.get("isRelevant")){
+                                    availableDatesList.add(doc.getId());
+                                }
                             }
                             dateSpinnerInit();
-                            //hourSpinnerInit();
-                            //getAvailableHoursFromDB();
                         }
                     }
                 });
