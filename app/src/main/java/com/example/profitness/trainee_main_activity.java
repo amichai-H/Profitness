@@ -78,7 +78,6 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
             Intent intent = new Intent(this, ShowMenuListCoach.class);
             intent.putExtra("Uid", user.getUid());
             startActivity(intent);
-            finish();
         }
 
     }

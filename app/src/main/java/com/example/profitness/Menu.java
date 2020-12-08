@@ -96,8 +96,6 @@ public class Menu extends AppCompatActivity implements  View.OnClickListener {
             String d = dinnerMenu.getText().toString().trim();
             String day = spinner.getSelectedItem().toString().trim();
 
-           // saveNewDayMenu(user.getUid(),bf, l, d, day);
-
             saveNewDayMenu(uid,bf, l, d, day);
 
         }
@@ -106,7 +104,6 @@ public class Menu extends AppCompatActivity implements  View.OnClickListener {
             Intent intent = new Intent(this, ShowMenuListCoach.class);
             intent.putExtra("Uid", uid);
             startActivity(intent);
-            finish();
         }
     }
 
