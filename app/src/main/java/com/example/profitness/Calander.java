@@ -120,7 +120,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    private void setAsTaken() {
+    private void setAsTaken() { ////when trainee select free hour in some date, the hour is set to be taken and its not free anymore
         Map<String, Object> docData = new HashMap<>();
         docData.put("isFree", false);
         docData.put("user", user.getUid());
@@ -143,22 +143,25 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     }
 
 
-    private void addToAllTrainings(String uid) {
+    private void addToAllTrainings(String uid) { //when trainee select free hour in some date, it will be added to the coach list of trainings
 
         DocumentReference docRef = db.collection("users").document(uid);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
+
+                    /* get the name of the trainee */
                     DocumentSnapshot document = task.getResult();
                     String userFirstNameString = (String)document.getData().get("first");
                     String userLastNameString = (String)document.getData().get("last");
                     userName = userFirstNameString + " " + userLastNameString;
 
-                    /* put into db */
+                    /* set the data we want to update */
                     Map<String, Object> docData = new HashMap<>();
                     docData.put("trainee", userName);
 
+                    /* put into db */
                     db.collection("allTrainings").document(date).collection("hours").document(time)
                             .set(docData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -188,7 +191,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
     }
 
-    private void addToUserTrainings() {//not finished
+    private void addToUserTrainings() {//when trainee select free hour in some date, it will be added to the trainee list of trainings
         Map<String, Object> docData = new HashMap<>();
         docData.put("isOver", false);
 
@@ -209,7 +212,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
     }
 
-    private void dateSpinnerInit(){
+    private void dateSpinnerInit(){//create the date spinner using the dates inside availableDatesList (need to reload the dates from the db first)
 
         ArrayAdapter aa = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item,
@@ -232,7 +235,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         });
     }
 
-    private void hourSpinnerInit(){
+    private void hourSpinnerInit(){//after the use of getAvailableHoursFromDB(), this func creates the hours spinner
 
         ArrayAdapter aa;
         aa = new ArrayAdapter(this,
@@ -255,7 +258,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         });
     }
 
-    void getAvailableHoursFromDB(){
+    void getAvailableHoursFromDB(){//for a given date, this func reload the non taken hours of the date to availableHoursList
 
         db.collection(availableDates + "/" + date + "/" + hoursString)
                 .get()
@@ -269,14 +272,13 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                             boolean isDateAvailable = false;
                             for(DocumentSnapshot doc: myListOfDocuments){
 
-
-                                if((Boolean)doc.get("isFree"))
+                                if((Boolean)doc.get("isFree")){
                                     isDateAvailable = true;
                                     availableHoursList.add(doc.getId());
+                                }
                             }
-                            if(!isDateAvailable){
+                            if(!isDateAvailable){ //in case all the hours of the selected date are taken, update the db that the selected date is taken and reload again the relevant dates
                                 removeDateFromList(date);
-
                             }
                             hourSpinnerInit();
                         }
@@ -284,12 +286,12 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 });
     }
 
-    private void removeDateFromList(String date) {
+    private void removeDateFromList(String date) {//if while we see that all the hours of some date are taken -> we update the date to be not relevant and reload the spinner
         makeDateNotRelevant();
         dateSpinnerInit();
     }
 
-    private void makeDateNotRelevant() {
+    private void makeDateNotRelevant() { //we use this func if all hours of this date are taken -> it will not added to the list of the available dates
         Map<String, Object> docData = new HashMap<>();
         docData.put("isRelevant", false);
 
