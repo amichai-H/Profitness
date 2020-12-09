@@ -176,7 +176,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         userDB.put("sex", myUser.getGsex());
         userDB.put("trainer", myUser.getTraining());
         userDB.put("phone", myUser.getPhone());
-
+        userDB.put("email", myUser.getEmail());
 // Add a new document with a generated ID
 
         db.collection("users").document(user.getUid())

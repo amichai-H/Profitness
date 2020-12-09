@@ -3,12 +3,19 @@ package com.example.profitness;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,9 +30,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
-public class personalInformationDisplayToCoach extends AppCompatActivity {
+public class personalInformationDisplayToCoach extends AppCompatActivity implements View.OnClickListener {
+    String userFirstNameString,userLastNameString,dateBorn,phone,emaill;
     String uid;
-    TextView mFullName,mAge,mPhone,mSex;
+    TextView mFullName,mAge,mPhone,mSex,email;
     FirebaseFirestore db;
 
 
@@ -37,8 +45,11 @@ public class personalInformationDisplayToCoach extends AppCompatActivity {
         mAge = findViewById(R.id.age_id);
         mPhone = findViewById(R.id.phone_id);
         mSex = findViewById(R.id.sex_id);
+        email = findViewById(R.id.email_id);
         uid = (String) getIntent().getExtras().get("Uid");
         db = FirebaseFirestore.getInstance();
+        mPhone.setOnClickListener( this);
+        email.setOnClickListener(this);
         takeDataFromDB();
     }
 
@@ -69,7 +80,6 @@ public class personalInformationDisplayToCoach extends AppCompatActivity {
     }
 
     private void updateUI(DocumentSnapshot document) {
-        String userFirstNameString,userLastNameString,dateBorn,phone;
         long sex;
        // if (document != null) {
             Map<String, Object> data = document.getData();
@@ -80,6 +90,7 @@ public class personalInformationDisplayToCoach extends AppCompatActivity {
                 userLastNameString = (String) data.get("last");
                 dateBorn = (String) data.get("born");
                 phone =  (String) data.get("phone");
+                emaill = (String) data.get("email");
                 sex = (long) data.get("sex");
                 mFullName.setText("Trainee " + userFirstNameString + " " + userLastNameString);
                 updateAge(dateBorn);
@@ -88,6 +99,7 @@ public class personalInformationDisplayToCoach extends AppCompatActivity {
                     mSex.setText("sex: Male");
                 else
                     mSex.setText("sex: female");
+                email.setText("email: "+emaill);
 
 
 
@@ -132,4 +144,69 @@ public class personalInformationDisplayToCoach extends AppCompatActivity {
         return ageS;
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v == email){
+            String[] adress = new String[1];
+            adress[0] = emaill;
+            composeEmail(adress,"Hello from your coach");
+        }
+        else if (v == mPhone) {
+            callPhoneNumber();
+        }
+
+    }
+    public void callPhoneNumber()
+    {
+        try
+        {
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+
+                ActivityCompat.requestPermissions(personalInformationDisplayToCoach.this, new String[]{Manifest.permission.CALL_PHONE}, 101);
+
+                return;
+            }
+
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + phone));
+            startActivity(callIntent);
+
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(personalInformationDisplayToCoach.this, "Permission not Granted",
+                    Toast.LENGTH_SHORT).show();
+            ex.printStackTrace();
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults)
+    {
+        if(requestCode == 101)
+        {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                callPhoneNumber();
+            }
+            else
+            {
+                Toast.makeText(personalInformationDisplayToCoach.this, "Permission not Granted",
+                        Toast.LENGTH_SHORT).show();
+                Log.e("TAG", "Permission not Granted");
+            }
+        }
+    }
+    public void composeEmail(String[] addresses, String subject) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, addresses);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        startActivity(intent);
+//        if (intent.resolveActivity(getPackageManager()) != null) {
+//            startActivity(intent);
+//        }
+    }
 }
