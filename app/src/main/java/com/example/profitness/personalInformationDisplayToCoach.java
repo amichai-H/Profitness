@@ -94,12 +94,12 @@ public class personalInformationDisplayToCoach extends AppCompatActivity impleme
                 sex = (long) data.get("sex");
                 mFullName.setText("Trainee " + userFirstNameString + " " + userLastNameString);
                 updateAge(dateBorn);
-                mPhone.setText("phone: " +phone);
+                mPhone.setText("Phone: " +phone);
                 if (sex==0)
-                    mSex.setText("sex: Male");
+                    mSex.setText("Sex: Male");
                 else
-                    mSex.setText("sex: female");
-                email.setText("email: "+emaill);
+                    mSex.setText("Sex: female");
+                email.setText("Email: "+emaill);
 
 
 

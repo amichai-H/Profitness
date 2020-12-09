@@ -9,66 +9,81 @@
 
     <TextView
         android:id="@+id/id_full_name"
-        android:layout_width="203dp"
-        android:layout_height="33dp"
-        android:background="#D3D3D3"
+        android:layout_width="218dp"
+        android:layout_height="56dp"
+        android:background="#99D3D3D3"
+        android:fontFamily="@font/allerta_stencil"
+        android:gravity="center"
         android:text="@string/empty"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.227" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <TextView
         android:id="@+id/age_id"
         android:layout_width="203dp"
         android:layout_height="33dp"
-        android:background="#D3D3D3"
+        android:background="#80D3D3D3"
+        android:fontFamily="@font/allerta_stencil"
+        android:gravity="center"
         android:text="@string/empty"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/id_full_name"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/id_full_name"
         app:layout_constraintTop_toBottomOf="@+id/id_full_name"
-        app:layout_constraintVertical_bias="0.143" />
+        app:layout_constraintVertical_bias="0.201" />
 
     <TextView
         android:id="@+id/phone_id"
         android:layout_width="203dp"
         android:layout_height="33dp"
-        android:background="#D3D3D3"
+        android:background="#B3D3D3D3"
+        android:fontFamily="@font/allerta_stencil"
+        android:gravity="center"
         android:text="@string/empty"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/age_id"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/age_id"
         app:layout_constraintTop_toBottomOf="@+id/age_id"
-        app:layout_constraintVertical_bias="0.201" />
+        app:layout_constraintVertical_bias="0.117" />
 
     <TextView
         android:id="@+id/sex_id"
         android:layout_width="203dp"
         android:layout_height="33dp"
-        android:background="#D3D3D3"
+        android:background="#B3D3D3D3"
+        android:fontFamily="@font/allerta_stencil"
+        android:gravity="center"
         android:text="@string/empty"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/phone_id"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/phone_id"
         app:layout_constraintTop_toBottomOf="@+id/phone_id"
-        app:layout_constraintVertical_bias="0.264" />
+        app:layout_constraintVertical_bias="0.153" />
 
     <TextView
         android:id="@+id/email_id"
         android:layout_width="203dp"
         android:layout_height="33dp"
-        android:background="#D3D3D3"
+        android:background="#80D3D3D3"
+        android:fontFamily="@font/allerta_stencil"
+        android:gravity="center"
         android:text="@string/empty"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/sex_id"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/sex_id"
         app:layout_constraintTop_toBottomOf="@+id/sex_id"
-        app:layout_constraintVertical_bias="0.449" />
+        app:layout_constraintVertical_bias="0.195" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

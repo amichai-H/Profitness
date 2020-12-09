@@ -24,7 +24,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -325,9 +329,16 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                                     availableDatesList.add(doc.getId());
                                 }
                             }
+                            //sortDatesList(availableDatesList);
                             dateSpinnerInit();
                         }
                     }
                 });
+    }
+
+    private void sortDatesList(List<String> availableDatesList) {// supposed to sort the list availableDatesList
+
+
+
     }
 }
