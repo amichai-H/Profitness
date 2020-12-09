@@ -19,25 +19,9 @@
         android:paddingRight="16dp"
         android:orientation="vertical"
         android:gravity="center">
-    <EditText
-        android:id="@+id/firstName"
-        android:layout_width="233dp"
-        android:layout_height="42dp"
-        android:autofillHints=""
-        android:background="#4DFFFFFF"
-        android:ems="10"
-        android:fontFamily="@font/allerta_stencil"
-        android:hint="@string/first_name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.0" />
 
 
-    <TextView
+        <TextView
         android:id="@+id/textView"
         android:layout_width="163dp"
         android:layout_height="37dp"
@@ -52,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
 
-    <TextView
+        <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,7 +48,24 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.023" />
 
-    <EditText
+        <EditText
+            android:id="@+id/firstName"
+            android:layout_width="233dp"
+            android:layout_height="42dp"
+            android:autofillHints=""
+            android:background="#4DFFFFFF"
+            android:ems="10"
+            android:fontFamily="@font/allerta_stencil"
+            android:hint="@string/first_name"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
         android:id="@+id/lastName"
         android:layout_width="233dp"
         android:layout_height="42dp"
@@ -219,7 +220,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="0"
-            android:text="@string/trainer" />
+            android:text="@string/trainer"
+            android:checked="true"/>
 
         <RadioButton
             android:id="@+id/radioCoach"

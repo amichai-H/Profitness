@@ -18,12 +18,15 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Map;
+
 public class DetailsTraining extends AppCompatActivity implements View.OnClickListener {
-    private Button editMenu;
+    private Button editMenu,detailTrainer;
     String uid;
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
     TextView showTraineeName;
+
 
 
     @Override
@@ -34,11 +37,13 @@ public class DetailsTraining extends AppCompatActivity implements View.OnClickLi
         editMenu = (Button)findViewById(R.id.menuBtn);
         uid = (String) getIntent().getExtras().get("Uid");
         showTraineeName = findViewById(R.id.showTrainneName);
+        detailTrainer = findViewById(R.id.p_information);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         editMenu.setOnClickListener(this);
+        detailTrainer.setOnClickListener(this);
         updateUI();
     }
 
@@ -49,8 +54,13 @@ public class DetailsTraining extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        if(v == editMenu){
+        if(v == editMenu) {
             Intent intent = new Intent(this, Menu.class);
+            intent.putExtra("Uid", uid);
+            startActivity(intent);
+        }
+        else if (v==detailTrainer){
+            Intent intent = new Intent(this, personalInformationDisplayToCoach.class);
             intent.putExtra("Uid", uid);
             startActivity(intent);
         }
@@ -63,10 +73,17 @@ public class DetailsTraining extends AppCompatActivity implements View.OnClickLi
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     //mUser = new MyUser((String)document.getData().get("first"), (String)document.getData().get("last"), );
-                    String userFirstNameString = (String)document.getData().get("first");
-                    String userLastNameString = (String)document.getData().get("last");
-                    showTraineeName.setText("Trainee " + userFirstNameString + " " + userLastNameString);
+                    if (document != null) {
+                        Map<String, Object> data = document.getData();
+                        if (data != null) {
+                            String userFirstNameString = (String) data.get("first");
+                            String userLastNameString = (String) data.get("last");
+                            showTraineeName.setText("Trainee " + userFirstNameString + " " + userLastNameString);
 
+                        }
+                    }
+
+                    assert document != null;
                     if (document.exists()) {
                         Log.d("readData", "DocumentSnapshot data: " + document.getData());
                     } else {

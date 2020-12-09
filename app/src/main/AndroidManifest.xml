@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Profitness">
-        <activity android:name=".TraineeNextTrainingView"></activity>
+        <activity android:name=".personalInformationDisplayToCoach"></activity>
+        <activity android:name=".TraineeNextTrainingView" />
         <activity android:name=".ShowMenuListCoach" />
         <activity android:name=".Menu" />
         <activity android:name=".SelfCoachScreen" />

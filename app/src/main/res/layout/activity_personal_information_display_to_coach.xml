@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".personalInformationDisplayToCoach">
+
+    <TextView
+        android:id="@+id/id_full_name"
+        android:layout_width="203dp"
+        android:layout_height="33dp"
+        android:background="#D3D3D3"
+        android:text="@string/empty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.227" />
+
+    <TextView
+        android:id="@+id/age_id"
+        android:layout_width="203dp"
+        android:layout_height="33dp"
+        android:background="#D3D3D3"
+        android:text="@string/empty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/id_full_name"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/id_full_name"
+        app:layout_constraintTop_toBottomOf="@+id/id_full_name"
+        app:layout_constraintVertical_bias="0.143" />
+
+    <TextView
+        android:id="@+id/phone_id"
+        android:layout_width="203dp"
+        android:layout_height="33dp"
+        android:background="#D3D3D3"
+        android:text="@string/empty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/age_id"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/age_id"
+        app:layout_constraintTop_toBottomOf="@+id/age_id"
+        app:layout_constraintVertical_bias="0.201" />
+
+    <TextView
+        android:id="@+id/sex_id"
+        android:layout_width="203dp"
+        android:layout_height="33dp"
+        android:background="#D3D3D3"
+        android:text="@string/empty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/phone_id"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/phone_id"
+        app:layout_constraintTop_toBottomOf="@+id/phone_id"
+        app:layout_constraintVertical_bias="0.264" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

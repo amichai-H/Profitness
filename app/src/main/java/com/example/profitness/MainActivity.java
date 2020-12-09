@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -63,8 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("failLogin", "signInWithEmail:failure", task.getException());
-                                //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                                       // Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Authentication failed.",
+                                       Toast.LENGTH_SHORT).show();
                                 //updateUI(null);
                             }
 

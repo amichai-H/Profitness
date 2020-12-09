@@ -75,6 +75,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         pick_btn = findViewById(R.id.choosday);
         pick_btn.setOnClickListener(this);
         mRegisterBtn.setOnClickListener(this);
+        mtrain.setVisibility(View.INVISIBLE);
         /* spinner*/
     }
 
@@ -99,14 +100,14 @@ public class register extends AppCompatActivity implements View.OnClickListener 
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d("create user", "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-
-                                    updateUser(user);
+                                    if (user!=null)
+                                        updateUser(user);
                                     //updateUI(user);
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w("fail create", "createUserWithEmail:failure", task.getException());
-                                    //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                                    //      Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(register.this, "Authentication failed.",
+                                          Toast.LENGTH_SHORT).show();
                                     //updateUI(null);
                                 }
 
@@ -115,7 +116,8 @@ public class register extends AppCompatActivity implements View.OnClickListener 
                         });
 
             } else {
-                System.out.println("hello found out no!!!");
+                Toast.makeText(register.this, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -129,7 +131,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
             sex = 0;
         else
             sex = 1;
-        int train = 2;
+        int train = 0;
         if (radioTrainButton.getTag().toString().equals("0"))
             train = 0;
         else
@@ -140,14 +142,15 @@ public class register extends AppCompatActivity implements View.OnClickListener 
     }
 
     private boolean chackData() {
-        boolean select = mSex.isSelected();
-        boolean stringNotNullOrBlank = !mLastName.getText().toString().equals("") &&
-                !mFirstNAme.getText().toString().equals("") &&
-                !mEmail.getText().toString().equals("") &&
-                !mPhone.getText().toString().equals("") &&
-                !mPassword.getText().toString().equals("");
-        return true;
-
+        //RadioButton radioSexButton = (RadioButton) findViewById(mSex.getCheckedRadioButtonId());
+        boolean select =  true;
+        System.out.println(select);
+        boolean stringNotNullOrBlank = (!mLastName.getText().toString().equals("")) &&
+                (!mFirstNAme.getText().toString().equals("") )&&
+                (!mEmail.getText().toString().equals("")) &&
+                (!mPhone.getText().toString().equals("") )&&
+                (!mPassword.getText().toString().equals(""));
+        return select&&stringNotNullOrBlank;
     }
 
 

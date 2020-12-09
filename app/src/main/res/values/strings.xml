@@ -52,4 +52,6 @@
     <string name="menu_lunch">Menu Lunch</string>
     <string name="dinner_recommendation">Dinner Recommendation</string>
     <string name="menu_dinner">Menu Dinner</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="empty">empty</string>
 </resources>
