@@ -19,7 +19,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SelfCoachScreen extends AppCompatActivity implements View.OnClickListener {
-    Button goToList,goToSchedTimeToWork;
+    Button goToList,goToSchedTimeToWork,scheduledTraining;
     TextView helloCoach;
     FirebaseUser user;
     FirebaseFirestore db;
@@ -36,9 +36,11 @@ public class SelfCoachScreen extends AppCompatActivity implements View.OnClickLi
         helloCoach = findViewById(R.id.helloCa);
         goToSchedTimeToWork = findViewById(R.id.timeTT);
         goToList = findViewById(R.id.listOfT);
+        scheduledTraining = findViewById(R.id.Scheduled_training_id);
 
         goToList.setOnClickListener(this);
         goToSchedTimeToWork.setOnClickListener(this);
+        scheduledTraining.setOnClickListener(this);
         setUserName();
 
     }
@@ -53,6 +55,10 @@ public class SelfCoachScreen extends AppCompatActivity implements View.OnClickLi
             Intent intent=new Intent(this,SchedAvailability.class);
             startActivity(intent);
 
+        }
+        else if(v==scheduledTraining){
+            Intent intent=new Intent(this,CoachSeeAllComingTreining.class);
+            startActivity(intent);
         }
     }
     private void setUserName() {

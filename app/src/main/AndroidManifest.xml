@@ -3,8 +3,8 @@
     package="com.example.profitness">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACTION_CALL"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.ACTION_CALL" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Profitness">
-        <activity android:name=".personalInformationDisplayToCoach"></activity>
+        <activity android:name=".CoachSeeAllComingTreining"></activity>
+        <activity android:name=".personalInformationDisplayToCoach" />
         <activity android:name=".TraineeNextTrainingView" />
         <activity android:name=".ShowMenuListCoach" />
         <activity android:name=".Menu" />

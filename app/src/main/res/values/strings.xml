@@ -54,4 +54,6 @@
     <string name="menu_dinner">Menu Dinner</string>
     <string name="personal_information">Personal Information</string>
     <string name="empty">empty</string>
+    <string name="choos_date">Choos Date</string>
+    <string name="scheduled_training">Scheduled training</string>
 </resources>
