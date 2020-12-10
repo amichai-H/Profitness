@@ -69,6 +69,7 @@ public class CoachSeeAllComingTreining extends AppCompatActivity implements View
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("TAG", document.getId() + " => " + document.getData());
+                                layout.removeAllViews();
                                 System.out.println(document.getId());
                                 if (!((String)document.getData().get("trainee")).equals("")) {
                                     myTraining.add(document);
@@ -101,7 +102,6 @@ public class CoachSeeAllComingTreining extends AppCompatActivity implements View
 
                 }
             });
-
             layout.addView(newTextView);
         }
     }
@@ -128,6 +128,7 @@ public class CoachSeeAllComingTreining extends AppCompatActivity implements View
     @Override
     public void onClick(View v) {
         if (v == chooseDate){
+            myTraining = new LinkedList<>();
             handleDateButton();
         }
 
