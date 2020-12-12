@@ -287,7 +287,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                             if(!isDateAvailable){ //in case all the hours of the selected date are taken, update the db that the selected date is taken and reload again the relevant dates
                                 removeDateFromList(date);
                             }
-                            sortHoursList(availableHoursList);
+                            //sortHoursList(availableHoursList);
                             hourSpinnerInit();
                         }
                     }
@@ -329,12 +329,15 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                         if (task.isSuccessful()) {
                             List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
                             for(DocumentSnapshot doc: myListOfDocuments){
-                                boolean isRelevant = isRelevant(doc.getId());
-                                if((boolean)doc.get("isRelevant") && isRelevant){
-                                    availableDatesList.add(doc.getId());
-                                }
-                                else if(!isRelevant){
-                                    makeDateNotRelevant(doc.getId());
+                                boolean isRelevantByDate = isRelevantByDate(doc.getId());
+                                if((boolean)doc.get("isRelevant")){
+
+                                    if( isRelevantByDate ){
+                                        availableDatesList.add(doc.getId());
+                                    }
+                                    else{
+                                        makeDateNotRelevant(doc.getId());
+                                    }
                                 }
                             }
                             sortDatesList(availableDatesList);
@@ -344,7 +347,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 });
     }
 
-    private boolean isRelevant(String stringDate) {
+    private boolean isRelevantByDate(String stringDate) {
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date date = null;
@@ -360,8 +363,6 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         Calendar today = Calendar.getInstance();
 
         return calendarDate.compareTo(today) > 0;
-
-
     }
 
     private void sortDatesList(List<String> availableDatesList) {// supposed to sort the list availableDatesList
