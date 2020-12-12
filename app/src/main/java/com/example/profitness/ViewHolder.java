@@ -15,25 +15,10 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
         mView = itemView;
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mClickListener.onClickItem(v,getAdapterPosition());
-            }
-        });
-
         day = itemView.findViewById(R.id.dayId);
         breakFastTV = itemView.findViewById(R.id.editTextBreakFast);
         lunchTV = itemView.findViewById(R.id.editTextLunch);
         dinnerTV = itemView.findViewById(R.id.editTextDinnerId);
-    }
-
-    private ViewHolder.ClickListenr mClickListener;
-
-    //interface with click listener
-    public interface ClickListenr{
-        void onClickItem(View view, int position);
-
     }
 
 }
