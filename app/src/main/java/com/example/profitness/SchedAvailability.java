@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,7 +63,10 @@ public class SchedAvailability extends AppCompatActivity implements View.OnClick
         pickStartH.setOnClickListener(this);
         pickEndH.setOnClickListener(this);
         send.setOnClickListener(this);
+
+        hStart = hEnd = minStart = tH = tM = -1;
     }
+
 
 
 
@@ -84,7 +88,14 @@ public class SchedAvailability extends AppCompatActivity implements View.OnClick
             minend = tM;
         }
         else if (v==send){
-            sendToDB();
+            if(hStart != -1 && minStart != -1 && hEnd != -1 && minend != -1 ){
+                sendToDB();
+                Toast.makeText(this, "The trainings was set up!", Toast.LENGTH_SHORT).show();//DB add action
+            }
+            else{
+                Toast.makeText(this, "Please select valid time!", Toast.LENGTH_SHORT).show();//DB add action
+            }
+
         }
 
 
