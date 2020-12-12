@@ -28,8 +28,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -293,15 +295,15 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     }
 
     private void removeDateFromList(String date) {//if while we see that all the hours of some date are taken -> we update the date to be not relevant and reload the spinner
-        makeDateNotRelevant();
+        makeDateNotRelevant(date);
         dateSpinnerInit();
     }
 
-    private void makeDateNotRelevant() { //we use this func if all hours of this date are taken -> it will not added to the list of the available dates
+    private void makeDateNotRelevant(String dateToChange) { //we use this func if all hours of this date are taken -> it will not added to the list of the available dates
         Map<String, Object> docData = new HashMap<>();
         docData.put("isRelevant", false);
 
-        db.collection("availableDates").document(date)
+        db.collection("availableDates").document(dateToChange)
                 .set(docData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -327,8 +329,12 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                         if (task.isSuccessful()) {
                             List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
                             for(DocumentSnapshot doc: myListOfDocuments){
-                                if((boolean)doc.get("isRelevant")){
+                                boolean isRelevant = isRelevant(doc.getId());
+                                if((boolean)doc.get("isRelevant") && isRelevant){
                                     availableDatesList.add(doc.getId());
+                                }
+                                else if(!isRelevant){
+                                    makeDateNotRelevant(doc.getId());
                                 }
                             }
                             sortDatesList(availableDatesList);
@@ -336,6 +342,26 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                         }
                     }
                 });
+    }
+
+    private boolean isRelevant(String stringDate) {
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date date = null;
+        try {
+            date = inputFormat.parse(stringDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return true;
+        }
+
+        Calendar calendarDate = Calendar.getInstance();
+        calendarDate.setTime(date);
+        Calendar today = Calendar.getInstance();
+
+        return calendarDate.compareTo(today) > 0;
+
+
     }
 
     private void sortDatesList(List<String> availableDatesList) {// supposed to sort the list availableDatesList
