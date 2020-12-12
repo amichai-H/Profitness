@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -228,7 +229,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 dateSelected = true;
                 date = adapterView.getItemAtPosition(position).toString();
-                dateTimeTextv.setText(date);
+                dateTimeTextv.setText(date + " " + time);
                 getAvailableHoursFromDB(); //only after clicking on some date we need to update the hourSpinner
             }
             @Override
@@ -252,7 +253,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 timeSelected = true;
                 time = adapterView.getItemAtPosition(position).toString();
-                dateTimeTextv.setText(time);
+                dateTimeTextv.setText(date + " " + time);
             }
 
             @Override
@@ -284,6 +285,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                             if(!isDateAvailable){ //in case all the hours of the selected date are taken, update the db that the selected date is taken and reload again the relevant dates
                                 removeDateFromList(date);
                             }
+                            sortHoursList(availableHoursList);
                             hourSpinnerInit();
                         }
                     }
@@ -329,7 +331,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                                     availableDatesList.add(doc.getId());
                                 }
                             }
-                            //sortDatesList(availableDatesList);
+                            sortDatesList(availableDatesList);
                             dateSpinnerInit();
                         }
                     }
@@ -337,8 +339,36 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     }
 
     private void sortDatesList(List<String> availableDatesList) {// supposed to sort the list availableDatesList
-
-
+        Collections.sort(availableDatesList, new Comparator<String>() {
+            DateFormat f = new SimpleDateFormat("dd.MM.yyyy");
+            @Override
+            public int compare(String o1, String o2) {
+                try {
+                    return f.parse(o1).compareTo(f.parse(o2));
+                } catch (ParseException e) {
+                    //throw new IllegalArgumentException(e);
+                    return 0;
+                }
+            }
+        });
 
     }
+
+    private void sortHoursList(List<String> availableDatesList) {// supposed to sort the list availableDatesList
+        Collections.sort(availableDatesList, new Comparator<String>() {
+
+            @Override
+            public int compare(String o1, String o2) {
+                try {
+                    return new SimpleDateFormat("hh:mm").parse(o1).compareTo(new SimpleDateFormat("hh:mm").parse(o2));
+                } catch (ParseException e) {
+                    return 0;
+                }
+            }
+        });
+
+    }
+
+
+
 }
