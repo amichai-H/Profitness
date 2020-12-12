@@ -28,9 +28,7 @@ public class CustomAdapter extends RecyclerView.Adapter<ViewHolder> {
         View itemview = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.model_menu_layout, parent,false);
 
-        ViewHolder viewHolder = new ViewHolder(itemview);
-
-        return viewHolder;
+        return new ViewHolder(itemview);
     }
 
     @Override
