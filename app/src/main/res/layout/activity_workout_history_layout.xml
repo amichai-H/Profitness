@@ -20,9 +20,16 @@
         android:textColor="@android:color/black"
         android:textSize="32dp"
         android:layout_marginBottom="5dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
-    <ListView
+  <!--  <ListView
         android:id="@+id/listViewOfHistory"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    -->
+
 </LinearLayout>
