@@ -348,7 +348,6 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     }
 
     private boolean isRelevantByDate(String stringDate) {
-
         SimpleDateFormat inputFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date date = null;
         try {
