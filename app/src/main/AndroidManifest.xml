@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Profitness">
         <activity android:name=".TraineeNextTrainingView"></activity>
+        <activity android:name=".CoachSeeAllComingTreining"></activity>
         <activity android:name=".ShowMenuListCoach" />
         <activity android:name=".Menu" />
         <activity android:name=".SelfCoachScreen" />
