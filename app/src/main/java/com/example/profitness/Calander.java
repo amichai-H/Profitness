@@ -166,7 +166,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
                     /* set the data we want to update */
                     Map<String, Object> docData = new HashMap<>();
-                    docData.put("trainee", userName);
+                    docData.put("trainee", uid);
 
                     /* put into db */
                     db.collection("allTrainings").document(date).collection("hours").document(time)
@@ -378,7 +378,6 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 }
             }
         });
-
     }
 
     private void sortHoursList(List<String> availableDatesList) {// supposed to sort the list availableDatesList
@@ -393,8 +392,38 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 }
             }
         });
-
     }
+
+//    private String getUserName(String uid){
+//        String tmpUserName = "";
+//
+//        DocumentReference docRef = db.collection("users").document(uid);
+//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//
+//                    /* get the name of the trainee */
+//                    DocumentSnapshot document = task.getResult();
+//                    String userFirstNameString = (String)document.getData().get("first");
+//                    String userLastNameString = (String)document.getData().get("last");
+//                    tmpUserName = userFirstNameString + " " + userLastNameString;
+//
+//
+//                    if (document.exists()) {
+//                        Log.d("readData", "DocumentSnapshot data: " + document.getData());
+//                    } else {
+//                        Log.d("notFound", "No such document");
+//                    }
+//                } else {
+//                    Log.d("NotConnectedGetUserName", "get failed with ", task.getException());
+//                }
+//            }
+//        });
+//        return tmpUserName;
+//
+//
+//    }
 
 
 
