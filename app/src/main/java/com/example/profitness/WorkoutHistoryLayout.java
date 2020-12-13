@@ -55,41 +55,42 @@ public class WorkoutHistoryLayout extends AppCompatActivity  {
                     listOfDates.clear(); // need to refresh
                     myDatesHistoryTrainings = task.getResult().getDocuments(); // the dates
                     for(DocumentSnapshot doc: myDatesHistoryTrainings){
+                        System.out.println(" doc og dates " + doc.getId());
                         listOfDates.add(doc.getId()); // list of string from myhistory list
-                    }
 
+
+                    }
+                    System.out.println("one: " + listOfDates);
+
+                    if(!listOfDates.isEmpty()) {
+                        for(String dateName: listOfDates){
+                            db.collection("users/"+user.getUid()+"/trainings/"+dateName+"/hours")
+                                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful()){
+                                        datesAndHours.clear(); // need to refresh
+                                        myHoursHistoryTrainings = task.getResult().getDocuments(); // the dates
+                                        List<String> listOfHours=new LinkedList<>();
+                                        for(DocumentSnapshot doc: myHoursHistoryTrainings){
+                                            System.out.println(" doc og hours " + doc.getId());
+                                            listOfHours.add(doc.getId());
+                                        }
+                                        datesAndHours.put(dateName,listOfHours);
+
+                                    }
+                                }
+                            });
+                        }
+                    }
                 }
             }
         });
-        if(!listOfDates.isEmpty()) {
-             for(String dateName: listOfDates){
-                 db.collection("users/"+user.getUid()+"/trainings/"+dateName+"/hours")
-                         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                     @Override
-                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                         if(task.isSuccessful()){
-                             datesAndHours.clear(); // need to refresh
-                             myHoursHistoryTrainings = task.getResult().getDocuments(); // the dates
-                             List<String> listOfHours=new LinkedList<>();
-                             for(DocumentSnapshot doc: myHoursHistoryTrainings){
-                                 listOfHours.add(doc.getId());
-                             }
-                             datesAndHours.put(dateName,listOfHours);
-                         }
-                     }
-                 });
-             }
-        }
-        ArrayAdapter<String> HistoryList= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listOfDates);
+
+      ArrayAdapter<String> HistoryList= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listOfDates);
         listViewHistoryOfTraining.setAdapter(HistoryList);
 
 
-
-//        listViewHistoryOfTraining.setAdapter(HistoryList)
-            //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, datesAndHours, R.id.listViewOfHistory);
-
-
-        // take date and the time
 
 
 
