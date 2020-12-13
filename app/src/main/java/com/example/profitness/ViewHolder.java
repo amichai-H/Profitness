@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewHolder extends RecyclerView.ViewHolder {
 
-    TextView breakFastTV, lunchTV, dinnerTV, day;
+    TextView breakFastTV, lunchTV, dinnerTV, option;
     View mView;
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
 
         mView = itemView;
 
-        day = itemView.findViewById(R.id.dayId);
+        option = itemView.findViewById(R.id.optionId);
         breakFastTV = itemView.findViewById(R.id.editTextBreakFast);
         lunchTV = itemView.findViewById(R.id.editTextLunch);
         dinnerTV = itemView.findViewById(R.id.editTextDinnerId);

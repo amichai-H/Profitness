@@ -2,14 +2,11 @@
 <resources>
     <string-array name="planets_array" />
     
-    <string-array name="Day">
-        <item>Sunday</item>
-        <item>Monday</item>
-        <item>Tuesday</item>
-        <item>Wednesday</item>
-        <item>Thursday</item>
-        <item>Friday</item>
-        <item>Saturday</item>
+    <string-array name="Options">
+        <item>Option1</item>
+        <item>Option2</item>
+        <item>Option3</item>
+        <item>Option4</item>
 
     </string-array>
 </resources>

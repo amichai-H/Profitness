@@ -45,7 +45,7 @@
     <string name="dinner_menu">Dinner Menu</string>
     <string name="save">Save</string>
     <string name="show_list">Show List</string>
-    <string name="day">Day</string>
+    <string name="option">Option</string>
     <string name="menu_breakfast">Menu BreakFast</string>
     <string name="lunch_recommendation">Lunch Recommendation</string>
     <string name="breakfast_recommendation">BreakFast Recommendation</string>
@@ -57,4 +57,5 @@
     <string name="choos_date">Choos Date</string>
     <string name="scheduled_training">Scheduled training</string>
     <string name="trainee_name">trainee name</string>
+
 </resources>

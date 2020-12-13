@@ -49,9 +49,10 @@ public class ShowMenuListCoach extends AppCompatActivity {
 
 
         //set recycler view properties
-        mRecyclerView.setHasFixedSize(true);
+
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setHasFixedSize(true);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -72,7 +73,7 @@ public class ShowMenuListCoach extends AppCompatActivity {
         pd.setTitle("Loading Data...");
         pd.show();
 
-        db.collection("menu").document(uid).collection("Days")
+        db.collection("menu").document(uid).collection("Options")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -81,10 +82,10 @@ public class ShowMenuListCoach extends AppCompatActivity {
                 for (DocumentSnapshot documentSnapshot: task.getResult()){
                     modelMenu m = documentSnapshot.toObject(modelMenu.class);
                     m.setDay(documentSnapshot.getId());
-                    String day = m.getDay();
+                    String option = m.getOption();
 
 
-                    modelMenu modelMenu = new modelMenu(day,documentSnapshot.getString("breakFast"),
+                    modelMenu modelMenu = new modelMenu(option,documentSnapshot.getString("breakFast"),
                             documentSnapshot.getString("lunch"), documentSnapshot.getString("dinner"));
 
                     list.add(modelMenu);
@@ -98,7 +99,6 @@ public class ShowMenuListCoach extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         pd.dismiss();
                         Toast.makeText(ShowMenuListCoach.this,  e.getMessage(),Toast.LENGTH_SHORT).show();
-
 
                     }
                 });

@@ -34,7 +34,7 @@ public class CustomAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //bind view / set data
-        holder.day.setText(modelMenuList.get(position).getDay());
+        holder.option.setText(modelMenuList.get(position).getOption());
         holder.breakFastTV.setText(modelMenuList.get(position).getBreakFast());
         holder.lunchTV.setText(modelMenuList.get(position).getLunch());
         holder.dinnerTV.setText(modelMenuList.get(position).getDinner());

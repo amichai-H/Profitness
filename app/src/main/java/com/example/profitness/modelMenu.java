@@ -4,14 +4,14 @@ import com.google.firebase.firestore.Exclude;
 
 public class modelMenu {
 
-    String breakFast, lunch, dinner, day;
+    String breakFast, lunch, dinner, option;
 
     public modelMenu(){
 
     }
 
-    public modelMenu(String day, String breakFast, String lunch, String dinner){
-        this.day = day;
+    public modelMenu(String option, String breakFast, String lunch, String dinner){
+        this.option = option;
         this.breakFast = breakFast;
         this.lunch = lunch;
         this.dinner = dinner;
@@ -29,7 +29,7 @@ public class modelMenu {
     }
 
     @Exclude
-    public String getDay(){return day;}
+    public String getOption(){return option;}
 
     public void setBreakFast(String breakFast){
         this.breakFast = breakFast;
@@ -43,6 +43,6 @@ public class modelMenu {
         this.dinner = dinner;
     }
 
-    public void setDay(String day){this.day = day;}
+    public void setDay(String option){this.option = option;}
 
 }

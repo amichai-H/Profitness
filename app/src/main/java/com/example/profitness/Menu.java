@@ -76,7 +76,7 @@ public class Menu extends AppCompatActivity implements  View.OnClickListener {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Day, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
         spinner.setAdapter(adapter);
@@ -95,21 +95,21 @@ public class Menu extends AppCompatActivity implements  View.OnClickListener {
             String bf = breakFastMenu.getText().toString().trim();
             String l = lunchMenu.getText().toString().trim();
             String d = dinnerMenu.getText().toString().trim();
-            String day = spinner.getSelectedItem().toString().trim();
+            String option = spinner.getSelectedItem().toString().trim();
 
-            saveNewDayMenu(uid,bf, l, d, day);
+            saveNewDayMenu(uid,bf, l, d, option);
 
         }
 
         if(v == showList){
-            Intent intent = new Intent(this, ShowMenuListCoach.class);
+            Intent intent = new Intent(Menu.this, ShowMenuListCoach.class);
             intent.putExtra("Uid", uid);
             startActivity(intent);
         }
     }
 
 
-    private void saveNewDayMenu(String trainer ,String breakFast, String lunch, String dinner, String day){
+    private void saveNewDayMenu(String trainer ,String breakFast, String lunch, String dinner, String option){
         pd.setTitle("Adding data to FireStore");
         pd.show();
 
@@ -119,7 +119,7 @@ public class Menu extends AppCompatActivity implements  View.OnClickListener {
         doc.put("lunch", lunch);
         doc.put("dinner", dinner);
 
-        db.collection("menu").document(trainer).collection("Days").document(day).set(doc)
+        db.collection("menu").document(trainer).collection("Options").document(option).set(doc)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
