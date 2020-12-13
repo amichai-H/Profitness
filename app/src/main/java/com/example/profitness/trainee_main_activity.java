@@ -12,12 +12,15 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class trainee_main_activity extends AppCompatActivity implements View.OnClickListener{
 
@@ -26,10 +29,15 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
     Button perf_btn;
     Button menu_btn;
     TextView userName_tv;
+    TextView nextTraining_tv;
+
 
     FirebaseUser user;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
+
+    List<String> nextTrainigsList;
+    List<String> nextHoursList;
 
 
 
@@ -42,6 +50,7 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
         perf_btn = findViewById(R.id.performance_btn);
         menu_btn = findViewById(R.id.menu_btn);
         userName_tv = findViewById(R.id.userNameTv);
+        nextTraining_tv = findViewById(R.id.nextTrainingTV);
         my_trainings_btn = findViewById(R.id.my_trainings_btn);
 
 
@@ -54,7 +63,11 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
         db = FirebaseFirestore.getInstance();
         user = mAuth.getCurrentUser();
 
+        nextTrainigsList = new ArrayList<>();
+        nextHoursList = new ArrayList<>();
+
         setUserName();
+        setNextTrainingTV();
 
 
     }
@@ -111,6 +124,51 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
                 }
             }
         });
+    }
+
+    private void setNextTrainingTV() {
+        db.collection("users/" + user.getUid() + "/trainings")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                            for(DocumentSnapshot doc: myListOfDocuments) {
+                                if(Calander.isRelevantByDate(doc.getId())){
+                                    nextTrainigsList.add(doc.getId());
+                                }
+                                //nextTrainigsList.add(doc.getId());
+                            }
+                        }
+                        if(nextTrainigsList.isEmpty()) return;
+                        Calander.sortDatesList(nextTrainigsList);
+                        nextTraining_tv.setText("Next Training: " + nextTrainigsList.get(0));
+
+                        db.collection("users/" + user.getUid() + "/trainings/" + nextTrainigsList.get(0) + "/hours")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                                            for(DocumentSnapshot doc: myListOfDocuments) {
+                                                if(Calander.isRelevantByHour(doc.getId())){
+                                                    nextHoursList.add(doc.getId());
+                                                }
+                                            }
+                                        }
+                                        if( nextHoursList.isEmpty() ) return;
+                                        Calander.sortHoursList(nextHoursList);
+                                        nextTraining_tv.setText("Next Training: " + nextTrainigsList.get(0) + "\nAt: " + nextHoursList.get(0));
+
+                                    }
+                                });
+
+                        //nextTraining_tv.setText("Next Training: " + nextTrainigsList.get(0));
+
+                    }
+                });
     }
 
 }

@@ -1,8 +1,10 @@
 package com.example.profitness;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -202,6 +205,24 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         Map<String, Object> docData = new HashMap<>();
         docData.put("isOver", false);
 
+        Map<String, Object> docData2 = new HashMap<>();
+        docData2.put("isRelevant", true);
+
+        db.collection("users").document(user.getUid()).collection("trainings").document(date)
+                .set(docData2)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("addToUserTrainings", "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("fail addToUserTrainings", "Error writing document", e);
+                    }
+                });
+
         db.collection("users").document(user.getUid()).collection("trainings").document(date).collection("hours").document(time)
                 .set(docData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -347,7 +368,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 });
     }
 
-    private boolean isRelevantByDate(String stringDate) {
+    public static boolean isRelevantByDate(String stringDate) {
         SimpleDateFormat inputFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date date = null;
         try {
@@ -364,7 +385,21 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         return calendarDate.compareTo(today) > 0;
     }
 
-    private void sortDatesList(List<String> availableDatesList) {// supposed to sort the list availableDatesList
+
+    public static boolean isRelevantByHour(String hour) {
+
+        String timeStamp = new SimpleDateFormat("HH:mm").format(new java.util.Date());
+        try {
+            return new SimpleDateFormat("hh:mm").parse(hour).compareTo(new SimpleDateFormat("hh:mm").parse(timeStamp)) < 0;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+
+    }
+
+    public static void sortDatesList(List<String> availableDatesList) {// supposed to sort the list availableDatesList
         Collections.sort(availableDatesList, new Comparator<String>() {
             DateFormat f = new SimpleDateFormat("dd.MM.yyyy");
             @Override
@@ -379,7 +414,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         });
     }
 
-    private void sortHoursList(List<String> availableDatesList) {// supposed to sort the list availableDatesList
+    public static void sortHoursList(List<String> availableDatesList) {// supposed to sort the list availableDatesList
         Collections.sort(availableDatesList, new Comparator<String>() {
 
             @Override
