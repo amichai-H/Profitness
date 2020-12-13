@@ -71,7 +71,7 @@ public class SelfCoachScreen extends AppCompatActivity implements View.OnClickLi
                     //mUser = new MyUser((String)document.getData().get("first"), (String)document.getData().get("last"), );
                     String userFirstNameString = (String)document.getData().get("first");
                     String userLastNameString = (String)document.getData().get("last");
-                    helloCoach.setText("Hello Coach" + userFirstNameString + " " + userLastNameString);
+                    helloCoach.setText("Hello Coach " + userFirstNameString + " " + userLastNameString);
 
                     if (document.exists()) {
                         Log.d("readData", "DocumentSnapshot data: " + document.getData());

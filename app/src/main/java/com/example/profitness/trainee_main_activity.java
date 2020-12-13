@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class trainee_main_activity extends AppCompatActivity implements View.OnClickListener{
@@ -38,6 +39,8 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
 
     List<String> nextTrainigsList;
     List<String> nextHoursList;
+
+    boolean isDateRelevant;
 
 
 
@@ -66,13 +69,16 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
         nextTrainigsList = new ArrayList<>();
         nextHoursList = new ArrayList<>();
 
+        isDateRelevant = true;
+
         setUserName();
         setNextTrainingTV();
 
 
+
     }
 
-    //@Override
+    @Override
     public void onClick(View v) {
         if (v == sched_btn){
 
@@ -127,6 +133,8 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
     }
 
     private void setNextTrainingTV() {
+
+
         db.collection("users/" + user.getUid() + "/trainings")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -135,7 +143,8 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
                         if (task.isSuccessful()) {
                             List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
                             for(DocumentSnapshot doc: myListOfDocuments) {
-                                if(Calander.isRelevantByDate(doc.getId())){
+
+                                if(Calander.isRelevantByDate(doc.getId()) >= 0){
                                     nextTrainigsList.add(doc.getId());
                                 }
                                 //nextTrainigsList.add(doc.getId());
@@ -153,22 +162,18 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
                                         if (task.isSuccessful()) {
                                             List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
                                             for(DocumentSnapshot doc: myListOfDocuments) {
-                                                if(Calander.isRelevantByHour(doc.getId())){
+                                                if(Calander.isRelevantByHour(doc.getId()) || Calander.isRelevantByDate(nextTrainigsList.get(0)) > 0){
                                                     nextHoursList.add(doc.getId());
                                                 }
                                             }
                                         }
                                         if( nextHoursList.isEmpty() ) return;
-                                        Calander.sortHoursList(nextHoursList);
+                                        //Calander.sortHoursList(nextHoursList);
                                         nextTraining_tv.setText("Next Training: " + nextTrainigsList.get(0) + "\nAt: " + nextHoursList.get(0));
-
                                     }
                                 });
-
                         //nextTraining_tv.setText("Next Training: " + nextTrainigsList.get(0));
-
                     }
                 });
     }
-
 }

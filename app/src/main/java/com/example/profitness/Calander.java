@@ -350,10 +350,10 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                         if (task.isSuccessful()) {
                             List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
                             for(DocumentSnapshot doc: myListOfDocuments){
-                                boolean isRelevantByDate = isRelevantByDate(doc.getId());
+                                int isRelevantByDate = isRelevantByDate(doc.getId());
                                 if((boolean)doc.get("isRelevant")){
 
-                                    if( isRelevantByDate ){
+                                    if( isRelevantByDate >= 0 ){
                                         availableDatesList.add(doc.getId());
                                     }
                                     else{
@@ -368,21 +368,21 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 });
     }
 
-    public static boolean isRelevantByDate(String stringDate) {
+    public static int isRelevantByDate(String stringDate) {//return minus if date is passed, 0 if today and positive if in the future
         SimpleDateFormat inputFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date date = null;
         try {
             date = inputFormat.parse(stringDate);
         } catch (ParseException e) {
             e.printStackTrace();
-            return true;
+            return 0;
         }
 
         Calendar calendarDate = Calendar.getInstance();
         calendarDate.setTime(date);
         Calendar today = Calendar.getInstance();
 
-        return calendarDate.compareTo(today) > 0;
+        return calendarDate.compareTo(today);
     }
 
 
