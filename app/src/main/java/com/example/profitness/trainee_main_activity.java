@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class trainee_main_activity extends AppCompatActivity implements View.OnClickListener{
@@ -77,7 +78,7 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
 
     }
 
-    //@Override
+    @Override
     public void onClick(View v) {
         if (v == sched_btn){
 
@@ -167,7 +168,7 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
                                             }
                                         }
                                         if( nextHoursList.isEmpty() ) return;
-                                        Calander.sortHoursList(nextHoursList);
+                                        //Calander.sortHoursList(nextHoursList);
                                         nextTraining_tv.setText("Next Training: " + nextTrainigsList.get(0) + "\nAt: " + nextHoursList.get(0));
                                     }
                                 });
