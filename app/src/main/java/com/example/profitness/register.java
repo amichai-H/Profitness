@@ -14,15 +14,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,17 +26,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Source;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class register extends AppCompatActivity implements View.OnClickListener {
     FirebaseFirestore db;
@@ -53,7 +46,10 @@ public class register extends AppCompatActivity implements View.OnClickListener 
     Button mRegisterBtn;
     ImageButton pick_btn;
     FirebaseAuth mAuth;
-    ProgressBar progressBar;
+    List<String> availableCoachesIdList;
+    List<String> availableCoachesNameList;
+    Spinner coachesSpinner;
+    String coachId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +69,13 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         mPassword = findViewById(R.id.password);
         mRegisterBtn = findViewById(R.id.btn_register);
         mAuth = FirebaseAuth.getInstance();
-        progressBar = findViewById(R.id.progressBar);
         pick_btn = findViewById(R.id.choosday);
         pick_btn.setOnClickListener(this);
+        coachesSpinner = findViewById(R.id.coachesSpinner);
+        availableCoachesIdList = new ArrayList();
+        availableCoachesNameList = new ArrayList<>();
         mRegisterBtn.setOnClickListener(this);
+        coachId = "";
         //mtrain.setVisibility(View.INVISIBLE);
         /* spinner*/
     }
@@ -177,9 +176,14 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         userDB.put("trainer", myUser.getTraining());
         userDB.put("phone", myUser.getPhone());
         userDB.put("email", myUser.getEmail());
-// Add a new document with a generated ID
+        if (myUser.getTraining()==1){
+            mydb.insertDoc("coaches/"+user.getUid(),userDB,this::finish);
+        }
 
-        mydb.insertDocToUser(user.getUid(),userDB,this::finish);
+// Add a new document with a generated ID
+        else{
+            mydb.insertDocToUser(user.getUid(),userDB,this::finish);
+        }
     }
 
     private void handleDateButton() {
@@ -199,5 +203,38 @@ public class register extends AppCompatActivity implements View.OnClickListener 
             }
         }, YEAR, MONTH, DATE);
         datePickerDialog.show();
+    }
+
+    private void setCoachesList(){
+        mydb.getCollection("coaches", (doc)->{
+
+            availableCoachesIdList.add(doc.getId());
+            availableCoachesNameList.add(doc.get("first") + " " + doc.get("last"));
+
+        }, this::coachesSpinnerInit );
+
+
+    }
+
+    private void coachesSpinnerInit(){//create the date spinner using the dates inside availableDatesList (need to reload the dates from the db first)
+
+        ArrayAdapter aa = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item,
+                availableCoachesNameList);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        coachesSpinner.setAdapter(aa);
+        coachesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                coachId = availableCoachesIdList.get(position);
+//                date = adapterView.getItemAtPosition(position).toString();
+//                dateTimeTextv.setText(date + " " + time);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                coachId = null;
+
+            }
+        });
     }
 }
