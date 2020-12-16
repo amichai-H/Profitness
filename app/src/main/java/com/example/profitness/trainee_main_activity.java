@@ -104,6 +104,18 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            Thread.sleep(100);
+            setNextTrainingTV();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private void setUserName() {
         DocumentReference docRef = db.collection("users").document(user.getUid());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

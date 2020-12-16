@@ -162,10 +162,10 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 if (task.isSuccessful()) {
 
                     /* get the name of the trainee */
-                    DocumentSnapshot document = task.getResult();
-                    String userFirstNameString = (String)document.getData().get("first");
-                    String userLastNameString = (String)document.getData().get("last");
-                    userName = userFirstNameString + " " + userLastNameString;
+//                    DocumentSnapshot document = task.getResult();
+//                    String userFirstNameString = (String)document.getData().get("first");
+//                    String userLastNameString = (String)document.getData().get("last");
+//                    userName = userFirstNameString + " " + userLastNameString;
 
                     /* set the data we want to update */
                     Map<String, Object> docData = new HashMap<>();
@@ -186,13 +186,6 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                                     Log.w("fail addToUserTrainings", "Error writing document", e);
                                 }
                             });
-
-                    if (document.exists()) {
-
-                        Log.d("readData", "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d("notFound", "No such document");
-                    }
                 } else {
                     Log.d("NotConnected", "get failed with ", task.getException());
                 }
