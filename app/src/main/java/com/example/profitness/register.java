@@ -44,6 +44,7 @@ import java.util.Objects;
 
 public class register extends AppCompatActivity implements View.OnClickListener {
     FirebaseFirestore db;
+    DBshort mydb;
     MyUser myUser;
     String dateString;
     EditText mLastName, mFirstNAme, mEmail, mPassword, mPhone, mDayOfBirth;
@@ -60,6 +61,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_register);
         /* set variables */
         db = FirebaseFirestore.getInstance();
+        mydb = new DBshort();
         System.out.println(db);
         mLastName = findViewById(R.id.lastName);
         mFirstNAme = findViewById(R.id.firstName);
@@ -179,21 +181,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         userDB.put("email", myUser.getEmail());
 // Add a new document with a generated ID
 
-        db.collection("users").document(user.getUid())
-                .set(userDB)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("add new user to db", "DocumentSnapshot successfully written!");
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("fail add new user to db", "Error writing document", e);
-                    }
-                });
+        mydb.insertDocToUser(user.getUid(),userDB,this::finish);
     }
 
     private void handleDateButton() {

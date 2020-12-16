@@ -34,8 +34,9 @@ public class CoachSeeAllComingTreining extends AppCompatActivity implements View
     LinearLayout layout;
     TextView currentDay;
     Button chooseDate;
+    DBshort mydb;
 
-    FirebaseFirestore db;
+   // FirebaseFirestore db;
     FirebaseAuth mAuth;
     List<QueryDocumentSnapshot> myTraining = new LinkedList<>();
 
@@ -43,8 +44,9 @@ public class CoachSeeAllComingTreining extends AppCompatActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_see_all_coming_treining);
-        db = FirebaseFirestore.getInstance();
+        //db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        mydb = new DBshort();
 
         chooseDate = findViewById(R.id.chose_date_id);
         currentDay = findViewById(R.id.date_id);
@@ -60,28 +62,15 @@ public class CoachSeeAllComingTreining extends AppCompatActivity implements View
 
 
     }
+    private void addAlltrainingList(QueryDocumentSnapshot document){
+        layout.removeAllViews();
+        if (!((String)document.getData().get("trainee")).equals("")) {
+            myTraining.add(document);
+        }
+    }
 
     private void addAlltrainingTody() {
-        db.collection(allTrainings+'/'+pathDay+'/'+hours)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("TAG", document.getId() + " => " + document.getData());
-                                layout.removeAllViews();
-                                System.out.println(document.getId());
-                                if (!((String)document.getData().get("trainee")).equals("")) {
-                                    myTraining.add(document);
-                                }
-                            }
-                            createViewOnScreen();
-                        } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
+        mydb.getAlltrainingHours(pathDay,hours,this::addAlltrainingList,this::createViewOnScreen);
     }
 
     private void createViewOnScreen() {

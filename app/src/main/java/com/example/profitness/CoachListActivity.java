@@ -30,6 +30,7 @@ public class CoachListActivity extends AppCompatActivity {
     FirebaseUser user;
     LinearLayout layout;
     MyUser myUser;
+    DBshort mydb;
 
 
     @Override
@@ -37,12 +38,19 @@ public class CoachListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_list);
         db = FirebaseFirestore.getInstance();
+        mydb = new DBshort();
         myTrainers = new LinkedList<>();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         preferList();
         layout= (LinearLayout) findViewById(R.id.listLayout);
 
+    }
+    private void docToList(QueryDocumentSnapshot document){
+        String uid = document.getId();
+        if (!uid.equals(user.getUid())) {
+            myTrainers.add(document);
+        }
     }
 
     private void createViewOnScreen() {
@@ -71,23 +79,6 @@ public class CoachListActivity extends AppCompatActivity {
     }
 
     void preferList(){
-        db.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("TAG", document.getId() + " => " + document.getData());
-                                String uid = document.getId();
-                                if (!uid.equals(user.getUid()))
-                                    myTrainers.add(document);
-                            }
-                            createViewOnScreen();
-                        } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
+        mydb.getAllUsers(this::docToList,this::createViewOnScreen);
     }
 }

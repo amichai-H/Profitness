@@ -39,16 +39,18 @@ public class SchedAvailability extends AppCompatActivity implements View.OnClick
     int hStart,hEnd,minStart,minend,tH,tM;
 
     FirebaseUser user;
-    FirebaseFirestore db;
+    //FirebaseFirestore db;
     FirebaseAuth mAuth;
+    DBshort mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sched_availability);
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        //db = FirebaseFirestore.getInstance();
         user = mAuth.getCurrentUser();
+        mydb = new DBshort();
 
         showDate = findViewById(R.id.showMycDate);
         showStartH =   findViewById(R.id.strTime);
@@ -137,42 +139,41 @@ public class SchedAvailability extends AppCompatActivity implements View.OnClick
         }
         Map<String, Object> docData2 = new HashMap<>();
         docData2.put("isRelevant", true);
-        db.collection("availableDates").document(dateString
-        ).set(docData2)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("TAG", "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("TAG", "Error writing document", e);
-                    }
-                });
+        mydb.insertDocAvaDates(dateString,docData2,()->{});
+//        db.collection("availableDates").document(dateString
+//        ).set(docData2)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Log.d("TAG", "DocumentSnapshot successfully written!");
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w("TAG", "Error writing document", e);
+//                    }
+//                });
         for (String d:allDates) {
             Map<String, Object> docData = new HashMap<>();
             docData.put("isFree", true);
-            db.collection("availableDates").document(dateString
-            ).collection("hours").document(d).set(docData)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d("TAG", "DocumentSnapshot successfully written!");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w("TAG", "Error writing document", e);
-                        }
-                    });
+            mydb.insertDocAvaDatesHours(dateString,d,docData,()->{});
+//            db.collection("availableDates").document(dateString
+//            ).collection("hours").document(d).set(docData)
+//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void aVoid) {
+//                            Log.d("TAG", "DocumentSnapshot successfully written!");
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Log.w("TAG", "Error writing document", e);
+//                        }
+//                    });
 
         }
-
-
-
     }
 
     private void handleDateButton() {

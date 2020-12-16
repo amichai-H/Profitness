@@ -34,7 +34,7 @@ public class personalInformationDisplayToCoach extends AppCompatActivity impleme
     String userFirstNameString,userLastNameString,dateBorn,phone,emaill;
     String uid;
     TextView mFullName,mAge,mPhone,mSex,email;
-    FirebaseFirestore db;
+    DBshort mydb;
 
 
     @Override
@@ -47,36 +47,14 @@ public class personalInformationDisplayToCoach extends AppCompatActivity impleme
         mSex = findViewById(R.id.sex_id);
         email = findViewById(R.id.email_id);
         uid = (String) getIntent().getExtras().get("Uid");
-        db = FirebaseFirestore.getInstance();
         mPhone.setOnClickListener( this);
         email.setOnClickListener(this);
+        mydb = new DBshort();
         takeDataFromDB();
     }
 
     private void takeDataFromDB() {
-        DocumentReference docRef = db.collection("users").document(uid);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-
-                    assert document != null;
-                    updateUI(document);
-                    if (document.exists()) {
-                        Log.d("readData", "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d("notFound", "No such document");
-                        String e404 = "Error 404 user not found";
-                        mFullName.setText(e404);
-                    }
-                } else {
-                    Log.d("NotConnected", "get failed with ", task.getException());
-                    String e502 = "Error 502 failed to connect to server";
-                    mFullName.setText(e502);
-                }
-            }
-        });
+        mydb.getUser(uid,this::updateUI);
     }
 
     private void updateUI(DocumentSnapshot document) {
@@ -100,13 +78,6 @@ public class personalInformationDisplayToCoach extends AppCompatActivity impleme
                 else
                     mSex.setText("Sex: female");
                 email.setText("Email: "+emaill);
-
-
-
-
-
-            //}
-        //}
     }
 
     private void updateAge(String dateBorn) {
@@ -182,8 +153,7 @@ public class personalInformationDisplayToCoach extends AppCompatActivity impleme
         }
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults)
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
         if(requestCode == 101)
         {

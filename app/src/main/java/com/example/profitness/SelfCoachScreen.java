@@ -24,6 +24,7 @@ public class SelfCoachScreen extends AppCompatActivity implements View.OnClickLi
     FirebaseUser user;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
+    DBshort mybd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class SelfCoachScreen extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_self_coach_screen);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        mybd = new DBshort();
         user = mAuth.getCurrentUser();
 
         helloCoach = findViewById(R.id.helloCa);
@@ -62,30 +64,10 @@ public class SelfCoachScreen extends AppCompatActivity implements View.OnClickLi
         }
     }
     private void setUserName() {
-        DocumentReference docRef = db.collection("users").document(user.getUid());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    //mUser = new MyUser((String)document.getData().get("first"), (String)document.getData().get("last"), );
-                    String userFirstNameString = (String)document.getData().get("first");
-                    String userLastNameString = (String)document.getData().get("last");
-                    helloCoach.setText("Hello Coach " + userFirstNameString + " " + userLastNameString);
-
-                    if (document.exists()) {
-                        Log.d("readData", "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d("notFound", "No such document");
-                        String e404 = "Error 404 user not found";
-                        helloCoach.setText(e404);
-                    }
-                } else {
-                    Log.d("NotConnected", "get failed with ", task.getException());
-                    String e502 = "Error 502 failed to connect to server";
-                    helloCoach.setText(e502);
-                }
-            }
+        mybd.getUser(user.getUid(),(document)->{
+            String userFirstNameString = (String)document.getData().get("first");
+            String userLastNameString = (String)document.getData().get("last");
+            helloCoach.setText("Hello Coach " + userFirstNameString + " " + userLastNameString);
         });
     }
 }

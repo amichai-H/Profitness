@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    DBshort mydb;
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
     EditText mEmail, mPassword;
@@ -46,7 +47,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressBar = (ProgressBar)findViewById(R.id.progressBar2);
         mLoginBtn.setOnClickListener(this);
         mCreateBtn.setOnClickListener(this);
+        mydb = new DBshort();
     }
+
+    public TaskToRun nextActivi = (documentSnapshot) -> {
+        try {
+            long num = documentSnapshot.getLong("trainer");
+            if (num == 0)
+                openTrainer();
+            else
+                openCoach();
+        } catch (Exception e){
+            System.out.println(e.fillInStackTrace());
+        }
+
+    };
 
     @Override
     public void onClick(View v) {
@@ -59,8 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("login", "signInWithEmail:success");
                                 user = mAuth.getCurrentUser();
-                                nextActivity();
-                                //updateUI(user);
+                                mydb.getUser(user.getUid(),nextActivi);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("failLogin", "signInWithEmail:failure", task.getException());
@@ -79,31 +93,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
 
-    }
-
-    private void nextActivity() {
-        DocumentReference docRef = db.collection("users").document(user.getUid());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-
-                    long num = document.getLong("trainer");
-                    if (num == 0)
-                        openTrainer();
-                    else
-                        openCoach();
-                    if (document.exists()) {
-                        Log.d("readData", "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d("notFound", "No such document");
-                    }
-                } else {
-                    Log.d("NotConnected", "get failed with ", task.getException());
-                }
-            }
-        });
     }
 
     private void openCoach() {
