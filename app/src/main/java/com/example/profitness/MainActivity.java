@@ -66,26 +66,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v == mLoginBtn){
-            mAuth.signInWithEmailAndPassword(mEmail.getText().toString(), mPassword.getText().toString())
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d("login", "signInWithEmail:success");
-                                user = mAuth.getCurrentUser();
-                                mydb.getUser(user.getUid(),nextActivi);
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w("failLogin", "signInWithEmail:failure", task.getException());
-                                Toast.makeText(MainActivity.this, "Authentication failed.",
-                                       Toast.LENGTH_SHORT).show();
-                                //updateUI(null);
-                            }
+            if ( mEmail.getText().toString().equals("")){
+                Toast.makeText(MainActivity.this, "Please enter User Name",
+                        Toast.LENGTH_SHORT).show();
+            }
+           else if (mPassword.getText().toString().equals("")){
+                Toast.makeText(MainActivity.this, "Please enter Password",
+                        Toast.LENGTH_SHORT).show();
+            }
+           else {
+                mAuth.signInWithEmailAndPassword(mEmail.getText().toString(), mPassword.getText().toString())
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d("login", "signInWithEmail:success");
+                                    user = mAuth.getCurrentUser();
+                                    mydb.getUser(user.getUid(), nextActivi);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w("failLogin", "signInWithEmail:failure", task.getException());
+                                    Toast.makeText(MainActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                    //updateUI(null);
+                                }
 
-                            // ...
-                        }
-                    });
+                                // ...
+                            }
+                        });
+            }
         }
         else if(v == mCreateBtn){
 
