@@ -33,11 +33,12 @@ public class ShowMenuListCoach extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     FirebaseUser user;
     FirebaseAuth mAuth;
-    FirebaseFirestore db;
+    //FirebaseFirestore db;
 
     CustomAdapter adapter;
     ProgressDialog pd;
     String uid;
+    DBshort mydb;
 
 
     @Override
@@ -49,12 +50,13 @@ public class ShowMenuListCoach extends AppCompatActivity {
 
 
         //set recycler view properties
+        mydb = new DBshort();
 
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        db = FirebaseFirestore.getInstance();
+        //db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
@@ -72,35 +74,47 @@ public class ShowMenuListCoach extends AppCompatActivity {
 
         pd.setTitle("Loading Data...");
         pd.show();
-
-        db.collection("menu").document(uid).collection("Options")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                pd.dismiss();
-
-                for (DocumentSnapshot documentSnapshot: task.getResult()){
-                    modelMenu m = documentSnapshot.toObject(modelMenu.class);
-                    m.setDay(documentSnapshot.getId());
-                    String option = m.getOption();
+        pd.dismiss();
+        mydb.getCollection("menu/"+uid+"/Options",(documentSnapshot)->{
+            modelMenu m = documentSnapshot.toObject(modelMenu.class);
+            m.setDay(documentSnapshot.getId());
+            String option = m.getOption();
 
 
-                    modelMenu modelMenu = new modelMenu(option,documentSnapshot.getString("breakFast"),
-                            documentSnapshot.getString("lunch"), documentSnapshot.getString("dinner"));
+            modelMenu modelMenu = new modelMenu(option,documentSnapshot.getString("breakFast"),
+                    documentSnapshot.getString("lunch"), documentSnapshot.getString("dinner"));
 
-                    list.add(modelMenu);
-                }
-                adapter = new CustomAdapter(ShowMenuListCoach.this, list);
-                mRecyclerView.setAdapter(adapter);
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        pd.dismiss();
-                        Toast.makeText(ShowMenuListCoach.this,  e.getMessage(),Toast.LENGTH_SHORT).show();
-
-                    }
-                });
+            list.add(modelMenu);
+        },()->{
+            adapter = new CustomAdapter(ShowMenuListCoach.this, list);
+            mRecyclerView.setAdapter(adapter);
+        });
+//        db.collection("menu").document(uid).collection("Options")
+//                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                for (DocumentSnapshot documentSnapshot: task.getResult()){
+//                    modelMenu m = documentSnapshot.toObject(modelMenu.class);
+//                    m.setDay(documentSnapshot.getId());
+//                    String option = m.getOption();
+//
+//
+//                    modelMenu modelMenu = new modelMenu(option,documentSnapshot.getString("breakFast"),
+//                            documentSnapshot.getString("lunch"), documentSnapshot.getString("dinner"));
+//
+//                    list.add(modelMenu);
+//                }
+//                adapter = new CustomAdapter(ShowMenuListCoach.this, list);
+//                mRecyclerView.setAdapter(adapter);
+//            }
+//        })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        pd.dismiss();
+//                        Toast.makeText(ShowMenuListCoach.this,  e.getMessage(),Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                });
     }
 }

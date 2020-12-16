@@ -41,6 +41,8 @@ import java.util.Map;
 
 public class Calander extends AppCompatActivity implements View.OnClickListener{
 
+    DBshort  mydb;
+
     private String dateString;
     private String timeString;
 
@@ -67,6 +69,8 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     String isRelevantString;
     String userName;
 
+    boolean isDateAvailable;
+
 
 
 
@@ -81,6 +85,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+        mydb = new DBshort();
 
         sched_btn = findViewById(R.id.sched_btn);
         sched_btn.setOnClickListener(this);
@@ -280,32 +285,42 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     }
 
     void getAvailableHoursFromDB(){//for a given date, this func reload the non taken hours of the date to availableHoursList
-
-        db.collection(availableDates + "/" + date + "/" + hoursString)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
-                            availableHoursList.clear();
-
-                            boolean isDateAvailable = false;
-                            for(DocumentSnapshot doc: myListOfDocuments){
-
-                                if((Boolean)doc.get("isFree")){
-                                    isDateAvailable = true;
-                                    availableHoursList.add(doc.getId());
-                                }
-                            }
-                            if(!isDateAvailable){ //in case all the hours of the selected date are taken, update the db that the selected date is taken and reload again the relevant dates
-                                removeDateFromList(date);
-                            }
-                            //sortHoursList(availableHoursList);
-                            hourSpinnerInit();
-                        }
-                    }
-                });
+        isDateAvailable = false;
+        availableHoursList.clear();
+        mydb.getHoursAvailableDates(date,(doc)->{
+            if((Boolean)doc.get("isFree")){
+                isDateAvailable = true;
+                availableHoursList.add(doc.getId());
+            }
+        },()->{
+            if(!isDateAvailable){ //in case all the hours of the selected date are taken, update the db that the selected date is taken and reload again the relevant dates
+                removeDateFromList(date);
+            }
+            //sortHoursList(availableHoursList);
+            hourSpinnerInit();
+        });
+//        db.collection(availableDates + "/" + date + "/" + hoursString)
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+//                            availableHoursList.clear();
+//                            for(DocumentSnapshot doc: myListOfDocuments){
+//                                if((Boolean)doc.get("isFree")){
+//                                    isDateAvailable = true;
+//                                    availableHoursList.add(doc.getId());
+//                                }
+//                            }
+//                            if(!isDateAvailable){ //in case all the hours of the selected date are taken, update the db that the selected date is taken and reload again the relevant dates
+//                                removeDateFromList(date);
+//                            }
+//                            //sortHoursList(availableHoursList);
+//                            hourSpinnerInit();
+//                        }
+//                    }
+//                });
     }
 
     private void removeDateFromList(String date) {//if while we see that all the hours of some date are taken -> we update the date to be not relevant and reload the spinner
@@ -334,31 +349,46 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     }
 
     void getAvailableDatesFromDB(){
+        mydb.getCollection(availableDates,this::insertDateTolist,()->{
+            sortDatesList(availableDatesList);
+            dateSpinnerInit();
+        });
+//        db.collection(availableDates)
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+//                            for(DocumentSnapshot doc: myListOfDocuments){
+//                                int isRelevantByDate = isRelevantByDate(doc.getId());
+//                                if((boolean)doc.get("isRelevant")){
+//
+//                                    if( isRelevantByDate >= 0 ){
+//                                        availableDatesList.add(doc.getId());
+//                                    }
+//                                    else{
+//                                        makeDateNotRelevant(doc.getId());
+//                                    }
+//                                }
+//                            }
+//                            sortDatesList(availableDatesList);
+//                            dateSpinnerInit();
+//                        }
+//                    }
+//                });
+    }
+    private void insertDateTolist(DocumentSnapshot doc){
+        int isRelevantByDate = isRelevantByDate(doc.getId());
+        if((boolean)doc.get("isRelevant")){
 
-        db.collection(availableDates)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
-                            for(DocumentSnapshot doc: myListOfDocuments){
-                                int isRelevantByDate = isRelevantByDate(doc.getId());
-                                if((boolean)doc.get("isRelevant")){
-
-                                    if( isRelevantByDate >= 0 ){
-                                        availableDatesList.add(doc.getId());
-                                    }
-                                    else{
-                                        makeDateNotRelevant(doc.getId());
-                                    }
-                                }
-                            }
-                            sortDatesList(availableDatesList);
-                            dateSpinnerInit();
-                        }
-                    }
-                });
+            if( isRelevantByDate >= 0 ){
+                availableDatesList.add(doc.getId());
+            }
+            else{
+                makeDateNotRelevant(doc.getId());
+            }
+        }
     }
 
     public static int isRelevantByDate(String stringDate) {//return minus if date is passed, 0 if today and positive if in the future

@@ -29,7 +29,7 @@ public class DBshort {
     }
 
     public void getUser(String uid,TaskToRun taskToRun ){
-        getDocument("users/"+uid,taskToRun);
+        getDocument(users+"/"+uid,taskToRun);
     }
 
     public void getAllUsers(TTRCollection taskToRun,VoidFunc endFor){
@@ -106,11 +106,11 @@ public class DBshort {
     }
 
     public void insertDocAvaDates(String dateString, Map<String, Object> docData2,VoidFunc onSucces) {
-        insertDoc(availableDates+"/"+dateString,docData2,()->{});
+        insertDoc(availableDates+"/"+dateString,docData2,onSucces);
     }
 
     public void insertDocAvaDatesHours(String date,String hour , Map<String, Object> docData,VoidFunc onSucces) {
-        insertDoc(availableDates+"/"+date+"/"+hours+"/"+hour,docData,()->{});
+        insertDoc(availableDates+"/"+date+"/"+hours+"/"+hour,docData,onSucces);
     }
 
 

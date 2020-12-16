@@ -77,7 +77,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         pick_btn = findViewById(R.id.choosday);
         pick_btn.setOnClickListener(this);
         mRegisterBtn.setOnClickListener(this);
-        mtrain.setVisibility(View.INVISIBLE);
+        //mtrain.setVisibility(View.INVISIBLE);
         /* spinner*/
     }
 
@@ -86,8 +86,6 @@ public class register extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View v) {
         if (v == pick_btn) {
             handleDateButton();
-
-
         }
         if (v == mRegisterBtn) {
             //
