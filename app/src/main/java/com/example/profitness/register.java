@@ -139,7 +139,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
             train = 1;
         myUser = new MyUser(mFirstNAme.getText().toString()
                 , mLastName.getText().toString(), mEmail.getText().toString()
-                , mPassword.getText().toString(), mPhone.getText().toString(), mDayOfBirth.getText().toString(), sex, train);
+                , mPassword.getText().toString(), mPhone.getText().toString(), mDayOfBirth.getText().toString(), sex, train,coachId);
     }
 
     private boolean chackData() {
@@ -178,6 +178,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         userDB.put("trainer", myUser.getTraining());
         userDB.put("phone", myUser.getPhone());
         userDB.put("email", myUser.getEmail());
+        userDB.put("coach", myUser.getCoach());
         if (myUser.getTraining()==1){
             mydb.insertDoc("coaches/"+user.getUid(),userDB,this::finish);
         }
