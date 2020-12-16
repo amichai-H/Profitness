@@ -94,7 +94,6 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         dateTimeTextv = findViewById(R.id.emptyTV);
 
         /* Other */
-        //calendar = Calendar.getInstance();
 
         hourSpinner = findViewById(R.id.hourSpinner);
         dateSpinner = findViewById(R.id.dateSpinner);

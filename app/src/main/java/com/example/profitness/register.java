@@ -76,6 +76,8 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         availableCoachesNameList = new ArrayList<>();
         mRegisterBtn.setOnClickListener(this);
         coachId = "";
+
+        setCoachesList();
         //mtrain.setVisibility(View.INVISIBLE);
         /* spinner*/
     }
