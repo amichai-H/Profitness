@@ -21,6 +21,9 @@
         android:gravity="center">
 
 
+
+
+
         <TextView
         android:id="@+id/textView"
         android:layout_width="163dp"
@@ -134,35 +137,39 @@
         app:layout_constraintTop_toBottomOf="@+id/email"
         app:layout_constraintVertical_bias="0.006" />
 
-    <EditText
-        android:id="@+id/dayofbirth"
-        android:layout_width="233dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="12dp"
-        android:autofillHints=""
-        android:background="#4DFFFFFF"
-        android:ems="10"
-        android:fontFamily="@font/allerta_stencil"
-        android:hint="@string/day_of_birth"
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/password"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.003" />
+        <TextView
+            android:id="@+id/dateofbirth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:autofillHints=""
+            android:background="#4DFFFFFF"
+            android:ems="10"
+            android:fontFamily="@font/allerta_stencil"
+            android:inputType="date"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/password"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/password"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:layout_constraintVertical_bias="0.003" />
 
 
-    <ImageButton
-        android:id="@+id/choosday"
-        android:layout_width="62dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="8dp"
-        android:contentDescription="@drawable/calendar"
-        app:layout_constraintBottom_toBottomOf="@+id/dayofbirth"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dayofbirth"
-        app:layout_constraintTop_toTopOf="@+id/dayofbirth" />
+        <Button
+            android:id="@+id/choosdate"
+
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/allerta_stencil"
+            android:text="Date Of Birth"
+            android:visibility="visible"
+            app:backgroundTint="#CC777575"
+            app:layout_constraintBottom_toBottomOf="@+id/dayofbirth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dayofbirth"
+            app:layout_constraintTop_toTopOf="@+id/dayofbirth" />
 
     <RadioGroup
         android:id="@+id/sexgender"
@@ -219,18 +226,38 @@
             android:id="@+id/radioTrain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:tag="0"
-            android:text="@string/trainer"
-            android:checked="true"/>
+            android:text="@string/trainee" />
 
         <RadioButton
             android:id="@+id/radioCoach"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="1"
-            android:text="@string/coach" />
+            android:text="@string/coachText" />
 
     </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView3"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:autofillHints=""
+            android:background="#4DFFFFFF"
+            android:ems="10"
+            android:fontFamily="@font/allerta_stencil"
+            android:text="@string/if_trainee_select_coach"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.003" />
+
+
+        android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="If Trainee, Select Coach:" />
 
         <Spinner
             android:id="@+id/coachesSpinner"
@@ -252,7 +279,6 @@
         app:layout_constraintStart_toStartOf="@+id/trainRadio"
         app:layout_constraintTop_toBottomOf="@+id/sexgender"
         app:layout_constraintVertical_bias="0.712" />
-
 
 
     </LinearLayout>

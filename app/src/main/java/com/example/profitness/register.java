@@ -13,10 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +27,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,11 +39,12 @@ public class register extends AppCompatActivity implements View.OnClickListener 
     DBshort mydb;
     MyUser myUser;
     String dateString;
-    EditText mLastName, mFirstNAme, mEmail, mPassword, mPhone, mDayOfBirth;
+    EditText mLastName, mFirstNAme, mEmail, mPassword, mPhone;
+    TextView mDayOfBirth;
     RadioGroup mSex;
     RadioGroup mtrain;
     Button mRegisterBtn;
-    ImageButton pick_btn;
+    Button pick_btn;
     FirebaseAuth mAuth;
     List<String> availableCoachesIdList;
     List<String> availableCoachesNameList;
@@ -62,14 +62,14 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         mLastName = findViewById(R.id.lastName);
         mFirstNAme = findViewById(R.id.firstName);
         mPhone = findViewById(R.id.phoneNumber);
-        mDayOfBirth = findViewById(R.id.dayofbirth);
+        mDayOfBirth = findViewById(R.id.dateofbirth);
         mSex = findViewById(R.id.sexgender);
         mtrain = findViewById(R.id.trainRadio);
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         mRegisterBtn = findViewById(R.id.btn_register);
         mAuth = FirebaseAuth.getInstance();
-        pick_btn = findViewById(R.id.choosday);
+        pick_btn = findViewById(R.id.choosdate);
         pick_btn.setOnClickListener(this);
         coachesSpinner = findViewById(R.id.coachesSpinner);
         availableCoachesIdList = new ArrayList();
@@ -197,7 +197,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void handleDateButton() {
-        Toast.makeText(this, "handleDateButton", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "handleDateButton", Toast.LENGTH_SHORT).show();
         Calendar calendar = Calendar.getInstance();
         int YEAR = calendar.get(Calendar.YEAR);
         int MONTH = calendar.get(Calendar.MONTH)+1;
