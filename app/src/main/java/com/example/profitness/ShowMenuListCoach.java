@@ -76,17 +76,10 @@ public class ShowMenuListCoach extends AppCompatActivity {
 
     //show data in recyclerView
     private void showData() {
-        String path ="";
-        if (myUser.isTrainee())
-            path = "trainingInformation/"+myUser.getCoach()+"/menu/"+uid+"/Options";
-        else
-            path = "trainingInformation/"+user.getUid()+"/menu/"+uid+"/Options";
-
-
         pd.setTitle("Loading Data...");
         pd.show();
         pd.dismiss();
-        mydb.getCollection(path,(documentSnapshot)->{
+        mydb.getCollection("/menu/"+uid+"/Options",(documentSnapshot)->{
             modelMenu m = documentSnapshot.toObject(modelMenu.class);
             m.setDay(documentSnapshot.getId());
             String option = m.getOption();

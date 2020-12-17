@@ -37,9 +37,7 @@ public class SelfCoachScreen extends AppCompatActivity implements View.OnClickLi
         user = mAuth.getCurrentUser();
 
         myUser = new MyUser();
-        mybd.getUser(user.getUid(),(doc)->{
-            myUser.init(doc);
-        });
+
         helloCoach = findViewById(R.id.helloCa);
         goToSchedTimeToWork = findViewById(R.id.timeTT);
         goToList = findViewById(R.id.listOfT);
@@ -48,7 +46,11 @@ public class SelfCoachScreen extends AppCompatActivity implements View.OnClickLi
         goToList.setOnClickListener(this);
         goToSchedTimeToWork.setOnClickListener(this);
         scheduledTraining.setOnClickListener(this);
-        setUserName();
+        mybd.getUser(user.getUid(),(doc)->{
+            myUser.init(doc);
+            setUserName();
+        });
+
 
     }
 
