@@ -206,7 +206,8 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int date) {
-                dateString = date + "/" + month + 1 + "/" + year;
+                month++;
+                dateString = date + "/" + month + "/" + year;
                 mDayOfBirth.setText(dateString);
 
             }

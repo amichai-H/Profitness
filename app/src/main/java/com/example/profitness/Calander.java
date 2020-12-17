@@ -265,7 +265,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 dateSelected = true;
                 date = adapterView.getItemAtPosition(position).toString();
-                dateTimeTextv.setText(date + " " + time);
+                dateTimeTextv.setText(date + "\n" + time);
                 getAvailableHoursFromDB(); //only after clicking on some date we need to update the hourSpinner
             }
             @Override
@@ -289,7 +289,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 timeSelected = true;
                 time = adapterView.getItemAtPosition(position).toString();
-                dateTimeTextv.setText(date + " " + time);
+                dateTimeTextv.setText(date + "\n" + time);
             }
 
             @Override
@@ -311,7 +311,6 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
             if(!isDateAvailable){ //in case all the hours of the selected date are taken, update the db that the selected date is taken and reload again the relevant dates
                 removeDateFromList(date);
             }
-            //sortHoursList(availableHoursList);
             hourSpinnerInit();
         });
 //        db.collection(availableDates + "/" + date + "/" + hoursString)
