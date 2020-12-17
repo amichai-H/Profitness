@@ -8,6 +8,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,15 +20,23 @@ import java.util.Map;
 
 public class DBshort {
     FirebaseFirestore db;
-    final String availableDates = "availableDates", users = "users",hours = "hours";
+    FirebaseUser user;
+    FirebaseAuth mAuth;
+
+
+    final String availableDates = "availableDates", users = "users",hours = "hours",dates = "dates",trainingInformation = "trainingInformation";
     String allTrainings = "allTrainings",format = "dd.MM.yyyy";
     public DBshort(){
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
     }
 
     public void insertDocToUser(String uid,Map<String, Object> userDB, VoidFunc onSucces) {
         insertDoc("users/"+uid,userDB,onSucces);
     }
+
 
     public void getUser(String uid,TaskToRun taskToRun ){
         getDocument(users+"/"+uid,taskToRun);
@@ -36,16 +46,16 @@ public class DBshort {
         getCollection("users",taskToRun,endFor);
     }
 
-    public void getAvailableDates(TTRCollection taskToRun,VoidFunc endFor){
-        getCollection("availableDates",taskToRun,endFor);
+    public void getAvailableDates(String cUid,TTRCollection taskToRun,VoidFunc endFor){
+        getCollection(trainingInformation+"/"+cUid+"/"+availableDates,taskToRun,endFor);
     }
 
-    public void getHoursAvailableDates(String date,TTRCollection taskToRun,VoidFunc endFor){
-        getCollection(availableDates+"/"+date+"/"+hours,taskToRun,endFor);
+    public void getHoursAvailableDates(String cUid,String date,TTRCollection taskToRun,VoidFunc endFor){
+        getCollection(trainingInformation+"/"+cUid+"/"+availableDates+"/"+date+"/"+hours,taskToRun,endFor);
     }
 
-    public void getAlltrainingHours(String pathDay, String hours, TTRCollection addToList, VoidFunc onEnd) {
-        getCollection(allTrainings+'/'+pathDay+'/'+hours,addToList,onEnd);
+    public void getAlltrainingHours(String cUid,String pathDay, String hours, TTRCollection addToList, VoidFunc onEnd) {
+        getCollection(trainingInformation+"/"+cUid+"/"+allTrainings+'/'+pathDay+'/'+hours,addToList,onEnd);
     }
 
     public void getCollection(String path,TTRCollection taskToRun,VoidFunc endFor){
@@ -87,6 +97,7 @@ public class DBshort {
         });
     }
 
+
     public void insertDoc(String path, Map<String, Object> userDB,VoidFunc onSucces){
         db.document(path)
                 .set(userDB)
@@ -105,12 +116,12 @@ public class DBshort {
                 });
     }
 
-    public void insertDocAvaDates(String dateString, Map<String, Object> docData2,VoidFunc onSucces) {
-        insertDoc(availableDates+"/"+dateString,docData2,onSucces);
+    public void insertDocAvaDates(String cUid,String dateString, Map<String, Object> docData2,VoidFunc onSucces) {
+        insertDoc(trainingInformation+"/"+cUid+"/"+availableDates+"/"+dateString,docData2,onSucces);
     }
 
-    public void insertDocAvaDatesHours(String date,String hour , Map<String, Object> docData,VoidFunc onSucces) {
-        insertDoc(availableDates+"/"+date+"/"+hours+"/"+hour,docData,onSucces);
+    public void insertDocAvaDatesHours(String cUid,String date,String hour , Map<String, Object> docData,VoidFunc onSucces) {
+        insertDoc(trainingInformation+"/"+cUid+"/"+availableDates+"/"+date+"/"+hours+"/"+hour,docData,onSucces);
     }
 
 

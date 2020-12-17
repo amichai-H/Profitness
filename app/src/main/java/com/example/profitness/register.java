@@ -178,23 +178,29 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         userDB.put("trainer", myUser.getTraining());
         userDB.put("phone", myUser.getPhone());
         userDB.put("email", myUser.getEmail());
-        userDB.put("coach", myUser.getCoach());
+        if (myUser.isTrainee()) {
+            userDB.put("coach", myUser.getCoach());
+        }
+        else {
+            userDB.put("coach", "");
+        }
         if (myUser.getTraining()==1){
-            mydb.insertDoc("coaches/"+user.getUid(),userDB,this::finish);
-        }
+            mydb.insertDoc("coaches/"+user.getUid(),userDB, ()->{Toast.makeText(this, "Hello new coach", Toast.LENGTH_SHORT).show();});
 
-// Add a new document with a generated ID
-        else{
-            mydb.insertDocToUser(user.getUid(),userDB,this::finish);
         }
+// Add a new document with a generated ID
+            mydb.insertDocToUser(user.getUid(),userDB,()->{
+                Toast.makeText(this, "Enter To DB", Toast.LENGTH_SHORT).show();
+                finish();
+            });
+
     }
 
     private void handleDateButton() {
-        //Toast.makeText(this, "handleDateButton", Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(this, "handleDateButton", Toast.LENGTH_SHORT).show();
         Calendar calendar = Calendar.getInstance();
         int YEAR = calendar.get(Calendar.YEAR);
-        int MONTH = calendar.get(Calendar.MONTH);
+        int MONTH = calendar.get(Calendar.MONTH)+1;
         int DATE = calendar.get(Calendar.DATE);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {

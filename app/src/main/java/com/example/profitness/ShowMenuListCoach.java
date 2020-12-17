@@ -39,6 +39,7 @@ public class ShowMenuListCoach extends AppCompatActivity {
     ProgressDialog pd;
     String uid;
     DBshort mydb;
+    MyUser myUser;
 
 
     @Override
@@ -47,18 +48,22 @@ public class ShowMenuListCoach extends AppCompatActivity {
         setContentView(R.layout.activity_show_menu_list_coach);
 
         mRecyclerView = findViewById(R.id.recycler_view);
-
+        mAuth = FirebaseAuth.getInstance();
 
         //set recycler view properties
         mydb = new DBshort();
 
+        user = mAuth.getCurrentUser();
+        assert user != null;
+        myUser = new MyUser();
+        mydb.getUser(user.getUid(),(doc)->{
+            myUser.init(doc);
+        });
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
         //db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
 
 
         pd = new ProgressDialog(this);
@@ -71,11 +76,17 @@ public class ShowMenuListCoach extends AppCompatActivity {
 
     //show data in recyclerView
     private void showData() {
+        String path ="";
+        if (myUser.isTrainee())
+            path = "trainingInformation/"+myUser.getCoach()+"/menu/"+uid+"/Options";
+        else
+            path = "trainingInformation/"+user.getUid()+"/menu/"+uid+"/Options";
+
 
         pd.setTitle("Loading Data...");
         pd.show();
         pd.dismiss();
-        mydb.getCollection("menu/"+uid+"/Options",(documentSnapshot)->{
+        mydb.getCollection(path,(documentSnapshot)->{
             modelMenu m = documentSnapshot.toObject(modelMenu.class);
             m.setDay(documentSnapshot.getId());
             String option = m.getOption();

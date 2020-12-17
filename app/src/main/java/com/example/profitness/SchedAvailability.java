@@ -139,7 +139,7 @@ public class SchedAvailability extends AppCompatActivity implements View.OnClick
         }
         Map<String, Object> docData2 = new HashMap<>();
         docData2.put("isRelevant", true);
-        mydb.insertDocAvaDates(dateString,docData2,()->{});
+        mydb.insertDocAvaDates(user.getUid(),dateString,docData2,()->{});
 //        db.collection("availableDates").document(dateString
 //        ).set(docData2)
 //                .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -157,7 +157,7 @@ public class SchedAvailability extends AppCompatActivity implements View.OnClick
         for (String d:allDates) {
             Map<String, Object> docData = new HashMap<>();
             docData.put("isFree", true);
-            mydb.insertDocAvaDatesHours(dateString,d,docData,()->{});
+            mydb.insertDocAvaDatesHours(user.getUid(),dateString,d,docData,()->{});
 //            db.collection("availableDates").document(dateString
 //            ).collection("hours").document(d).set(docData)
 //                    .addOnSuccessListener(new OnSuccessListener<Void>() {

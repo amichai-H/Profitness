@@ -25,6 +25,7 @@ public class SelfCoachScreen extends AppCompatActivity implements View.OnClickLi
     FirebaseFirestore db;
     FirebaseAuth mAuth;
     DBshort mybd;
+    MyUser myUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,10 @@ public class SelfCoachScreen extends AppCompatActivity implements View.OnClickLi
         mybd = new DBshort();
         user = mAuth.getCurrentUser();
 
+        myUser = new MyUser();
+        mybd.getUser(user.getUid(),(doc)->{
+            myUser.init(doc);
+        });
         helloCoach = findViewById(R.id.helloCa);
         goToSchedTimeToWork = findViewById(R.id.timeTT);
         goToList = findViewById(R.id.listOfT);
@@ -64,10 +69,6 @@ public class SelfCoachScreen extends AppCompatActivity implements View.OnClickLi
         }
     }
     private void setUserName() {
-        mybd.getUser(user.getUid(),(document)->{
-            String userFirstNameString = (String)document.getData().get("first");
-            String userLastNameString = (String)document.getData().get("last");
-            helloCoach.setText("Hello Coach " + userFirstNameString + " " + userLastNameString);
-        });
+            helloCoach.setText("Hello Coach " + myUser.getFirstName() + " " + myUser.getLastName());
     }
 }

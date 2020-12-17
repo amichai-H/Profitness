@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -35,6 +36,8 @@ public class CoachSeeAllComingTreining extends AppCompatActivity implements View
     TextView currentDay;
     Button chooseDate;
     DBshort mydb;
+    FirebaseUser user;
+    MyUser myUser;
 
    // FirebaseFirestore db;
     FirebaseAuth mAuth;
@@ -46,6 +49,8 @@ public class CoachSeeAllComingTreining extends AppCompatActivity implements View
         setContentView(R.layout.activity_coach_see_all_coming_treining);
         //db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
         mydb = new DBshort();
 
         chooseDate = findViewById(R.id.chose_date_id);
@@ -61,6 +66,7 @@ public class CoachSeeAllComingTreining extends AppCompatActivity implements View
 
 
 
+
     }
     private void addAlltrainingList(QueryDocumentSnapshot document){
         layout.removeAllViews();
@@ -70,7 +76,7 @@ public class CoachSeeAllComingTreining extends AppCompatActivity implements View
     }
 
     private void addAlltrainingTody() {
-        mydb.getAlltrainingHours(pathDay,hours,this::addAlltrainingList,this::createViewOnScreen);
+        mydb.getAlltrainingHours(user.getUid(),pathDay,hours,this::addAlltrainingList,this::createViewOnScreen);
     }
 
     private void createViewOnScreen() {

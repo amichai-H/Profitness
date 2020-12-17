@@ -26,7 +26,7 @@ import java.util.List;
 public class CoachListActivity extends AppCompatActivity {
     FirebaseFirestore db;
     List<QueryDocumentSnapshot> myTrainers;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
     FirebaseUser user;
     LinearLayout layout;
     MyUser myUser;
@@ -42,15 +42,20 @@ public class CoachListActivity extends AppCompatActivity {
         myTrainers = new LinkedList<>();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+        myUser = new MyUser();
+        mydb.getUser(user.getUid(),(doc)->{
+            myUser.init(doc);
+        });
         preferList();
         layout= (LinearLayout) findViewById(R.id.listLayout);
 
     }
     private void docToList(QueryDocumentSnapshot document){
-        String uid = document.getId();
-        if (!uid.equals(user.getUid())) {
-            myTrainers.add(document);
-        }
+        String uidC = (String) document.get("coach");
+        assert uidC != null;
+        if (uidC.equals(user.getUid())) {
+                myTrainers.add(document);
+            }
     }
 
     private void createViewOnScreen() {

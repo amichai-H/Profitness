@@ -42,6 +42,7 @@ import java.util.Map;
 public class Calander extends AppCompatActivity implements View.OnClickListener{
 
     DBshort  mydb;
+    MyUser myUser;
 
     private String dateString;
     private String timeString;
@@ -86,6 +87,11 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         mydb = new DBshort();
+        myUser = new MyUser();
+        mydb.getUser(user.getUid(),(doc)->{
+            myUser.init(doc);
+        });
+
 
         sched_btn = findViewById(R.id.sched_btn);
         sched_btn.setOnClickListener(this);
@@ -114,9 +120,12 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
         /* db init */
         db = FirebaseFirestore.getInstance();
-
         /* spinner init */
-        getAvailableDatesFromDB();
+        mydb.getUser(user.getUid(),(doc)->{
+            myUser.init(doc);
+            getAvailableDatesFromDB();
+        });
+
     }
 
     @Override
@@ -138,8 +147,8 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         Map<String, Object> docData = new HashMap<>();
         docData.put("isFree", false);
         docData.put("user", user.getUid());
-        db.collection(availableDates).document(date)
-                .collection(hoursString).document(time).set(docData)
+        String path = "trainingInformation/"+myUser.getCoach()+"/"+availableDates+"/"+date+"/"+hoursString+"/"+time;
+        db.document(path).set(docData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -176,7 +185,8 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                     docData.put("trainee", uid);
 
                     /* put into db */
-                    db.collection("allTrainings").document(date).collection("hours").document(time)
+                    String path = "trainingInformation/"+myUser.getCoach()+"/allTrainings/"+date+"/hours/"+time;
+                    db.document(path)
                             .set(docData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -286,7 +296,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     void getAvailableHoursFromDB(){//for a given date, this func reload the non taken hours of the date to availableHoursList
         isDateAvailable = false;
         availableHoursList.clear();
-        mydb.getHoursAvailableDates(date,(doc)->{
+        mydb.getHoursAvailableDates(myUser.getCoach(),date,(doc)->{
             if((Boolean)doc.get("isFree")){
                 isDateAvailable = true;
                 availableHoursList.add(doc.getId());
@@ -330,8 +340,8 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     private void makeDateNotRelevant(String dateToChange) { //we use this func if all hours of this date are taken -> it will not added to the list of the available dates
         Map<String, Object> docData = new HashMap<>();
         docData.put("isRelevant", false);
-
-        db.collection("availableDates").document(dateToChange)
+        String path = "trainingInformation/"+myUser.getCoach()+"/"+availableDates+"/"+dateToChange;
+        db.document(path)
                 .set(docData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -348,7 +358,8 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     }
 
     void getAvailableDatesFromDB(){
-        mydb.getCollection(availableDates,this::insertDateTolist,()->{
+        String path = "trainingInformation/"+myUser.getCoach()+"/"+availableDates;
+        mydb.getCollection(path,this::insertDateTolist,()->{
             sortDatesList(availableDatesList);
             dateSpinnerInit();
         });
