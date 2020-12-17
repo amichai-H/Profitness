@@ -249,6 +249,12 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
     private void dateSpinnerInit(){//create the date spinner using the dates inside availableDatesList (need to reload the dates from the db first)
 
+        if(availableDatesList.isEmpty()){
+            dateTimeTextv.setText("No Trainings Available");
+
+            return;
+        }
+
         ArrayAdapter aa = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item,
                 availableDatesList);

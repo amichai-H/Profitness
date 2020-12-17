@@ -190,7 +190,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         }
 // Add a new document with a generated ID
             mydb.insertDocToUser(user.getUid(),userDB,()->{
-                Toast.makeText(this, "Enter To DB", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Registered successfully", Toast.LENGTH_SHORT).show();
                 finish();
             });
 
@@ -206,7 +206,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int date) {
-                dateString = date + "/" + month + "/" + year;
+                dateString = date + "/" + month + 1 + "/" + year;
                 mDayOfBirth.setText(dateString);
 
             }

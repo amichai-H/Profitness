@@ -22,8 +22,8 @@
 
     <TextView
         android:id="@+id/emptyTV"
-        android:layout_width="183dp"
-        android:layout_height="104dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/allerta_stencil"
         android:gravity="center"
         android:textColor="#BA353742"
@@ -40,9 +40,8 @@
         android:layout_height="54dp"
         android:background="#99FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/emptyTV"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/emptyTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emptyTV"
         app:layout_constraintVertical_bias="0.0" />
 
