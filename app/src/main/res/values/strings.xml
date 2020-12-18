@@ -61,5 +61,12 @@
     <string name="coachText">Coach</string>
     <string name="trainee">Trainee</string>
     <string name="if_trainee_select_coach">If Trainee, Select Coach:</string>
+    <string name="performances">Performances</string>
+    <string name="show_performance">Show Performance</string>
+    <string name="save_performance">Save Performance</string>
+    <string name="weight">Weight:</string>
+    <string name="bmi">BMI:</string>
+    <string name="fat_percentage">Fat Percentage:</string>
+    <string name="muscle_mass">Muscle mass:</string>
 
 </resources>
