@@ -2,18 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/performanceId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".EditPerformance">
+    tools:context=".ShowPerformance">
 
     <TextView
-        android:id="@+id/performanceID"
+        android:id="@+id/thePerformanceId"
         android:layout_width="323dp"
         android:layout_height="57dp"
         android:gravity="center"
-        android:text="@string/performances"
+        android:text="@string/the_performance"
         android:textSize="36sp"
         android:textStyle="bold|italic"
         app:autoSizeTextType="none"
@@ -21,158 +20,122 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.007" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/weightId"
-        android:layout_width="199dp"
-        android:layout_height="55dp"
+        android:id="@+id/weightTraineeId"
+        android:layout_width="107dp"
+        android:layout_height="49dp"
         android:gravity="center"
-        android:text="@string/weight_trainee"
+        android:text="@string/weight"
         android:textColor="#2E2C2C"
         android:textSize="27sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/performanceID"
+        app:layout_constraintTop_toBottomOf="@+id/thePerformanceId"
         app:layout_constraintVertical_bias="0.025" />
 
-    <EditText
-        android:id="@+id/editWeightID"
+    <TextView
+        android:id="@+id/theWeightTraineeId"
         android:layout_width="252dp"
         android:layout_height="55dp"
-        android:gravity="bottom"
+        android:gravity="top"
         android:textColor="#221E1E"
         android:textSize="24sp"
-        android:autofillHints=""
-        android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightId"
-        app:layout_constraintVertical_bias="0.0"
-         />
+        app:layout_constraintTop_toBottomOf="@+id/weightTraineeId"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/bmiId"
-        android:layout_width="199dp"
-        android:layout_height="55dp"
-        android:gravity="center"
-        android:text="@string/bmi_trainee"
-        android:textColor="#2E2C2C"
+        android:id="@+id/BMITraineeId"
+        android:layout_width="197dp"
+        android:layout_height="62dp"
+        android:gravity="left"
+        android:text="@string/bmi"
         android:textSize="30sp"
+        android:textColor="#2E2C2C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editWeightID"
+        app:layout_constraintTop_toBottomOf="@+id/theWeightTraineeId"
         app:layout_constraintVertical_bias="0.026" />
 
-    <EditText
-        android:id="@+id/editBmiId"
+    <TextView
+        android:id="@+id/theBMI_Id"
         android:layout_width="252dp"
         android:layout_height="55dp"
-        android:autofillHints=""
-        android:gravity="bottom"
-        android:inputType="numberDecimal"
+        android:gravity="top"
         android:textColor="#221E1E"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bmiId"
+        app:layout_constraintTop_toBottomOf="@+id/BMITraineeId"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/fat_percentageId"
-        android:layout_width="282dp"
-        android:layout_height="49dp"
-        android:text="@string/fat_percentage_trainee"
+        android:id="@+id/fat_percentage_traineeId"
+        android:layout_width="251dp"
+        android:layout_height="64dp"
+        android:gravity="center"
+        android:text="@string/fat_percentage"
+        android:textSize="30sp"
         android:textColor="#2E2C2C"
-        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editBmiId"
+        app:layout_constraintTop_toBottomOf="@+id/theBMI_Id"
         app:layout_constraintVertical_bias="0.028" />
 
-    <EditText
-        android:id="@+id/edit_fat_percentageId"
+    <TextView
+        android:id="@+id/the_fat_pecentage_id"
         android:layout_width="252dp"
         android:layout_height="55dp"
-        android:autofillHints=""
-        android:gravity="bottom"
-        android:inputType="numberDecimal"
+        android:gravity="top"
         android:textColor="#221E1E"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fat_percentageId"
+        app:layout_constraintTop_toBottomOf="@+id/fat_percentage_traineeId"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/muscle_massId"
-        android:layout_width="222dp"
-        android:layout_height="49dp"
+        android:id="@+id/muscle_mass_trainee_id"
+        android:layout_width="251dp"
+        android:layout_height="64dp"
         android:gravity="center"
-        android:text="@string/muscle_mass_trainne"
+        android:text="@string/muscle_mass"
+        android:textSize="30sp"
         android:textColor="#2E2C2C"
-        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_fat_percentageId"
+        app:layout_constraintTop_toBottomOf="@+id/the_fat_pecentage_id"
         app:layout_constraintVertical_bias="0.034" />
 
-    <EditText
-        android:id="@+id/edit_muscle_massId"
+    <TextView
+        android:id="@+id/the_muscle_mass_trainee_id"
         android:layout_width="252dp"
         android:layout_height="55dp"
-        android:autofillHints=""
-        android:gravity="bottom"
-        android:inputType="numberDecimal"
+        android:gravity="top"
         android:textColor="#221E1E"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/muscle_massId"
+        app:layout_constraintTop_toBottomOf="@+id/muscle_mass_trainee_id"
         app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/savePerformanceBtn"
-        android:layout_width="236dp"
-        android:layout_height="56dp"
-        android:backgroundTint="#7A7575"
-        android:text="@string/save_performance"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_muscle_massId"
-        app:layout_constraintVertical_bias="0.154" />
-
-    <Button
-        android:id="@+id/show_performanceBtn"
-        android:layout_width="236dp"
-        android:layout_height="56dp"
-        android:backgroundTint="#7A7575"
-        android:text="@string/show_performance"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/savePerformanceBtn"
-        app:layout_constraintVertical_bias="0.356" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

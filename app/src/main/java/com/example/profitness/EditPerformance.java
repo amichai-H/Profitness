@@ -62,16 +62,21 @@ public class EditPerformance extends AppCompatActivity implements View.OnClickLi
 
             saveNewPerformance(uid, weight, bmi, fatPercentage, muscleMass);
         }
+        else if(v == showPerormanceBtn){
+            Intent intent = new Intent(this, ShowPerformance.class);
+            intent.putExtra("Uid", uid);
+            startActivity(intent);
+        }
     }
 
     private void saveNewPerformance(String trainee, String weight, String bmi, String fatPercentage, String muscleMass) {
 
         Map<String, Object> doc = new HashMap<>();
 
-        doc.put("Weight ", weight);
-        doc.put("BMI ", bmi);
-        doc.put("Fat Percentage ", fatPercentage);
-        doc.put("Muscle Mass ", muscleMass);
+        doc.put("Weight", weight);
+        doc.put("BMI", bmi);
+        doc.put("Fat Percentage", fatPercentage);
+        doc.put("Muscle Mass", muscleMass);
 
 
         db.collection("performance").document(trainee).set(doc)

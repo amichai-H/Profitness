@@ -93,7 +93,9 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
 
         }
         else if (v == perf_btn){
-
+            Intent intent = new Intent(this, ShowPerformance.class);
+            intent.putExtra("Uid", user.getUid());
+            startActivity(intent);
 
         }
         else if (v == menu_btn){

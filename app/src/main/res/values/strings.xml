@@ -68,5 +68,11 @@
     <string name="bmi">BMI:</string>
     <string name="fat_percentage">Fat Percentage:</string>
     <string name="muscle_mass">Muscle mass:</string>
+    <string name="the_performance">The Performance</string>
+    <string name="weight_trainee">Weight Trainee:</string>
+    <string name="bmi_trainee">BMI Trainee:</string>
+    <string name="fat_percentage_trainee">Fat Percentage Trainee:</string>
+    <string name="muscle_mass_trainne">Muscle Mass Trainne:</string>
+
 
 </resources>
