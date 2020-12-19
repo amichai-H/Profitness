@@ -74,6 +74,7 @@ public class EditPerformance extends AppCompatActivity implements View.OnClickLi
         doc.put("Fat Percentage ", fatPercentage);
         doc.put("Muscle Mass ", muscleMass);
 
+
         db.collection("performance").document(trainee).set(doc)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
