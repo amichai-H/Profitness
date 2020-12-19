@@ -1,12 +1,13 @@
 package com.example.profitness;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ListActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -15,12 +16,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,91 +29,66 @@ public class WorkoutHistoryLayout extends AppCompatActivity  {
     FirebaseUser user;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
-   // ListView listViewHistoryOfTraining;
-HistoryAdapter adapter;
-    List<DocumentSnapshot> myDatesHistoryTrainings;
-    List<DocumentSnapshot> myHoursHistoryTrainings;
-    List<String> listOfDates;
-    HashMap<String, List<String>> datesAndHours;
     List<TrainData>  ListtrainData= new ArrayList<>();
-    RecyclerView listViewHistoryOfTraining;
-    RecyclerView.LayoutManager layoutManager;
+    ListView listView_trainData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_history_layout);
-
-        listViewHistoryOfTraining=findViewById(R.id.listHistory);
-        listViewHistoryOfTraining.setHasFixedSize(true);
-        layoutManager=new LinearLayoutManager(this);
-        listViewHistoryOfTraining.setLayoutManager(layoutManager);
-
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         user = mAuth.getCurrentUser();
-        myDatesHistoryTrainings =new ArrayList<>();
-        listOfDates=new ArrayList<>();
-        datesAndHours= new HashMap<>();
-        myHoursHistoryTrainings= new LinkedList<>();
+        listView_trainData =findViewById(R.id.list_view_history);
         showDate();
-
-
-
-
-
-
 
 
     }
 
     private void showDate() {
 
-        db.collection("users/"+user.getUid()+"/trainings").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("users/"+user.getUid()+"/trainings")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    listOfDates.clear(); // need to refresh
-                    myDatesHistoryTrainings = task.getResult().getDocuments(); // the dates
-                    for(DocumentSnapshot doc: myDatesHistoryTrainings){
+                    for(QueryDocumentSnapshot doc: task.getResult()){
+                            String date=doc.getId().toString();
+                            con(doc,date);
 
-                        System.out.println(" doc og dates " + doc.getId());
-                        listOfDates.add(doc.getId()); // list of string from myhistory list
-
-
-                    }
-                    System.out.println("one: " + listOfDates);
-
-                    if(!listOfDates.isEmpty()) {
-                        for(String dateName: listOfDates){
-                            db.collection("users/"+user.getUid()+"/trainings/"+dateName+"/hours")
-                                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if(task.isSuccessful()){
-                                        datesAndHours.clear(); // need to refresh
-                                        myHoursHistoryTrainings = task.getResult().getDocuments(); // the dates
-                                        List<String> listOfHours=new LinkedList<>();
-                                        for(DocumentSnapshot doc: myHoursHistoryTrainings){
-                                            System.out.println(" doc og hours " + doc.getId());
-                                            listOfHours.add(doc.getId());
-
-                                        }
-                                        datesAndHours.put(dateName,listOfHours);
-                                        TrainData data= new TrainData(dateName, listOfHours);
-                                    }
-                                }
-                            });
-                        }
-                        adapter= new HistoryAdapter(WorkoutHistoryLayout.this, ListtrainData);
-                        listViewHistoryOfTraining.setAdapter(adapter);
                     }
                 }
             }
         });
 
-        ArrayAdapter<String> HistoryList= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listOfDates);
-       // listViewHistoryOfTraining.setAdapter(HistoryList);
+
+
+    }
+
+public void con(QueryDocumentSnapshot doc,String date){
+    doc.getReference().collection("hours").get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        List<String> listOfHours = new LinkedList<>();
+                        for(QueryDocumentSnapshot docHours:task.getResult()){
+                            listOfHours.add(docHours.getId());
+
+                        }
+                        TrainData trainData=new TrainData(date,listOfHours);
+                        ListtrainData.add(trainData);
+
+
+                    }
+                    displayData();
+                }
+            });
+}
+
+    public void displayData(){
+        HistoryAdapter adapter= new HistoryAdapter(this, ListtrainData);
+        listView_trainData.setAdapter(adapter);
     }
 
 

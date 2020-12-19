@@ -1,62 +1,44 @@
 package com.example.profitness;
 
-import android.app.ListActivity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HolderForHistory> {
-
-    WorkoutHistoryLayout listHistory; // list of dates and th hours on this date
-    List<TrainData> DataList; //  list of template - date and hours
-
-    public HistoryAdapter(WorkoutHistoryLayout listHistory, List<TrainData> dataList) {
-        this.listHistory = listHistory;
-        DataList = dataList;
+public class HistoryAdapter extends ArrayAdapter<TrainData> {
+    public HistoryAdapter(@NonNull Context context, @NonNull List<TrainData> objects) {
+        super(context, 0, objects);
     }
 
     @NonNull
     @Override
-    public HolderForHistory onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView= LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.train_data_layout, parent,false);
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        TrainData data=getItem(position);
+        if (convertView==null){
+            convertView=LayoutInflater.from(getContext()).inflate(R.layout.train_data_item_layout,parent,false);
 
-        return new HolderForHistory(itemView);
+        }
+        TextView dateTraining=(TextView)convertView.findViewById(R.id.text_view_dateData);
+        dateTraining.setText(data.getDate());// just one hour
+        ListView hoursTraining=(ListView)convertView.findViewById(R.id.list_view_hoursData);
+        List<String> hoursList=(ArrayList<String>)data.getHours();
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this.getContext(),R.layout.hour_list,hoursList);
+        hoursTraining.setAdapter(adapter);
+        return convertView;
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull HolderForHistory holder, int position) {
-        holder.dateData.setText(DataList.get(position).getDate());
-        holder.hoursData.setText((CharSequence) DataList.get(position).getHours());
 
-    }
 
-    @Override
-    public int getItemCount() {
-        return DataList.size();
-    }
 
-//    @NonNull
-//    @Override
-//    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View itemView= LayoutInflater.from(parent.getContext())
-//                .inflate(R.layout.train_data_layout, parent,false);
-//
-//        return new ViewHolder(itemView);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return DataList.size();
-//    }
+
+
 }

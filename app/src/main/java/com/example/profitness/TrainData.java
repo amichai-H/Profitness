@@ -5,6 +5,7 @@ import java.util.List;
 public class TrainData  {
     String date;
     List<String> hours;
+    // List<String> hours;
     TrainData(){
 
     }

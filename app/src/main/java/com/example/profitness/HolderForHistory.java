@@ -13,7 +13,8 @@ View myView;
     public HolderForHistory(@NonNull View itemView) {
         super(itemView);
         myView=itemView;
-        dateData=itemView.findViewById(R.id.dateData);
-        hoursData=itemView.findViewById(R.id.hoursData);
+        dateData=itemView.findViewById(R.id.text_view_dateData);
+        hoursData=itemView.findViewById(R.id.list_view_hoursData);
+
     }
 }
