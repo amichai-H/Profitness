@@ -33,7 +33,6 @@ public class EditPerformance extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_performance);
 
-
         weightTextview = (TextView)findViewById(R.id.editWeightID);
         bmiTextView = (TextView)findViewById(R.id.editBmiId);
         fatPercentageTextView = (TextView)findViewById(R.id.edit_fat_percentageId);
