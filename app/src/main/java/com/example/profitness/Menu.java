@@ -97,7 +97,7 @@ public class Menu extends AppCompatActivity implements  View.OnClickListener {
             String d = dinnerMenu.getText().toString().trim();
             String option = spinner.getSelectedItem().toString().trim();
 
-            saveNewDayMenu(uid,bf, l, d, option);
+            saveNewOptionMenu(uid,bf, l, d, option);
 
         }
 
@@ -109,7 +109,7 @@ public class Menu extends AppCompatActivity implements  View.OnClickListener {
     }
 
 
-    private void saveNewDayMenu(String trainer ,String breakFast, String lunch, String dinner, String option){
+    private void saveNewOptionMenu(String trainer ,String breakFast, String lunch, String dinner, String option){
         pd.setTitle("Adding data to FireStore");
         pd.show();
 

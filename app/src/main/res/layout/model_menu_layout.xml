@@ -23,7 +23,6 @@
                 android:id="@+id/optionId"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:text="@string/option"
                 android:textSize="30sp" />
 
@@ -34,14 +33,15 @@
                 android:text="@string/breakfast_recommendation"
                 android:textSize="18sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/editTextBreakFast"
                 android:layout_width="match_parent"
-                android:layout_height="61dp"
+                android:layout_height="88dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/menu_breakfast"
-                android:inputType="textMultiLine" />
+                android:maxLines="5"
+                android:textColor="#221E1E" />
 
             <TextView
                 android:id="@+id/lunchId2"
@@ -50,14 +50,15 @@
                 android:text="@string/lunch_recommendation"
                 android:textSize="18sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/editTextLunch"
                 android:layout_width="match_parent"
-                android:layout_height="61dp"
+                android:layout_height="88dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/menu_lunch"
-                android:inputType="textMultiLine" />
+                android:maxLines="5"
+                android:textColor="#221E1E" />
 
             <TextView
                 android:id="@+id/dinnerId2"
@@ -66,14 +67,16 @@
                 android:text="@string/dinner_recommendation"
                 android:textSize="18sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/editTextDinnerId"
                 android:layout_width="match_parent"
-                android:layout_height="61dp"
+                android:layout_height="88dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/menu_dinner"
-                android:inputType="textMultiLine" />
+                android:maxLines="5"
+                android:textColor="#221E1E" />
+
         </LinearLayout>
 
     </ScrollView>
