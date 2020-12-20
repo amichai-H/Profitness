@@ -29,7 +29,7 @@ public class WorkoutHistoryLayout extends AppCompatActivity  {
     FirebaseUser user;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
-    List<TrainData>  ListtrainData= new ArrayList<>();
+    ArrayList<TrainData>  ListtrainData= new ArrayList<>();
     ListView listView_trainData;
 
     @Override
@@ -71,7 +71,7 @@ public void con(QueryDocumentSnapshot doc,String date){
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if(task.isSuccessful()){
-                        List<String> listOfHours = new LinkedList<>();
+                        ArrayList<String> listOfHours = new ArrayList<>();
                         for(QueryDocumentSnapshot docHours:task.getResult()){
                             listOfHours.add(docHours.getId());
 

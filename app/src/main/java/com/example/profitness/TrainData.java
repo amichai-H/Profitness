@@ -1,16 +1,17 @@
 package com.example.profitness;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrainData  {
     String date;
-    List<String> hours;
-    // List<String> hours;
+    ArrayList<String> hours;
+
     TrainData(){
 
     }
 
-    public TrainData(String date, List<String> hours) {
+    public TrainData(String date, ArrayList<String> hours) {
         this.date = date;
         this.hours = hours;
     }
@@ -27,7 +28,7 @@ public class TrainData  {
         return hours;
     }
 
-    public void setHours(List<String> hours) {
+    public void setHours(ArrayList<String> hours) {
         this.hours = hours;
     }
 }

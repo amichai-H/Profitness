@@ -31,7 +31,8 @@ public class HistoryAdapter extends ArrayAdapter<TrainData> {
         dateTraining.setText(data.getDate());// just one hour
         ListView hoursTraining=(ListView)convertView.findViewById(R.id.list_view_hoursData);
         List<String> hoursList=(ArrayList<String>)data.getHours();
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this.getContext(),R.layout.hour_list,hoursList);
+        //ArrayAdapter<String> adapter=new ArrayAdapter<String>(this.getContext(),R.layout.hour_list,hoursList);
+        ArrayAdapter<String> adapter= new ArrayAdapter<>(this.getContext(),R.layout.hour_list,R.id.singel_hour_item,hoursList);
         hoursTraining.setAdapter(adapter);
         return convertView;
     }
