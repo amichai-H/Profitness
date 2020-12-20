@@ -77,9 +77,23 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         mRegisterBtn.setOnClickListener(this);
         coachId = "";
 
-        setCoachesList();
-        //mtrain.setVisibility(View.INVISIBLE);
+
+        RadioButton radioSexButton = (RadioButton) findViewById(mSex.getCheckedRadioButtonId());
+        RadioButton radioTrainButton = (RadioButton) findViewById(mtrain.getCheckedRadioButtonId());
+
         /* spinner*/
+        setCoachesList();
+        coachesSpinner.setVisibility(View.VISIBLE);
+/* need to do if the radio button of trainee is selected, to show the coaches list, else hide it */
+        /* the code below does not work */
+//        if (radioTrainButton.getTag().toString().equals("0"))
+//            coachesSpinner.setVisibility(View.VISIBLE);
+//
+//        else
+//            coachesSpinner.setVisibility(View.INVISIBLE);
+
+
+
     }
 
 
@@ -237,8 +251,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 coachId = availableCoachesIdList.get(position);
-//                date = adapterView.getItemAtPosition(position).toString();
-//                dateTimeTextv.setText(date + " " + time);
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {

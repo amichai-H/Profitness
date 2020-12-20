@@ -56,7 +56,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     String date;
     String time;
 
-    boolean timeSelected, dateSelected; //if user select something in spinner
+    boolean timeSelected, dateSelected, isDateAvailable; //if user select something in spinner
 
     FirebaseFirestore db;
     FirebaseAuth mAuth;
@@ -70,7 +70,6 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     String isRelevantString;
     String userName;
 
-    boolean isDateAvailable;
 
 
 
@@ -120,6 +119,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
         /* db init */
         db = FirebaseFirestore.getInstance();
+
         /* spinner init */
         mydb.getUser(user.getUid(),(doc)->{
             myUser.init(doc);
@@ -173,12 +173,6 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-
-                    /* get the name of the trainee */
-//                    DocumentSnapshot document = task.getResult();
-//                    String userFirstNameString = (String)document.getData().get("first");
-//                    String userLastNameString = (String)document.getData().get("last");
-//                    userName = userFirstNameString + " " + userLastNameString;
 
                     /* set the data we want to update */
                     Map<String, Object> docData = new HashMap<>();
@@ -424,16 +418,16 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     }
 
 
-    public static boolean isRelevantByHour(String hour) {
+    public static int isRelevantByHour(String hour) {
 
         String timeStamp = new SimpleDateFormat("HH:mm").format(new java.util.Date());
         try {
-            return new SimpleDateFormat("hh:mm").parse(hour).compareTo(new SimpleDateFormat("hh:mm").parse(timeStamp)) < 0;
+            return new SimpleDateFormat("hh:mm").parse(hour).compareTo(new SimpleDateFormat("hh:mm").parse(timeStamp));
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        return true;
+        return 0;
 
     }
 
