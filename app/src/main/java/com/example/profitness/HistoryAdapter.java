@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,6 +31,9 @@ public class HistoryAdapter extends ArrayAdapter<TrainData> {
         TextView dateTraining=(TextView)convertView.findViewById(R.id.text_view_dateData);
         dateTraining.setText(data.getDate());// just one hour
         ListView hoursTraining=(ListView)convertView.findViewById(R.id.list_view_hoursData);
+       // hoursTraining.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        hoursTraining.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        hoursTraining.setItemsCanFocus(false);
         List<String> hoursList=(ArrayList<String>)data.getHours();
         //ArrayAdapter<String> adapter=new ArrayAdapter<String>(this.getContext(),R.layout.hour_list,hoursList);
         ArrayAdapter<String> adapter= new ArrayAdapter<>(this.getContext(),R.layout.hour_list,R.id.singel_hour_item,hoursList);

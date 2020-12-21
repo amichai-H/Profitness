@@ -43,6 +43,7 @@ public class WorkoutHistoryLayout extends AppCompatActivity  {
         showDate();
 
 
+
     }
 
     private void showDate() {
