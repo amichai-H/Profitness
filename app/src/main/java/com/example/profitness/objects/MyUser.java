@@ -1,9 +1,8 @@
-package com.example.profitness;
+package com.example.profitness.objects;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MyUser {
     DBshort mydb = new DBshort();

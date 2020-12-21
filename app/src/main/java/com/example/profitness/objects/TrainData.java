@@ -1,4 +1,4 @@
-package com.example.profitness;
+package com.example.profitness.objects;
 
 import java.util.ArrayList;
 import java.util.List;

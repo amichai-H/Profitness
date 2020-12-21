@@ -1,4 +1,4 @@
-package com.example.profitness;
+package com.example.profitness.objects;
 
 import com.google.firebase.firestore.Exclude;
 
