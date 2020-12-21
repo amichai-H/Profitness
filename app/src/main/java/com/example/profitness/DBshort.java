@@ -5,6 +5,10 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
+import com.example.profitness.functionsInterface.TTRCollection;
+import com.example.profitness.functionsInterface.TTrcollS;
+import com.example.profitness.functionsInterface.TaskToRun;
+import com.example.profitness.functionsInterface.VoidFunc;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,11 +43,11 @@ public class DBshort {
     }
 
 
-    public void getUser(String uid,TaskToRun taskToRun ){
+    public void getUser(String uid, TaskToRun taskToRun ){
         getDocument(users+"/"+uid,taskToRun);
     }
 
-    public void getAllUsers(TTRCollection taskToRun,VoidFunc endFor){
+    public void getAllUsers(TTRCollection taskToRun, VoidFunc endFor){
         getCollection("users",taskToRun,endFor);
     }
 

@@ -1,4 +1,4 @@
-package com.example.profitness;
+package com.example.profitness.functionsInterface;
 
 import android.widget.LinearLayout;
 

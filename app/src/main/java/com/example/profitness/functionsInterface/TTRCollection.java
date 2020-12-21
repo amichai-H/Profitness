@@ -1,4 +1,4 @@
-package com.example.profitness;
+package com.example.profitness.functionsInterface;
 
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
