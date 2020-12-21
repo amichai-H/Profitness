@@ -1,11 +1,19 @@
 package com.example.profitness;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MyUser {
+    DBshort mydb = new DBshort();
+    FirebaseAuth mAuth;
+    FirebaseUser user;
     private String firstName="", lastName="", email="", password="",phone="",birthDAy="",coach="";
     private int gsex=0, training=0;
     public MyUser(){
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
     public MyUser(String fn, String ln, String email, String pass, String phone, String birthDAy, int sg,int isTraining,String coach){
         this.coach = coach;
@@ -36,6 +44,19 @@ public class MyUser {
         setTraining(Math.toIntExact(doc.getLong("trainer")));
         setCoach((String) doc.get("coach"));
         setGsex(Math.toIntExact(doc.getLong("sex")));
+    }
+    public void init(){
+        mydb.getUser(user.getUid(),(doc)->{
+            setFirstName((String) doc.get("first"));
+            setLastName((String) doc.get("last"));
+            setPhone((String) doc.get("phone"));
+            setBirthDAy((String) doc.get("born"));
+            setEmail((String) doc.get("email"));
+            setTraining(Math.toIntExact(doc.getLong("trainer")));
+            setCoach((String) doc.get("coach"));
+            setGsex(Math.toIntExact(doc.getLong("sex")));
+        });
+
     }
 
     public String getFirstName() {

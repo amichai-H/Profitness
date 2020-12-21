@@ -1,6 +1,7 @@
 package com.example.profitness;
 
 import android.util.Log;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
@@ -123,6 +124,25 @@ public class DBshort {
     public void insertDocAvaDatesHours(String cUid,String date,String hour , Map<String, Object> docData,VoidFunc onSucces) {
         insertDoc(trainingInformation+"/"+cUid+"/"+availableDates+"/"+date+"/"+hours+"/"+hour,docData,onSucces);
     }
+    public void getCollection(String path, TTrcollS taskToRun, VoidFunc endFor, LinearLayout linearLayout){
+        db.collection(path)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("TAG", document.getId() + " => " + document.getData());
+                                taskToRun.run(document,linearLayout);
+                            }
+                            endFor.run();
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
 
 
 }

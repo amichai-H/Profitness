@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Map;
 
 public class DetailsTraining extends AppCompatActivity implements View.OnClickListener {
-    private Button editMenu,detailTrainer, performanceBtn;
+    private Button editMenu,detailTrainer, performanceBtn,practiceTime;
     String uid;
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -36,17 +36,19 @@ public class DetailsTraining extends AppCompatActivity implements View.OnClickLi
 
         editMenu = (Button)findViewById(R.id.menuBtn);
         performanceBtn = (Button)findViewById(R.id.performanceTraineeBtn);
+        practiceTime = findViewById(R.id.practiceTimeBtn);
 
         uid = (String) getIntent().getExtras().get("Uid");
         showTraineeName = findViewById(R.id.showTrainneName);
         detailTrainer = findViewById(R.id.p_information);
+        practiceTime = findViewById(R.id.practiceTimeBtn);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         editMenu.setOnClickListener(this);
+        practiceTime.setOnClickListener(this);
         detailTrainer.setOnClickListener(this);
-        performanceBtn.setOnClickListener(this);
         updateUI();
     }
 
@@ -64,6 +66,11 @@ public class DetailsTraining extends AppCompatActivity implements View.OnClickLi
         }
         else if (v==detailTrainer){
             Intent intent = new Intent(this, personalInformationDisplayToCoach.class);
+            intent.putExtra("Uid", uid);
+            startActivity(intent);
+        }
+        else if(v==practiceTime){
+            Intent intent = new Intent(this, CoachPractisTimeOfUser.class);
             intent.putExtra("Uid", uid);
             startActivity(intent);
         }

@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Profitness">
-        <activity android:name=".ShowPerformance"></activity>
+        <activity android:name=".ShowPerformance"/>
         <activity android:name=".EditPerformance" />
         <activity android:name=".personalInformationDisplayToCoach" />
         <activity android:name=".CoachSeeAllComingTreining" />
+        <activity android:name=".CoachPractisTimeOfUser"/>
         <activity android:name=".ShowMenuListCoach" />
         <activity android:name=".Menu" />
         <activity android:name=".SelfCoachScreen" />
