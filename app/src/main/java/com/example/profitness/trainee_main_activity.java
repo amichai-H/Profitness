@@ -82,7 +82,10 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         if (v == sched_btn){
 
-            startActivity(new Intent(getApplicationContext(), Calander.class));
+            Intent i = new Intent(this, Calander.class);
+            startActivityForResult(i, 1);
+
+            //startActivity(new Intent(getApplicationContext(), Calander.class));
 
         }
         else if (v == my_trainings_btn) {
@@ -106,17 +109,17 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        try {
-            Thread.sleep(100);
-            setNextTrainingTV();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        try {
+//            Thread.sleep(100);
+//            setNextTrainingTV();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private void setUserName() {
         DocumentReference docRef = db.collection("users").document(user.getUid());
@@ -146,7 +149,7 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
         });
     }
 
-    private void setNextTrainingTV() {
+    public void setNextTrainingTV() {
 
 
         db.collection("users/" + user.getUid() + "/trainings")
