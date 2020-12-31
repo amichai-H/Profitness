@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,10 +47,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     DBshort mydb;
     MyUser myUser;
 
-    private String dateString;
-    private String timeString;
-
-    private Button pick_btn, sched_btn;
+    private Button sched_btn;
     private TextView dateTimeTextv;
 
     private Spinner dateSpinner;
@@ -130,6 +128,8 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
     }
 
+
+
     @Override
     public void onClick(View v) {
         if(v == sched_btn){
@@ -140,6 +140,12 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
             else{
                 setAsTaken();
                 Toast.makeText(this, "The training was set up!", Toast.LENGTH_SHORT).show();//DB add action
+
+                int result = 1;
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result",result);
+                setResult(RESULT_OK,returnIntent);
+//                getAvailableDatesFromDB();
                 finish();
                 }
         }
@@ -209,7 +215,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         docData.put("isOver", false);
 
         Map<String, Object> docData2 = new HashMap<>();
-        docData2.put("isRelevant", true);
+        docData2.put(isRelevantString, true);
 
         db.collection("users").document(user.getUid()).collection("trainings").document(date)
                 .set(docData2)
@@ -340,7 +346,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
 
     private void makeDateNotRelevant(String dateToChange) { //we use this func if all hours of this date are taken -> it will not added to the list of the available dates
         Map<String, Object> docData = new HashMap<>();
-        docData.put("isRelevant", false);
+        docData.put(isRelevantString, false);
         String path = "trainingInformation/"+myUser.getCoach()+"/"+availableDates+"/"+dateToChange;
         db.document(path)
                 .set(docData)
@@ -358,7 +364,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
                 });
     }
 
-    void getAvailableDatesFromDB(){
+    public void getAvailableDatesFromDB(){
         String path = "trainingInformation/"+myUser.getCoach()+"/"+availableDates;
         mydb.getCollection(path,this::insertDateTolist,()->{
             sortDatesList(availableDatesList);
@@ -391,7 +397,7 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
     }
     private void insertDateTolist(DocumentSnapshot doc){
         int isRelevantByDate = isRelevantByDate(doc.getId());
-        if((boolean)doc.get("isRelevant")){
+        if((boolean)doc.get(isRelevantString)){
 
             if( isRelevantByDate >= 0 ){
                 availableDatesList.add(doc.getId());
@@ -448,19 +454,19 @@ public class Calander extends AppCompatActivity implements View.OnClickListener{
         });
     }
 
-    public static void sortHoursList(List<String> availableDatesList) {// supposed to sort the list availableDatesList
-        Collections.sort(availableDatesList, new Comparator<String>() {
-
-            @Override
-            public int compare(String o1, String o2) {
-                try {
-                    return new SimpleDateFormat("hh:mm").parse(o1).compareTo(new SimpleDateFormat("hh:mm").parse(o2));
-                } catch (ParseException e) {
-                    return 0;
-                }
-            }
-        });
-    }
+//    public static void sortHoursList(List<String> availableDatesList) {// supposed to sort the list availableDatesList
+//        Collections.sort(availableDatesList, new Comparator<String>() {
+//
+//            @Override
+//            public int compare(String o1, String o2) {
+//                try {
+//                    return new SimpleDateFormat("hh:mm").parse(o1).compareTo(new SimpleDateFormat("hh:mm").parse(o2));
+//                } catch (ParseException e) {
+//                    return 0;
+//                }
+//            }
+//        });
+//    }
 
 //    private String getUserName(String uid){
 //        String tmpUserName = "";

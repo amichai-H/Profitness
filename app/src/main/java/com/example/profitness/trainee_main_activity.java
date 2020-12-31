@@ -1,6 +1,7 @@
 package com.example.profitness;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -30,15 +31,15 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
     Button perf_btn;
     Button menu_btn;
     TextView userName_tv;
-    TextView nextTraining_tv;
+    static TextView nextTraining_tv;
 
 
-    FirebaseUser user;
-    FirebaseFirestore db;
+    static FirebaseUser user;
+    static FirebaseFirestore db;
     FirebaseAuth mAuth;
 
-    List<String> nextTrainigsList;
-    List<String> nextHoursList;
+    static List<String> nextTrainigsList;
+    static List<String> nextHoursList;
 
     boolean isDateRelevant;
 
@@ -78,14 +79,13 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
 
     }
 
+
     @Override
     public void onClick(View v) {
         if (v == sched_btn){
 
             Intent i = new Intent(this, Calander.class);
             startActivityForResult(i, 1);
-
-            //startActivity(new Intent(getApplicationContext(), Calander.class));
 
         }
         else if (v == my_trainings_btn) {
@@ -110,16 +110,14 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
     }
 
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        try {
-//            Thread.sleep(100);
-//            setNextTrainingTV();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
+    }
 
     private void setUserName() {
         DocumentReference docRef = db.collection("users").document(user.getUid());
@@ -149,7 +147,7 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
         });
     }
 
-    public void setNextTrainingTV() {
+    public static void setNextTrainingTV() {
 
 
         db.collection("users/" + user.getUid() + "/trainings")
