@@ -207,8 +207,10 @@ public class register extends AppCompatActivity implements View.OnClickListener 
 // Add a new document with a generated ID
             mydb.insertDocToUser(user.getUid(),userDB,()->{
                 Toast.makeText(this, "Registered successfully", Toast.LENGTH_SHORT).show();
+
                 finish();
             });
+
 
     }
 

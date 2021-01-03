@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.profitness.functionsInterface.TaskToRun;
 import com.example.profitness.objects.DBshort;
+import com.example.profitness.objects.MyFirebaseInstanceIDService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -104,12 +105,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void openCoach() {
+        MyFirebaseInstanceIDService myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
+        myFirebaseInstanceIDService.onTokenRefresh();
         Intent intent=new Intent(this,SelfCoachScreen.class);
         startActivity(intent);
     }
 
 
     private void openTrainer() {
+        MyFirebaseInstanceIDService myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
+        myFirebaseInstanceIDService.onTokenRefresh();
         Intent intent=new Intent(this,trainee_main_activity.class);
         startActivity(intent);
 
