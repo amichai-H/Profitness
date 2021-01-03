@@ -2,7 +2,9 @@ package com.example.profitness;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.pm.PackageManager;
 
 import com.example.profitness.functionsInterface.TaskToRun;
 import com.example.profitness.objects.DBshort;
@@ -41,12 +44,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         db = FirebaseFirestore.getInstance();
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
-        mLoginBtn = (Button)findViewById(R.id.btn_login);
-        mCreateBtn = (TextView)findViewById(R.id.createText);
-        progressBar = (ProgressBar)findViewById(R.id.progressBar2);
+        mLoginBtn = (Button) findViewById(R.id.btn_login);
+        mCreateBtn = (TextView) findViewById(R.id.createText);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
         mLoginBtn.setOnClickListener(this);
         mCreateBtn.setOnClickListener(this);
         mydb = new DBshort();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NOTIFICATION_POLICY) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_NOTIFICATION_POLICY}, 101);
+
+            return;
+        }
     }
 
     public TaskToRun nextActivi = (documentSnapshot) -> {
