@@ -25,6 +25,7 @@ public class ShowMenuListCoach extends AppCompatActivity {
     FirebaseAuth mAuth;
     //FirebaseFirestore db;
 
+
     CustomAdapter adapter;
     ProgressDialog pd;
     String uid;

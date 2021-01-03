@@ -15,6 +15,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
         mView = itemView;
 
+
         option = itemView.findViewById(R.id.optionId);
         breakFastTV = itemView.findViewById(R.id.editTextBreakFast);
         lunchTV = itemView.findViewById(R.id.editTextLunch);

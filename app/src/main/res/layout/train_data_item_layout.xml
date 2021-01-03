@@ -24,13 +24,13 @@
         android:textSize="24sp"
         android:textColor="#000"
         />
-    <ListView
-        android:id="@+id/list_view_hoursData"
-        android:text="hours"
-        android:textSize="18dp"
-        android:textColor="#000"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+
+        <ListView
+            android:id="@+id/list_view_hoursData"
+            android:layout_width="match_parent"
+            android:layout_height="157dp"
+            android:text="hours"
+            android:textColor="#000"
+            android:textSize="18dp" />
     </LinearLayout>
 </RelativeLayout>
