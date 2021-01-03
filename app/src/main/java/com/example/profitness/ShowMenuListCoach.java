@@ -1,6 +1,5 @@
 package com.example.profitness;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,19 +9,19 @@ import android.os.Bundle;
 import com.example.profitness.objects.DBshort;
 import com.example.profitness.objects.MyUser;
 import com.example.profitness.objects.modelMenu;
+import com.example.profitness.objects.trainee_menu;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowMenuListCoach extends AppCompatActivity {
+public class ShowMenuListCoach extends trainee_menu {
 
     RecyclerView mRecyclerView;
     List<modelMenu> list = new ArrayList<>();
     RecyclerView.LayoutManager layoutManager;
-    FirebaseUser user;
-    FirebaseAuth mAuth;
+//    FirebaseUser user;
+//    FirebaseAuth mAuth;
     //FirebaseFirestore db;
 
 

@@ -1,8 +1,6 @@
 package com.example.profitness;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,20 +9,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.profitness.objects.trainee_menu;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-public class trainee_main_activity extends AppCompatActivity implements View.OnClickListener{
+public class trainee_main_activity extends trainee_menu implements View.OnClickListener{
 
     Button sched_btn;
     Button my_trainings_btn;
@@ -33,17 +30,14 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
     TextView userName_tv;
     static TextView nextTraining_tv;
 
-
-    static FirebaseUser user;
-    static FirebaseFirestore db;
-    FirebaseAuth mAuth;
+//    static FirebaseUser user;
+//    static FirebaseFirestore db;
+//    static FirebaseAuth mAuth;
 
     static List<String> nextTrainigsList;
     static List<String> nextHoursList;
 
     boolean isDateRelevant;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +50,6 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
         userName_tv = findViewById(R.id.userNameTv);
         nextTraining_tv = findViewById(R.id.nextTrainingTV);
         my_trainings_btn = findViewById(R.id.my_trainings_btn);
-
 
         sched_btn.setOnClickListener(this);
         perf_btn.setOnClickListener(this);
@@ -75,9 +68,31 @@ public class trainee_main_activity extends AppCompatActivity implements View.OnC
         setUserName();
         setNextTrainingTV();
 
-
-
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.trainee_menu, menu);
+//        return true;
+//    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch(item.getItemId()){
+//            case R.id.logout:
+//                logout();
+//                return true;
+//            case R.id.home:
+//                if(this.getClass().getSimpleName().compareTo("trainee_main_activity") != 0) {
+//                    finish();
+//                }
+//                return true;
+//            default: return super.onOptionsItemSelected(item);
+//        }
+//
+//    }
+
 
 
     @Override

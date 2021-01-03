@@ -1,28 +1,27 @@
 package com.example.profitness;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ListView;
 
 
 import com.example.profitness.objects.TrainData;
+import com.example.profitness.objects.trainee_menu;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class WorkoutHistoryLayout extends AppCompatActivity  {
+public class WorkoutHistoryLayout extends trainee_menu {
    // private Button ShowMore;
-    FirebaseUser user;
-    FirebaseFirestore db;
-    FirebaseAuth mAuth;
+//    FirebaseUser user;
+//    FirebaseFirestore db;
+//    FirebaseAuth mAuth;
     ArrayList<TrainData>  ListtrainData= new ArrayList<>();
     ListView listView_trainData;
 
