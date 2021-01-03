@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+
     DBshort mydb = new DBshort();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
