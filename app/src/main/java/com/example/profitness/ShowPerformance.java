@@ -56,16 +56,20 @@ public class ShowPerformance extends trainee_menu {
                         Map<String, Object> data = new HashMap<>();
                         assert documentSnapshot != null;
                         data = documentSnapshot.getData();
-                        assert data != null;
-                        weight = (String) data.get("Weight");
-                        bmi = (String) data.get("BMI");
-                        fatPercentage = (String)data.get("Fat Percentage");
-                        muscleMass = (String)data.get("Muscle Mass");
+                        if (data ==  null){
+                            Toast.makeText(ShowPerformance.this, "There is no Performance to Display yet...", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }else {
+                            weight = (String) data.get("Weight");
+                            bmi = (String) data.get("BMI");
+                            fatPercentage = (String) data.get("Fat Percentage");
+                            muscleMass = (String) data.get("Muscle Mass");
 
-                        weightTextView.setText(weight);
-                        BMITextView.setText(bmi);
-                        fatPercentageTextView.setText(fatPercentage);
-                        muscleMassTextView.setText(muscleMass);
+                            weightTextView.setText(weight);
+                            BMITextView.setText(bmi);
+                            fatPercentageTextView.setText(fatPercentage);
+                            muscleMassTextView.setText(muscleMass);
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
