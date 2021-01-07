@@ -13,6 +13,11 @@ import com.example.profitness.objects.MyUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
+
+import static com.google.firebase.messaging.Constants.MessagePayloadKeys.SENDER_ID;
+
 
 public class SelfCoachScreen extends AppCompatActivity implements View.OnClickListener {
     Button goToList,goToSchedTimeToWork,scheduledTraining;
@@ -46,8 +51,19 @@ public class SelfCoachScreen extends AppCompatActivity implements View.OnClickLi
             myUser.init(doc);
             setUserName();
         });
+        sendTest();
 
 
+    }
+
+    private void sendTest() {
+        FirebaseMessaging fm = FirebaseMessaging.getInstance();
+        fm.send(new RemoteMessage.Builder(SENDER_ID + "@fcm.googleapis.com")
+                .setMessageId(Integer.toString(0))
+                .addData("my_message", "Hello World")
+                .addData("my_action","SAY_HELLO")
+                .build());
+        System.out.println("messages send");
     }
 
     @Override

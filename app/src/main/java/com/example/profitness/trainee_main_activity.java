@@ -1,6 +1,8 @@
 package com.example.profitness;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,16 +11,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.profitness.objects.MyUser;
 import com.example.profitness.objects.trainee_menu;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class trainee_main_activity extends trainee_menu implements View.OnClickListener{
@@ -33,6 +39,11 @@ public class trainee_main_activity extends trainee_menu implements View.OnClickL
 //    static FirebaseUser user;
 //    static FirebaseFirestore db;
 //    static FirebaseAuth mAuth;
+
+    static FirebaseUser user;
+    static FirebaseFirestore db;
+    FirebaseAuth mAuth;
+    MyUser myUser;
 
     static List<String> nextTrainigsList;
     static List<String> nextHoursList;
@@ -51,6 +62,7 @@ public class trainee_main_activity extends trainee_menu implements View.OnClickL
         nextTraining_tv = findViewById(R.id.nextTrainingTV);
         my_trainings_btn = findViewById(R.id.my_trainings_btn);
 
+
         sched_btn.setOnClickListener(this);
         perf_btn.setOnClickListener(this);
         menu_btn.setOnClickListener(this);
@@ -59,6 +71,7 @@ public class trainee_main_activity extends trainee_menu implements View.OnClickL
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         user = mAuth.getCurrentUser();
+        myUser = new MyUser();
 
         nextTrainigsList = new ArrayList<>();
         nextHoursList = new ArrayList<>();
@@ -67,6 +80,7 @@ public class trainee_main_activity extends trainee_menu implements View.OnClickL
 
         setUserName();
         setNextTrainingTV();
+        subscribeTo();
 
     }
 
@@ -94,6 +108,19 @@ public class trainee_main_activity extends trainee_menu implements View.OnClickL
 //    }
 
 
+
+    private void subscribeTo() {
+        FirebaseMessaging.getInstance().subscribeToTopic(myUser.getCoach())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d("RRRRr", "Update coach");
+                        }
+                        Log.d("RRRRr", "FAIL - subscribeTo");
+                    }
+                });
+    }
 
     @Override
     public void onClick(View v) {

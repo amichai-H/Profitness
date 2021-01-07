@@ -49,6 +49,7 @@ public class DetailsTraining extends AppCompatActivity implements View.OnClickLi
         editMenu.setOnClickListener(this);
         practiceTime.setOnClickListener(this);
         detailTrainer.setOnClickListener(this);
+        performanceBtn.setOnClickListener(this);
         updateUI();
     }
 
