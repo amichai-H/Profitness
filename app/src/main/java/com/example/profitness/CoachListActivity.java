@@ -57,9 +57,10 @@ public class CoachListActivity extends AppCompatActivity {
     private void createViewOnScreen() {
  //       for (int i = 0;i<20;i++) {
             for (QueryDocumentSnapshot s : myTrainers) {
+                View view = new View(this);
                 TextView newTextView = new TextView(this);
-                newTextView.setText((String) s.getData().get("first"));
-                newTextView.setTextColor(Color.BLACK);
+                newTextView.setText(((String) s.getData().get("first"))+" "+((String)s.getData().get("last")));
+                newTextView.setTextColor(Color.WHITE);
                 newTextView.setTextSize(24);
                 //newTextView.setBackgroundColor(Color.GRAY);
                 newTextView.setPadding(12,12,12,12);

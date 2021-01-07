@@ -48,7 +48,7 @@ public class CoachPractisTimeOfUser extends AppCompatActivity {
         myHours = new LinkedList<>();
         TextView viewDate = new TextView(this);
         viewDate.setText(date);
-        viewDate.setTextColor(Color.BLACK);
+        viewDate.setTextColor(Color.WHITE);
         viewDate.setTextSize(22);
         viewDate.setPadding(12, 12, 12, 12);
         templayout.addView(viewDate);
@@ -56,7 +56,7 @@ public class CoachPractisTimeOfUser extends AppCompatActivity {
             TextView viewHour = new TextView(this);
             viewHour.setText(doc.getId());
             System.out.println(doc.getId());
-            viewHour.setTextColor(Color.BLACK);
+            viewHour.setTextColor(Color.WHITE);
             viewHour.setTextSize(18);
             viewHour.setPadding(12, 3, 12, 3);
            linearLayout.addView(viewHour);

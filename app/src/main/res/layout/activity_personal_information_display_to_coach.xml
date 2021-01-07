@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background3"
     tools:context=".personalInformationDisplayToCoach">
 
     <TextView
@@ -27,17 +27,17 @@
     <TextView
         android:id="@+id/age_id"
         android:layout_width="wrap_content"
-        android:minWidth="203dp"
         android:layout_height="wrap_content"
-        android:minHeight="33dp"
         android:background="#80D3D3D3"
         android:fontFamily="@font/allerta_stencil"
         android:gravity="center"
+        android:minWidth="203dp"
+        android:minHeight="33dp"
         android:text="@string/empty"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/id_full_name"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="@+id/id_full_name"
         app:layout_constraintTop_toBottomOf="@+id/id_full_name"
         app:layout_constraintVertical_bias="0.201" />

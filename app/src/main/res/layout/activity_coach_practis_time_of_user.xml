@@ -26,7 +26,7 @@
         android:id="@+id/scrollView3"
         android:layout_width="293dp"
         android:layout_height="602dp"
-        android:background="@drawable/background"
+        android:background="@drawable/background3"
         android:fillViewport="true"
         android:minWidth="20dp"
         android:minHeight="20dp"

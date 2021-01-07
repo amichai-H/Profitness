@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CoachSeeAllComingTreining">
+    tools:context=".CoachSeeAllComingTreining"
+    android:background="@drawable/background3">
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="442dp"
         android:layout_height="477dp"
-        android:background="@drawable/background"
+        android:background="@drawable/background4"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
