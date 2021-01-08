@@ -9,8 +9,8 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="442dp"
-        android:layout_height="477dp"
+        android:layout_width="234dp"
+        android:layout_height="434dp"
         android:background="@drawable/background4"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +26,8 @@
             android:gravity="top"
             android:orientation="vertical"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingRight="16dp"
+            android:background="@color/white">
 
             <!-- Include other widget or layout tags here. These are considered
                     "child views" or "children" of the linear layout -->
